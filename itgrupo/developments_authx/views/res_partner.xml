@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_partner_ubicación_consultar_ruc" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="query_ruc_dni.view_partner_form_inherit_ruc"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='verify_ruc'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                 <xpath expr="//button[@name='verify_dni'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='vat']" position="after">
+                    <button string="Consultar RUC" name="verify_ruc" type="object" class="oe_highlight"
+                            invisible="related_identification != '6'"/>
+                    <button string="Consultar DNI" name="verify_dni" type="object" class="oe_highlight"
+                            invisible="related_identification != '1'"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

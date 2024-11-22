@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_crm_lead_moneda_usd" model="ir.ui.view">
+            <field name="name">crm.lead.moneda.usd</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='expected_revenue']" position="replace">
+                    <field name="my_custom_currency_id" invisible="1"/>
+                    <field name="expected_revenue" class="o_input_13ch" widget='monetary'
+                           options="{'currency_field': 'my_custom_currency_id'}"/>
+                </xpath>
+                <xpath expr="//field[@name='recurring_revenue']" position="replace">
+                    <field name="my_custom_currency_id" invisible="1"/>
+                    <field name="recurring_revenue" class="o_input_10ch" widget="monetary"
+                           options="{'currency_field': 'my_custom_currency_id'}"/>
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_crm_lead_moneda_create_usd" model="ir.ui.view">
+            <field name="name">crm.lead.moneda.create.usd</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='expected_revenue']" position="replace">
+                    <field name="my_custom_currency_id" invisible="1"/>
+                    <field name="expected_revenue" class="oe_inline me-5 o_field_highlight" widget="monetary"
+                           options="{'currency_field': 'my_custom_currency_id'}"/>
+                </xpath>
+                <xpath expr="//field[@name='recurring_revenue']" position="replace">
+                    <field name="my_custom_currency_id" invisible="1"/>
+                    <field name="recurring_revenue" class="oe_inline o_field_highlight" widget="monetary"
+                           options="{'currency_field': 'my_custom_currency_id'}"/>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_crm_lead_moneda_create_case_usd" model="ir.ui.view">
+            <field name="name">crm.lead.moneda.create.case.usd</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+
+                <!--                <xpath expr="//div[hasclass('o_kanban_record_subtitle')]" position="replace">-->
+                <!--                    <div class="o_kanban_record_subtitle">-->
+
+                <!--                </xpath>-->
+                <xpath expr="//div[hasclass('o_kanban_record_subtitle')]" position="replace">
+                    <div class="o_kanban_record_subtitle">
+                        <t t-if="record.expected_revenue.raw_value">
+                            <field name="my_custom_currency_id" invisible="1"/>
+                            <field name="expected_revenue" widget="monetary"
+                                   options="{'currency_field': 'my_custom_currency_id'}"/>
+                            <span t-if="record.recurring_revenue and record.recurring_revenue.raw_value"
+                                  groups="crm.group_use_recurring_revenues">+
+                            </span>
+                        </t>
+                        <t t-if="record.recurring_revenue and record.recurring_revenue.raw_value">
+                            <field name="my_custom_currency_id" invisible="1"/>
+                            <field class="me-1" name="recurring_revenue" widget="monetary"
+                                   options="{'currency_field': 'my_custom_currency_id'}"
+                                   groups="crm.group_use_recurring_revenues"/>
+                            <field name="recurring_plan" groups="crm.group_use_recurring_revenues"/>
+                        </t>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_crm_lead_invisible_boton" model="ir.ui.view">
+            <field name="name">crm.lead.invisible.boton</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_generate_leads']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

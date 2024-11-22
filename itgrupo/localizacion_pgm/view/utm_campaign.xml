@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_id_view_utm_campaign_tree" model="ir.ui.view">
+            <field name="name">view_utm_campaign_tree</field>
+            <field name="model">utm.campaign</field>
+            <field name="inherit_id" ref="utm.utm_campaign_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="company_id"/>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="view_id_view_utm_campaign_form" model="ir.ui.view">
+            <field name="name">view_utm_campaign_form</field>
+            <field name="model">utm.campaign</field>
+            <field name="inherit_id" ref="utm.utm_campaign_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="company_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

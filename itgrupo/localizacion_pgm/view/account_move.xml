@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_move_tree_state_partner" model="ir.ui.view">
+            <field name="name">account.move.tree.state.partner</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="l10n_pe_edi_pse_status"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_account_move_dominios" model="ir.ui.view">
+            <field name="name">account.move.dominios.partner</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('company_id', '=', company_id)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='fiscal_position_id']" position="after">
+                    <field name="tipo_financiamiento"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_sale_order_dominios_partner" model="ir.ui.view">
+            <field name="name">sale.order.dominios.partner</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('company_id', '=', company_id)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_order_dominios_partner" model="ir.ui.view">
+            <field name="name">purchase.order.dominios.partner</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('company_id', '=', company_id)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_crm_lead_dominios_partner_kanban" model="ir.ui.view">
+            <field name="name">crm.lead.dominios.partner.kanban</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.quick_create_opportunity_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('company_id', '=', company_id)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_crm_lead_dominios_partner_form" model="ir.ui.view">
+            <field name="name">crm.lead.dominios.partner.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='lead_partner']//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('company_id', '=', company_id)]</attribute>
+                </xpath>
+                <xpath expr="//group[@name='opportunity_partner']//field[@name='partner_id']" position="attributes">
+                    <attribute name="domain">[('company_id', '=', company_id)]</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

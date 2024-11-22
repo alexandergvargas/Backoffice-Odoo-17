@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="reporte_centro_quirurgico_tree_id" model="ir.ui.view">
+            <field name="name">Reporte Centro Quirurgico</field>
+            <field name="model">reporte.centro.quirurgico</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree string="Reporte Centro Quirurgico">
+                    <field name="name"/>
+                    <field name="medico_cirujano"/>
+                    <field name="paciente"/>
+                    <field name="edad"/>
+                    <field name="tipo_cirugia"/>
+                    <field name="hora_inicio"/>
+                    <field name="hora_termino"/>
+                    <field name="tiempo"/>
+                    <field name="anestesiologo"/>
+                    <field name="tipo_anestesia"/>
+                    <field name="fecha_ingreso" optional="hide"/>
+                    <field name="fecha_alta" optional="hide"/>
+                    <field name="dias_hospita" optional="hide"/>
+                    <field name="ayudante_cirujano" optional="hide"/>
+                    <field name="instrumentista" optional="hide"/>
+                    <field name="circulante" optional="hide"/>
+                    <field name="observaciones" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="report_centro_quirurgico_form_id">
+            <field name="name">Reporte Centro Quirurgico</field>
+            <field name="model">reporte.centro.quirurgico</field>
+            <field name="arch" type="xml">
+                <form string="Reporte Centro Quirurgico">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="medico_cirujano"/>
+                                <field name="paciente"/>
+                                <field name="edad"/>
+                                <field name="tipo_cirugia"/>
+                                <field name="hora_inicio"/>
+                                <field name="hora_termino"/>
+                                <field name="tiempo"/>
+                                <field name="anestesiologo"/>
+                            </group>
+                            <group>
+                                <field name="tipo_anestesia"/>
+                                <field name="fecha_ingreso"/>
+                                <field name="fecha_alta"/>
+                                <field name="dias_hospita"/>
+                                <field name="ayudante_cirujano"/>
+                                <field name="instrumentista"/>
+                                <field name="circulante"/>
+                                <field name="company_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Uso de Equipamiento" name="equipamientos_ids">
+                                <field name="equipamientos_ids" widget="section_and_note_one2many" mode="tree">
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="centrifuga"/>
+                                                <field name="cialitica"/>
+                                                <field name="co2"/>
+                                                <field name="electrocauterio"/>
+                                                <field name="esterilizacion"/>
+                                                <field name="maq_anestesia"/>
+                                                <field name="maq_aspiración"/>
+                                                <field name="maq_de_lipo_la"/>
+                                                <field name="moni_sig_vi"/>
+                                                <field name="lase_co2"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="Uso de Equipamiento" editable="bottom">
+                                        <field name="centrifuga"/>
+                                        <field name="cialitica"/>
+                                        <field name="co2"/>
+                                        <field name="electrocauterio"/>
+                                        <field name="esterilizacion"/>
+                                        <field name="maq_anestesia"/>
+                                        <field name="maq_aspiración"/>
+                                        <field name="maq_de_lipo_la"/>
+                                        <field name="moni_sig_vi"/>
+                                        <field name="lase_co2"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" col="6">
+                                    <group colspan="4">
+                                        <field name="observaciones" nolabel="1" placeholder="Observaciones"
+                                               string="Observaciones"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_tabla_report_quirurgico_id">
+            <field name="name">Reporte Quirurgico</field>
+            <field name="res_model">reporte.centro.quirurgico</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="reporte_centro_quirurgico_tree_id"/>
+        </record>
+
+
+        <menuitem name="Reporte Quirurgico" id="report_quirurgico_id"
+                  parent="2"
+                  action="action_tabla_report_quirurgico_id"
+                  sequence="3"/>
+
+
+        <record id="paperformat_utilities_c" model="report.paperformat">
+            <field name="name">Formato_report_cirugias</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">6</field>
+            <field name="margin_bottom">6</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">10</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_reporte_centro_quirurgico" model="ir.actions.report">
+            <field name="name">Reporte Quirurgico</field>
+            <field name="model">reporte.centro.quirurgico</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">reportería_clínica_zegarra.reporte_cirugias_ids</field>
+            <field name="report_file">reportería_clínica_zegarra.reporte_cirugias_ids</field>
+            <field name="print_report_name">'Reporte Quirurgico'</field>
+            <field name="binding_model_id" ref="model_reporte_centro_quirurgico"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="reportería_clínica_zegarra.paperformat_utilities_c"/>
+        </record>
+
+
+        <template id="reporte_cirugias_ids">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article mt0 o_report_layout_standard">
+                        <div class="header">
+
+                        </div>
+                        <div class="page" style="text-align: justify;">
+
+                            <div class="row">
+                                <div class="col-9">
+                                    <strong>
+                                        <center>
+                                            <h3>REPORTE CENTRO QUIRURGICO</h3>
+                                        </center>
+                                    </strong>
+                                </div>
+                                <div class="col-3">
+                                    <img width="30%" height="50px"
+                                         t-attf-src="data:image/png;base64,{{o.company_id.logo}}"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-3">
+                                    HISTORIA CLINICA N°
+
+                                </div>
+                                <div class="col-3" style="border: 1px solid #000000;">
+                                    <span t-field="o.name"/>
+                                </div>
+                                <div class="col-3">
+                                    N° 001602
+                                </div>
+                                <div class="col-3">
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-3">
+                                    Médico Cirujano:
+                                </div>
+                                <div class="col-9" style="border: 1px solid #000000;">
+                                    <span t-field="o.medico_cirujano"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    Paciente:
+                                </div>
+                                <div class="col-5" style="border: 1px solid #000000;">
+                                    <span t-field="o.paciente"/>
+                                </div>
+                                <div class="col-2" style="border: 1px solid #000000;">
+                                    Edad:
+                                </div>
+                                <div class="col-2" style="border: 1px solid #000000;">
+                                    <span t-field="o.edad"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <strong>Tipo de Cirugia:</strong>
+                                </div>
+                                <div class="col-9" style="border: 1px solid #000000;">
+                                    <span t-field="o.tipo_cirugia"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-3">
+                                    Hora de Inicio:
+                                </div>
+                                <div class="col-3" style="border: 1px solid #000000;">
+                                    <span t-field="o.hora_inicio"/>
+                                </div>
+                                <div class="col-3">
+                                    Tiempo:
+                                </div>
+                                <div class="col-3" style="border: 1px solid #000000;">
+                                    <span t-field="o.tiempo"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    Hora de Termino:
+                                </div>
+                                <div class="col-3" style="border: 1px solid #000000;">
+                                    <span t-field="o.hora_termino"/>
+                                </div>
+                                <div class="col-3">
+                                </div>
+                                <div class="col-3">
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-3">
+                                    <strong>Anestesiologo:</strong>
+
+                                </div>
+                                <div class="col-9" style="border: 1px solid #000000;">
+                                    <span t-field="o.anestesiologo"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    Tipo de Anestesia:
+                                </div>
+                                <div class="col-9" style="border: 1px solid #000000;">
+                                    <span t-field="o.tipo_anestesia"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-3">
+                                    Fecha de Ingreso:
+                                </div>
+                                <div class="col-3" style="border: 1px solid #000000;">
+                                    <span t-field="o.fecha_ingreso"/>
+                                </div>
+                                <div class="col-3">
+                                    Días de Hospitalicación:
+                                </div>
+                                <div class="col-3" style="border: 1px solid #000000;">
+                                    <span t-field="o.dias_hospita"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    Fecha de Alta:
+                                </div>
+                                <div class="col-3" style="border: 1px solid #000000;">
+                                    <span t-field="o.fecha_alta"/>
+                                </div>
+                                <div class="col-3">
+                                </div>
+                                <div class="col-3">
+                                </div>
+                            </div>
+                            <strong>Personal de Apoyo:</strong>
+                            <div class="row">
+                                <div class="col-3">
+                                    Ayudante de Cirujano:
+                                </div>
+                                <div class="col-9" style="border: 1px solid #000000;">
+                                    <span t-field="o.ayudante_cirujano"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    Instrumentista:
+                                </div>
+                                <div class="col-9" style="border: 1px solid #000000;">
+                                    <span t-field="o.instrumentista"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    Circulante:
+                                </div>
+                                <div class="col-9" style="border: 1px solid #000000;">
+                                    <span t-field="o.circulante"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table width="100%" height="100px">
+                                        <thead style="color:#FFFFFF;background: #0e294b;border: 2px solid #0e294b;padding:4px;">
+                                            <tr>
+                                                <th colspan="10" class="text-center">USO DE EQUIPAMIENTO</th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Centrifuga
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Cialitica
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    CO2
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Electrocauterio
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Esterilización
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Maq. De Anestecia
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Maq. De Aspiración
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Maq. De Lipo Laser
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Monitor de Signos Vitales
+                                                </th>
+                                                <th class="text-center" rowspan="6"
+                                                    style="width: 10%;font-size:14px;"
+                                                    scope="col">
+                                                    Laser CO2
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="font-size: 12px;">
+                                            <tr t-foreach="o.equipamientos_ids" t-as="line">
+
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.centrifuga"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.cialitica"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.co2"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.electrocauterio"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.esterilizacion"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.maq_anestesia"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.maq_aspiración"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.maq_de_lipo_la"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.moni_sig_vi"/>
+                                                </td>
+                                                <td VALIGN="TOP" class="text-left"
+                                                    style="border: 2px solid #0e294b;padding:4px;">
+                                                    <span t-field="line.lase_co2"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="col-12" width="100%" height="100px">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3"
+                                            style="color:#FFFFFF;background: #0e294b;border: 2px solid #0e294b;padding:4px;">
+                                            OBSERVACIONES
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="border: 2px solid #0e294b;padding:4px;">
+                                            <span t-esc="o.observaciones"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="border: 2px solid #0e294b;padding:4px;">RESPONSABLE Y
+                                            FIRMA:
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

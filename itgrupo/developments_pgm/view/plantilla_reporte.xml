@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="plantillas_formatos_form">
+        <field name="name">plantilla.reporte.form</field>
+        <field name="model">plantilla.reporte</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="is_default"/>
+                        <field name="company_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Contenido">
+                            <field name="contenido"/>
+                            <group>
+                                <field name="leyenda"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_plantilla_reporte">
+        <field name="name">Plantillas Formato Ventas</field>
+        <field name="res_model">plantilla.reporte</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Crea tu primera Plantilla
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

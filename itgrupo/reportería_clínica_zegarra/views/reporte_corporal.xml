@@ -1,0 +1,1254 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record id="reporte_corporal_clinica_zegarra_tree_id" model="ir.ui.view">
+            <field name="name">Reporte Corporal</field>
+            <field name="model">reporte.corporal</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="motivo_consul"/>
+                    <field name="causa_origen"/>
+                    <field name="desde_prese_pro"/>
+                    <field name="ostio_articulares"/>
+                    <field name="diabetes"/>
+                    <field name="renales"/>
+                    <field name="ninguna_gra_croni"/>
+                    <field name="cardiacas" optional="hide"/>
+                    <field name="epilepsia" optional="hide"/>
+                    <field name="cancer" optional="hide"/>
+                    <field name="otras" optional="hide"/>
+                    <field name="alergias" optional="hide"/>
+                    <field name="tiroides" optional="hide"/>
+                    <field name="proble_piel" optional="hide"/>
+                    <field name="inter_quirur" optional="hide"/>
+                    <field name="inter_quirur_01" optional="hide"/>
+                    <field name="toma_hormonas" optional="hide"/>
+                    <field name="toma_hormonas_01" optional="hide"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="report_corporal_clinica_zegarra_form_id">
+            <field name="name">Reporte Corporal</field>
+            <field name="model">reporte.corporal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" options="{'clickable': '1'}"
+                               statusbar_visible="new,confirmado,cancelado"/>
+                    </header>
+                    <sheet>
+
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group id="reportes_corporal_ids">
+                            <group name="reporte_corporal_grup_ids">
+                                <field name="partner_id"/>
+                                <field name="motivo_consul"/>
+                                <field name="causa_origen"/>
+                                <field name="desde_prese_pro"/>
+                                <separator string="Tratamientos Estéticos Anteriores" colspan="4"/>
+                                <field name="tra_este_ante"/>
+                                <field name="tra_este_ante_01"/>
+                                <field name="donde"/>
+                                <separator string="Realiza actividad física" colspan="4"/>
+                                <field name="real_activi_fi"/>
+                                <field name="real_activi_fi_01"/>
+                                <field name="donde_01"/>
+                                <field name="company_id" invisible="1"/>
+                                <separator string="Ha tenido o tiene usted alguna de éstas enfermedades" colspan="4"/>
+                                <field name="ostio_articulares"/>
+                                <field name="diabetes"/>
+                                <field name="renales"/>
+                                <field name="ninguna_gra_croni"/>
+                                <field name="cardiacas"/>
+                                <field name="epilepsia"/>
+                                <field name="cancer"/>
+                                <field name="otras"/>
+                                <field name="alergias"/>
+                                <field name="tiroides"/>
+                                <field name="proble_piel"/>
+                                <field name="date_order"/>
+                                <separator string="Intervención quirúrgicas y/o implantes" colspan="4"/>
+                                <field name="inter_quirur"/>
+                                <field name="inter_quirur_01"/>
+                                <field name="obser_qui" string=""/>
+                            </group>
+                            <group name="group_2">
+                                <separator string="¿Toma hormonas y/o anticonceptivos hormonales?" colspan="4"/>
+                                <field name="toma_hormonas"/>
+                                <field name="toma_hormonas_01"/>
+                                <field name="obser_hormona" string=""/>
+                                <separator string="Presión anterial" colspan="4"/>
+                                <field name="normal"/>
+                                <field name="alta"/>
+                                <field name="baja"/>
+                                <separator string="Digestión" colspan="4"/>
+                                <field name="lenta"/>
+                                <field name="normal_01"/>
+                                <field name="rapida"/>
+                                <separator string="Evaluación y Diagnóstico" colspan="4"/>
+                                <field name="eval_diagnostico_1"/>
+                                <field name="eval_diagnostico_2"/>
+                                <field name="eval_observaciones_1_2"/>
+                                <field name="eval_diagnostico_3"/>
+                                <field name="eval_diagnostico_4"/>
+                                <field name="eval_observaciones_3_4"/>
+                                <separator string="Tratamiento a Seguir" colspan="4"/>
+                                <field name="primera"/>
+                                <field name="segunda"/>
+                                <field name="tercera"/>
+                                <field name="monto_a_pagar"/>
+                                <field name="promocion_descuento"/>
+                                <field name="sesiones_adicionales"/>
+                                <field name="vencimiento_tratamiento"/>
+                                <field name="forma_pago"/>
+                            </group>
+
+                        </group>
+                        <group name="group_3">
+                            <field name="obser" string="Observaciones"/>
+                        </group>
+                        <notebook>
+                            <page string="Control de Medidas" name="order_lines_id">
+                                <field name="order_line" widget="section_and_note_one2many" mode="tree">
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="fecha"/>
+                                                <field name="pecto_busto"/>
+                                                <field name="espalda"/>
+                                                <field name="abd_alto"/>
+                                                <field name="cintura"/>
+                                                <field name="abd_bajo"/>
+                                                <field name="cad_alta"/>
+                                                <field name="muslo"/>
+                                                <field name="brazo"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="Control de Medidas" editable="bottom">
+                                        <field name="fecha"/>
+                                        <field name="pecto_busto"/>
+                                        <field name="espalda"/>
+                                        <field name="abd_alto"/>
+                                        <field name="cintura"/>
+                                        <field name="abd_bajo"/>
+                                        <field name="cad_alta"/>
+                                        <field name="muslo"/>
+                                        <field name="brazo"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" col="6">
+                                    <group colspan="4">
+                                        <field name="note" nolabel="1" placeholder="Observaciones y otros Tratamientos"
+                                               string="Observaciones y otros Tratamientos"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+
+
+                            <page string="Otra Información" name="other_info_tera">
+                                <field name="order_line_01" widget="section_and_note_one2many" mode="tree">
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="terapista"/>
+                                                <field name="fecha"/>
+                                                <field name="maquinas"/>
+                                                <field name="zona_tratar"/>
+                                                <field name="paciente"/>
+                                                <field name="firma"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                    <tree string="Control " editable="bottom">
+                                        <field name="terapista"/>
+                                        <field name="fecha"/>
+                                        <field name="maquinas"/>
+                                        <field name="zona_tratar"/>
+                                        <field name="paciente"/>
+                                        <field name="firma"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" col="6">
+                                    <group colspan="4">
+                                        <field name="note_01" nolabel="1" placeholder="Observaciones"
+                                               string="Observaciones"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+
+
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_tabla_report_corporal_clinica_id">
+            <field name="name">Reporte Corporal</field>
+            <field name="res_model">reporte.corporal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="reporte_corporal_clinica_zegarra_tree_id"/>
+        </record>
+
+
+        <menuitem name="Reporte Corporal" id="report_corpo_id"
+                  parent="2"
+                  action="action_tabla_report_corporal_clinica_id"
+                  sequence="2"/>
+
+
+        <record id="formato_papel_reporte_corporal_pdf" model="report.paperformat">
+            <field name="name">Formato_Corporal</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">6</field>
+            <field name="margin_bottom">6</field>
+            <field name="margin_left">4</field>
+            <field name="margin_right">4</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="action_report_reporte_corporal" model="ir.actions.report">
+            <field name="name">Reporte Corporal</field>
+            <field name="model">reporte.corporal</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">reportería_clínica_zegarra.reporte_corporal_pdf_id</field>
+            <field name="report_file">reportería_clínica_zegarra.reporte_corporal_pdf_id</field>
+            <field name="print_report_name">'Reporte Corporal'</field>
+            <field name="binding_model_id" ref="model_reporte_corporal"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="reportería_clínica_zegarra.formato_papel_reporte_corporal_pdf"/>
+        </record>
+
+
+        <template id="reporte_corporal_pdf_id">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article mt0 o_report_layout_standard">
+                        <div class="page" style="text-align: justify;">
+                            <div style="page-break-before: always;">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <img width="200" t-attf-src="data:image/png;base64,{{o.company_id.logo}}"/>
+                                    </div>
+                                    <div class="col-3">
+
+                                    </div>
+                                    <div class="col-3" style="text-align: left;">
+                                        <br/>
+                                        <br/>
+                                        <span style="color:#0e294b;padding:6px;">N°</span>
+                                        <span t-field="o.name"/>
+                                        <br/>
+                                        <br/>
+                                        <span style="color:#0e294b;padding:6px;">FICHA DE INSCRIPCIÓN</span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span style="color:#0e294b;">Medio por el cual se enteró de
+                                            nosotros:.................................
+                                        </span>
+                                    </div>
+                                    <div class="col-6">
+                                        <p align="right">
+                                            <span style="color:#0e294b;">Fecha:</span>
+                                            <span align="right" t-esc="o.date_order or '....../...../....'"/>
+
+
+                                        </p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div>
+                                            <table width="100%" height="100px" style="border: 1px solid #FFFFFF;">
+                                                <tbody>
+                                                    <tr style="background-color:#0e294b;color:#FFFFFF;font-size: 25px;">
+                                                        <td colspan="4" style="padding:5px;">DATOS PERSONALES</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">
+                                                                Apellidos y nombres:
+                                                            </span>
+                                                            <span t-field="o.partner_id.name"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">
+                                                                Dirección:
+                                                            </span>
+                                                            <span t-field="o.partner_id.street"/>
+                                                        </td>
+
+                                                        <td>
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">
+                                                                Distrito:
+                                                            </span>
+                                                            <span t-field="o.partner_id.district_id.name"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">
+                                                                Cel:
+                                                            </span>
+                                                            <span t-field="o.partner_id.mobile"/>
+                                                        </td>
+                                                        <td>
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">Telf.
+                                                                Ofic:
+                                                            </span>
+                                                            <span t-field="o.partner_id.phone"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">
+                                                                Ocupación:
+                                                            </span>
+                                                            <span t-field="o.partner_id.function"/>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">
+                                                                F.Nac:
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <span style="color:#0e294b;border: 1px solid #FFFFFF;">
+                                                                E-mail:
+                                                            </span>
+                                                            <span t-field="o.partner_id.email"/>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div>
+                                            <table width="100%" height="100px" style="border: 1px solid #FFFFFF;">
+                                                <tbody>
+                                                    <tr style="background-color:#0e294b;color:#FFFFFF;font-size: 25px;">
+                                                        <td colspan="4" style="padding:5px;">HISTORIAL DE SALUD</td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td colspan="4" style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Motivo de la consulta:
+                                                            </span>
+                                                            <span t-field="o.motivo_consul"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">¿Cuál cree usted que sea la
+                                                                causa u
+                                                                origen?
+                                                            </span>
+                                                            <span t-field="o.causa_origen"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">¿Desde cuándo presenta este
+                                                                problema?
+                                                            </span>
+                                                            <span t-field="o.desde_prese_pro"/>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr style="border-top: 3px solid #0e294b;">
+                                                        <td>
+                                                            <span style="color:#0e294b;">Trats. estéticos anteriores
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            <span style="color:#0e294b;">No</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.tra_este_ante"/>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <span style="color:#0e294b;">Si</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.tra_este_ante_01"/>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <span style="color:#0e294b;">dónde?</span>
+                                                            <span t-field="o.donde"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="border-bottom: 3px solid #0e294b;">
+                                                        <td>
+                                                            <span style="color:#0e294b;">Realiza actividad fisica</span>
+                                                        </td>
+                                                        <td>
+                                                            <span style="color:#0e294b;">No</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.real_activi_fi"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Si</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.real_activi_fi_01"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">dónde?</span>
+                                                            <span t-field="o.donde_01"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Ha tenido o tiene usted alguna
+                                                                de
+                                                                éstas
+                                                                efermedades:
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Ostio articulares</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.ostio_articulares"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Diabetes</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.diabetes"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Renales</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.renales"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Ninguna grave o crónica</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.ninguna_gra_croni"/>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Cardiacas</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.cardiacas"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Epilepsia</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.epilepsia"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Cáncer</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.cancer"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Otras</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.otras"/>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Alergias</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.alergias"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Tiroides</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.tiroides"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Problemas en la piel</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.proble_piel"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Intervención quirúrgica y/o
+                                                                implantes
+                                                            </span>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">No</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.inter_quirur"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Si</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.inter_quirur_01"/>
+                                                            </label>
+
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span t-field="o.obser_qui"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">¿Toma hormonas y/o
+                                                                anticonceptivos
+                                                                hormonales?
+                                                            </span>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">No</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.toma_hormonas"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Si</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.toma_hormonas_01"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span t-field="o.obser_hormona"/>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Presión arterial</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Normal</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.normal"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Alta</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.alta"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Baja</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.baja"/>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Digestión</span>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Lenta</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.lenta"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Normal</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.normal_01"/>
+                                                            </label>
+                                                        </td>
+                                                        <td style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Rápida</span>
+                                                            <label>
+                                                                <input type="checkbox"
+                                                                       t-att-checked="o.rapida"/>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" style="border: 1px solid #FFFFFF;">
+                                                            <span style="color:#0e294b;">Observaciones:</span>
+                                                            <span t-field="o.obser"/>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="page-break-before: always;">
+                                <div class="row">
+                                    <div class="col-12"
+                                         style="background-color:#0e294b;color:#FFFFFF;;font-size: 25px;">
+                                        <span>EVALUACIÓN Y DIAGNÓSTICO</span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/1.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-esc="o.eval_diagnostico_1 or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ----------------------------------------------------------------------------------------------------------
+                                    -----------------'"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/2.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/3.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-esc="o.eval_diagnostico_2 or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ----------------------------------------------------------------------------------------------------------
+                                    -----------------'"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/4.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            <span style="color:#0e294b;">OBSERVACIONES:</span>
+                                            <span t-esc="o.eval_observaciones_1_2 or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ---------------'"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/5.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                    <div class="col-2">
+
+                                        <span t-esc="o.eval_diagnostico_3 or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ----------------------------------------------------------------------------------------------------------
+                                    -----------------'"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/6.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/7.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-esc="o.eval_diagnostico_4 or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ----------------------------------------------------------------------------------------------------------
+                                    -----------------'"/>
+                                    </div>
+                                    <div class="col-2">
+                                        <img src="reportería_clínica_zegarra/static/description/images/8.png"
+                                             width="100%" height="300px"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            <span style="color:#0e294b;">OBSERVACIONES:</span>
+                                            <span t-esc="o.eval_observaciones_3_4 or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ---------------'"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12"
+                                         style="border-top: 3px solid #0e294b;border-bottom: 3px solid #0e294b;">
+                                        <span style="color:#0e294b;">TRATAMIENTO A SEGUIR</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span style="color:#0e294b;">Zona a Tratar:</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <span style="color:#0e294b;">1era</span>
+                                        <br/>
+                                        <span style="color:#0e294b;">2da</span>
+                                        <br/>
+                                        <span style="color:#0e294b;">3era</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span t-esc="o.primera or
+                                    '--------------------------------------------'"/>
+                                        <br/>
+                                        <span t-esc="o.segunda or
+                                    '--------------------------------------------'"/>
+                                        <br/>
+                                        <span t-esc="o.tercera or
+                                    '--------------------------------------------'"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <span style="color:#0e294b;">Monto a pagar:</span>
+                                        <br/>
+                                        <span style="color:#0e294b;">Promoción y/o descuento</span>
+                                        <br/>
+                                        <span style="color:#0e294b;">Sesiones Adicionales</span>
+                                        <br/>
+                                        <span style="color:#0e294b;">Fecha de tratamiento</span>
+                                        <br/>
+                                        <span style="color:#0e294b;">Forma de pago</span>
+                                    </div>
+                                    <div class="col-2">
+                                        <span t-esc="o.monto_a_pagar or
+                                    '-------------------'"/>
+                                        <br/>
+                                        <span t-esc="o.promocion_descuento or
+                                    '-------------------'"/>
+                                        <br/>
+                                        <span t-esc="o.sesiones_adicionales or
+                                    '-------------------'"/>
+                                        <br/>
+                                        <span t-esc="o.vencimiento_tratamiento or
+                                    '-------------------'"/>
+                                        <br/>
+                                        <span t-esc="o.forma_pago or
+                                    '-------------------'"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p>
+                                            <span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3">
+                                        <p>
+                                            <span style="color:#0e294b;text-align:center;">1ra
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3">
+                                        <p>
+                                            <span style="color:#0e294b;text-align:center;">2da
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3">
+                                        <p>
+                                            <span style="color:#0e294b;text-align:center;">3ra
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p>
+                                            <span style="color:#0e294b;text-align:center;">Sesiones<br/>Recomendadas
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3" style="border: 3px solid #0e294b;">
+                                        <p>
+                                            <span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3" style="border: 3px solid #0e294b;">
+                                        <p>
+                                            <span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3" style="border: 3px solid #0e294b;">
+                                        <p>
+                                            <span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <p>
+                                            <span style="color:#0e294b;text-align:center;">Sesiones
+                                                <br/>
+                                                Tomadas
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3" style="border: 3px solid #0e294b;">
+                                        <p>
+                                            <span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3" style="border: 3px solid #0e294b;">
+                                        <p>
+                                            <span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                    <div class="col-3" style="border: 3px solid #0e294b;">
+                                        <p>
+                                            <span>
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <span style="color:#0e294b;">
+                                            ....................................................................................................................................................................................................................................
+                                        </span>
+                                        <br/>
+                                        <spanp style="color:#0e294b;">
+                                            ....................................................................................................................................................................................................................................
+                                        </spanp>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>
+                                            <span style="color:#0e294b;">Una vez vencido el plazo para actuar el
+                                                tratamiento
+                                                no habrá recuperación
+                                                de sesiones ni devoulición de dinero
+                                            </span>
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="page-break-before: always;">
+                                <div class="row">
+                                    <div class="col-12"
+                                         style="background-color:#0e294b;color:#FFFFFF;;font-size: 25px;">
+                                        <span>CONTROL DE MEDIDAS</span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <table class="col-12" width="100%" height="100px">
+                                    <thead style="color:#FFFFFF;background: #0e294b;border: 2px solid #0e294b;padding:4px;">
+                                        <tr>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                FECHA
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                PECTORAL O BUSTO
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                ESPALDA
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                ABD ALTO
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                CINTURA
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                ABD BAJO
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                CAD. ALTA
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                MUSLO
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                BRAZO
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size: 12px;">
+                                        <t t-set="count" t-value="0"/>
+                                        <tr t-foreach="o.order_line" t-as="line">
+                                            <t t-set="count" t-value="count + 1"/>
+
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;height: 60px;">
+                                                <t t-esc="count"/>-MEDIDA
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.fecha"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.pecto_busto"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.espalda"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.abd_alto"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.cintura"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.abd_bajo"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.cad_alta"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.muslo"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.brazo"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            <span style="color:#0e294b;">OBSERVACIONES Y OTROS TRATAMIENTOS</span>
+                                            <br/>
+                                            <span t-esc="o.note or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ------------------------------------------------------------------------------------------------------------------------
+                                    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                    ------------------------------------------------------------------------------------------------------------------------
+                                    -------------------------------------------------------------'"/>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12"
+                                         style="background-color:#0e294b;color:#FFFFFF;;font-size: 25px;">
+                                        <span>CLÁUSULAS Y COMPROMISOS</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5">
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>1.</b>
+                                                Clínica Zegarra se compremete a
+                                                mantener los precios y las
+                                                promociones estables hasta la culminación del tratamiento
+                                            </span>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>2.</b>
+                                                Los montos cancelados por
+                                                concepto de tratamiento completo
+                                                o sesiones individuales
+                                                <b>NO SON REEMBOLSABLES</b>
+                                            </span>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>3.</b>
+                                                Los tratamientos no son
+                                                transferibles a otras personas
+                                            </span>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>4.</b>
+                                                En caso de suspender el
+                                                tratamiento por mas de 3 sesiones y fechas seguidas no se asume la
+                                                efectividad del resultado
+                                            </span>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>5.</b>
+                                                El plan de membresía vence por
+                                                un tiempo determinado y no por número de sesiones tomadas,
+                                                respetando el tiempo ya no habrá recuperación
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="col-1">
+
+                                    </div>
+                                    <div class="col-6">
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>6.</b>
+                                                Los pacientes aceptan y asumen
+                                                la responsabilidad de la información brindada en la presente ficha y
+                                                autorizan
+                                                a <b>Clínica Zegarra</b> a realizar el tratamiento recomendado. Asi
+                                                mismo se
+                                                compromete a no llevar ningún otro tratamiento paralelo que no sea de
+                                                parte
+                                                de
+                                                <b>Clínica Zegarra</b>
+                                            </span>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>7.</b>
+                                                Usted manifiesta aceptar y dar
+                                                conocimiento libre, previo, expreso e inequivoco para el tratamiento de
+                                                sus
+                                                datos a favor
+                                                de <b>Clínica Zegarra</b> para los siguientes usos comerciales de
+                                                publicidad
+                                                interna
+                                            </span>
+                                        </span>
+                                        <br/>
+                                        <span>
+                                            <span style="color:#0e294b;font-size: 10px;">
+                                                <b>8.</b>
+                                                Después de lo leído la firma del
+                                                presente acuerdo expresa la aceptación y cumplimiento de todo lo pactado
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span style="color:#0e294b;">
+
+                                        </span>
+                                    </div>
+                                    <div class="col-6">
+                                        <p align="right">
+                                            <span style="color:#0e294b;">___________________________</span>
+                                        </p>
+                                        <p align="right">
+                                            <span style="color:#0e294b;">FIRMA DEL PACIENTE</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="page-break-before: always;">
+                                <div class="row">
+                                    <div class="col-12"
+                                         style="border:3px solid #0e294b;font-size: 25px;">
+                                        <span style="color:#0e294b;">Apellidos y nombres:</span>
+                                        <span
+                                                t-esc="o.order_line_01.paciente.name"/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+
+                                <table class="col-12" width="100%" height="100px">
+                                    <thead style="color:#FFFFFF;background: #0e294b;border: 2px solid #0e294b;padding:4px;">
+                                        <tr>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                TERAPISTA
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                FECHA
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                MAQUINAS
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                ZONAS A TRATAR
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                PACIENTE
+                                            </th>
+                                            <th class="text-center" rowspan="6" style="width: 10%;font-size:14px;"
+                                                scope="col">
+                                                FIRMA
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size: 12px;">
+                                        <t t-set="count" t-value="0"/>
+                                        <tr t-foreach="o.order_line_01" t-as="line">
+                                            <t t-set="count" t-value="count + 1"/>
+
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;height: 60px;">
+                                                <t t-esc="count"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.terapista"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.fecha"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.maquinas"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.zona_tratar"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.paciente"/>
+                                            </td>
+                                            <td VALIGN="TOP" class="text-left"
+                                                style="border: 2px solid #0e294b;padding:4px;">
+                                                <span t-field="line.firma"/>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <br/>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            <span style="color:#0e294b;">OBSERVACIONES:</span>
+                                            <br/>
+                                            <span t-esc="o.note_01 or
+                                    '---------------------------------------------------------------------------------------------------------
+                                    ------------------------------------------------------------------------------------------------------------------------
+                                    ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                    ------------------------------------------------------------------------------------------------------------------------
+                                    -------------------------------------------------------------'"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

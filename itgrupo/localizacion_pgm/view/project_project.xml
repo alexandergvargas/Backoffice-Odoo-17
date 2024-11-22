@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="id_project_project_inherit_kanban_porcentage" model="ir.ui.view">
+            <field name="name">project.project.inherit.kanban.porcentage</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('o_primary')]" position="after">
+                    <p>
+                        <span>
+                            <field name="activity_count" invisible="1"/>
+                            <field name="account_aprobados" invisible="1"/>
+                            <field name="porcentaje_avance_projecto" string="Progreso" widget="percentpie"/>
+                        </span>
+                    </p>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_id_project_project_inherit_progreso" model="ir.ui.view">
+            <field name="name">view_id_project_project_inherit_progreso</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="activity_count" invisible="1"/>
+                    <field name="account_aprobados" invisible="1"/>
+                    <field name="porcentaje_avance_projecto" string="Progreso" widget="progressbar"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

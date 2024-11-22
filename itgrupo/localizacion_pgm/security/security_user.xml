@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+     <record id="rule_campanas_company_id" model="ir.rule">
+        <field name="name">Campañas por compañías</field>
+        <field name="model_id" ref="utm.model_utm_campaign"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+
+
+    <record id="rule_product_category_company_id" model="ir.rule">
+        <field name="name">Categorias de Producto por compañías</field>
+        <field name="model_id" ref="model_product_category"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="group_view_modulo_crm" model="res.groups">
+        <field name="name">Visualizar Modulo CRM</field>
+        <field name="comment">Permisos de Administrador
+        </field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+     <record id="group_view_modulo_mantenimiento" model="res.groups">
+        <field name="name">Visualizar Módulo Mantenimiento</field>
+        <field name="comment">Permisos de Administrador
+        </field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+     <record id="group_view_modulo_empleado" model="res.groups">
+        <field name="name">Visualizar Módulo Empleado</field>
+        <field name="comment">Permisos de Administrador
+        </field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_view_modulo_suscription" model="res.groups">
+        <field name="name">Visualizar Modulo Suscripción</field>
+        <field name="comment">Permisos de Administrador
+        </field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+      <record id="group_view_modulo_conversacion" model="res.groups">
+        <field name="name">Visualizar Modulo Conversacion</field>
+        <field name="comment">Permisos de Administrador
+        </field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+      <record id="group_view_modulo_calendario" model="res.groups">
+        <field name="name">Visualizar Modulo Calendario</field>
+        <field name="comment">Permisos de Administrador
+        </field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <record id="rule_product_brand_company_id" model="ir.rule">
+        <field name="name">Marca de productos por compañías</field>
+        <field name="model_id" ref="model_product_brand"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="crm_stage_company_rule" model="ir.rule">
+        <field name="name">CRM Stage Multi-Company</field>
+        <field name="model_id" ref="crm.model_crm_stage"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_res_partner_category_company_id" model="ir.rule">
+        <field name="name">Categorias de Partner</field>
+        <field name="model_id" ref="model_res_partner_category"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_crm_tag_company_id" model="ir.rule">
+        <field name="name">Etiquetas CRM por company</field>
+        <field name="model_id" ref="model_crm_tag"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_utilities_cotizacion_pgm" model="report.paperformat">
+        <field name="name">Formato Personalizado - Cotizacion PGM</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">45</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">25</field>
+        <field name="dpi">90</field>
+
+    </record>
+
+    <record id="report_sale_order_plantilla_reperte_id" model="ir.actions.report">
+        <field name="print_report_name">(object.state in ('draft', 'sent') and 'Cotización - %s' % (object.name + ' - '
+            + object.partner_id.name + ' - ' + str(object.servicio_sale))) or 'Orden - %s' % (object.name +' - ' +
+            object.partner_id.name + ' - ' + str(object.servicio_sale))
+        </field>
+        <field name="paperformat_id" ref="developments_pgm.paperformat_utilities_cotizacion_pgm"/>
+    </record>
+
+    <!--    <record id="report_event_event_badge" model="ir.actions.report">-->
+    <!--        <field name="name">Reporte HTML</field>-->
+    <!--        <field name="model">sale.order</field>-->
+    <!--        <field name="report_type">qweb-html</field>-->
+    <!--        <field name="report_name">developments_pgm.report_saleorderx</field>-->
+    <!--        <field name="report_file">developments_pgm.report_saleorderx</field>-->
+    <!--        <field name="paperformat_id" ref="developments_pgm.paperformat_utilities_cotizacion_pgm"/>-->
+    <!--        <field name="print_report_name">'Cost Structure Analysis - %s' % object.name</field>-->
+    <!--        <field name="binding_model_id" ref="model_sale_order"/>-->
+    <!--        <field name="binding_type">report</field>-->
+    <!--    </record>-->
+
+</odoo>

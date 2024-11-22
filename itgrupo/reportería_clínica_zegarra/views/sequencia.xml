@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="unique_sequence_id_ficha_paciente_id_id" model="ir.sequence">
+            <field name="name">Sequence Reportes Ficha Paciente</field>
+            <field name="code">mer.sequence.code.report.pgm</field>
+            <field name="active">TRUE</field>
+            <field name="prefix">FICHA-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="unique_sequence_id_reporte_corporal_id_id" model="ir.sequence">
+            <field name="name">Sequence Reportes Corporal</field>
+            <field name="code">mer.sequence.reports.corporal</field>
+            <field name="active">TRUE</field>
+            <field name="prefix">RE-CORP-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+
+
+ <data noupdate="1">
+        <record id="unique_sequence_centro_quirurgico" model="ir.sequence">
+            <field name="name">Sequence Centro Quirurgico</field>
+            <field name="code">secuencia.centro.quirurgico</field>
+            <field name="active">TRUE</field>
+            <field name="prefix">CE-QUI-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record model="ir.ui.view" id="order_add">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="print_report_pgm" type="object" string="Cotizacion PGM" class="btn-primary" invisible="company_id not in [10,22,2]"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="pedidos_FORM_herencia" model="ir.ui.view">
+            <field name="name">Plantilla Presupuesto</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="servicio_sale" invisible="company_id != 22" required="company_id == 22"/>
+                </xpath>
+                <xpath expr="//page[@name='customer_signature']" position="after">
+                    <page string="Plantilla Reporte" name="plantilla_term_sign" invisible="company_id not in [10,22,2]">
+                        <div class="row">
+
+                            <div class="col-12 mt-4">
+                                <h2>Elige una Plantilla</h2>
+
+                                <field name="plantilla_term"/>
+                            </div>
+
+                            <div class="col-12"><field name="plantilla_reporte"/></div>
+                            <div class="col-12"><field name="leyenda"/></div>
+                        </div>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

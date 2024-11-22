@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.actions.server" id="action_change_name_account_move_pdf_pdf">
+            <field name="name">Descargar Documentos Electrónicos</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">action = records.download_invoices()</field>
+        </record>
+
+
+        <record model="ir.ui.view" id="account_move_form_pdf_1_2_pdf">
+            <field name="name">account.move.form.pdf</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//header" position="inside">
+                    <button name="download_invoices" string="Descargar Documentos Electrónicos" type="object" class="oe_highlight" invisible="move_type != 'out_invoice'"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

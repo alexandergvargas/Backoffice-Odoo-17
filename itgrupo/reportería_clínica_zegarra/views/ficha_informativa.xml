@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="reporte_clinica_corporal_view_kanban" model="ir.ui.view">
+        <field name="name">reporte.clinica.corporal.view.kanban</field>
+        <field name="model">reporte.clinica.corporal</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="name"/>
+<!--                <field name="description"/>-->
+<!--                <field name="state"/>-->
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-12">
+                                    <strong>
+                                        <field name="name"/>
+                                    </strong>
+                                </div>
+                            </div>
+<!--                            <t t-if="record.description.value">-->
+<!--                                <hr class="mt8 mb8"/>-->
+<!--                                <field name="description"/>-->
+<!--                            </t>-->
+<!--                            <div>-->
+<!--                                <field name="state"/>-->
+<!--                            </div>-->
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+
+        <record id="reporte_clinica_tree_id" model="ir.ui.view">
+            <field name="name">Ficha Informativa Paciente</field>
+            <field name="model">reporte.clinica.corporal</field>
+            <field name="priority" eval="16"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="pago_consulta"/>
+                    <field name="fecha_consulta"/>
+                    <field name="partner_id"/>
+                    <field name="id_cliente"/>
+                    <field name="fecha_nacimiento"/>
+                    <field name="edad" class="oe_inline"/>
+                    <field name="direccion_cliente"/>
+                    <field name="telefono_cliente"/>
+                    <field name="correo_cliente"/>
+                    <field name="ocupacion_cliente"/>
+                    <field name="consulta"/>
+                    <field name="descripcion_consulta" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="report_clinica_form_id">
+            <field name="name">Ficha Informativa Paciente</field>
+            <field name="model">reporte.clinica.corporal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" widget="statusbar" options="{'clickable': '1'}"
+                               statusbar_visible="new,confirmado,cancelado"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_sales" type="object" class="oe_stat_button" icon="fa-dollar">
+                                <div class="o_stat_info">
+                                    <field name="appointment_count" class="o_stat_value"/>
+                                    <span class="o_stat_text">Cotizacion</span>
+                                </div>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group id="reportes_ids">
+                            <group name="ficha_tecnica_ids">
+                                <field name="pago_consulta" class="oe_inline"/>
+                                <field name="fecha_consulta" class="oe_inline"/>
+                                <label for="hora_consulta"/>
+                                <div class="d-flex">
+                                    <field name="hora_consulta" class="oe_inline"/>
+                                    <span class="o_form_label mx-3 oe_edit_only">o</span>
+                                    <field name="tipo_hora" class="oe_inline"/>
+                                </div>
+                                <field name="partner_id" class="oe_inline" force_save="1"/>
+                                <field name="id_cliente" class="oe_inline" force_save="1"/>
+                                <field name="fecha_nacimiento" class="oe_inline" force_save="1"/>
+                                <field name="edad" class="oe_inline" force_save="1"/>
+                                <field name="direccion_cliente" class="oe_inline" force_save="1"/>
+                                <field name="telefono_cliente" class="oe_inline" force_save="1"/>
+                                <field name="correo_cliente" class="oe_inline" force_save="1"/>
+                                <field name="ocupacion_cliente" class="oe_inline" force_save="1"/>
+                                <field name="consulta" class="oe_inline"/>
+                                <field name="descripcion_consulta"/>
+                                <field name="company_id" invisible="1"/>
+
+                            </group>
+                            <group name="image_ids">
+                                <field name='image' string="Imagen Paciente" optional="show" widget="image"
+                                       class="oe_avatar"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_tabla_report_clinica">
+            <field name="name">Ficha Informativa Paciente</field>
+            <field name="res_model">reporte.clinica.corporal</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="reporte_clinica_corporal_view_kanban"/>
+        </record>
+
+        <record id="action_report_clinica_corporal" model="ir.actions.report">
+            <field name="name">Ficha Informativa Paciente</field>
+            <field name="model">reporte.clinica.corporal</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">reportería_clínica_zegarra.sale_summary_convenio_retencion_04_pgm</field>
+            <field name="report_file">reportería_clínica_zegarra.sale_summary_convenio_retencion_04_pgm</field>
+            <field name="print_report_name">'Ficha Informativa Paciente'</field>
+            <field name="binding_model_id" ref="model_reporte_clinica_corporal"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <menuitem name="Reportes Clínica"
+                  id="report_menu"
+                  web_icon="reportería_clínica_zegarra,static/description/icon.png"
+                  groups="reportería_clínica_zegarra.group_view_permiso_zegarra"
+        />
+
+        <menuitem name="Reportes" id="2"
+                  parent="report_menu"
+                  action="action_tabla_report_clinica"
+                  sequence="1"/>
+
+        <menuitem name="Ficha Informativa Paciente" id="report"
+                  parent="2"
+                  action="action_tabla_report_clinica"
+                  sequence="1"/>
+
+
+        <template id="sale_summary_convenio_retencion_04_pgm">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <div class="article mt0 o_report_layout_standard">
+
+
+                        <div class="header">
+                            <img width="200" t-attf-src="data:image/png;base64,{{o.company_id.logo}}"/>
+                        </div>
+
+
+                        <div class="page" style="text-align: justify;">
+                            <div class="row">
+                                <div class="col-8">
+                                    <br/>
+                                    <br/>
+                                    <h3>
+                                        <b>FICHA INFORMATIVA</b>
+
+                                    </h3>
+                                    <br/>
+
+                                    <b style="color:#142026;">TIPO DE PAGO:</b>
+                                    <span t-field="o.pago_consulta"/>
+                                    <br/>
+                                    <b style="color:#142026;">FECHA</b>:
+                                    <span t-field="o.fecha_consulta"/>
+                                    <br/>
+
+                                    <b style="color:#142026;">HORA:</b>
+                                    <span t-field="o.hora_consulta"/>
+                                    -
+                                    <span t-field="o.tipo_hora"/>
+                                    <br/>
+
+                                    <b style="color:#142026;">NOMBRE Y APELLIDOS:</b>
+                                    <span t-field="o.partner_id.name"/>
+                                    <br/>
+                                    <b style="color:#142026;">ID:</b>
+                                    <span t-field="o.id_cliente"/>
+                                    <br/>
+                                    <b style="color:#142026;">FECHA DE NACIMIENTO:</b>
+                                    <span t-field="o.fecha_nacimiento"/>
+                                    <br/>
+                                    <b style="color:#142026;">EDAD:</b>
+                                    <span t-field="o.edad"/>
+                                    <br/>
+                                    <b style="color:#142026;">DIRECCION:</b>
+                                    <span t-field="o.direccion_cliente"/>
+                                    <br/>
+                                    <b style="color:#142026;">TELEFONO:</b>
+                                    <span t-field="o.telefono_cliente"/>
+                                    <br/>
+                                    <b style="color:#142026;">CORREO:</b>
+                                    <span t-field="o.correo_cliente"/>
+                                    <br/>
+                                    <b style="color:#142026;">OCUPACION:</b>
+                                    <span t-field="o.ocupacion_cliente"/>
+                                    <br/>
+                                    <b style="color:#142026;">CONSULTA:</b>
+                                    <span t-field="o.consulta"/>
+
+                                </div>
+                                <div class="col-4">
+                                    <img width="300" t-attf-src="data:image/png;base64,{{o.image}}"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <br/>
+                                    <br/>
+                                    <span t-field="o.descripcion_consulta"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>
