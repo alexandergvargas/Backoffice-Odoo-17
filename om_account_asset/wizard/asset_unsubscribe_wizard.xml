@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_asset_unsubscribe_wizard_form" model="ir.ui.view">
+            <field name="name">asset.unsubscribe.wizard.form</field>
+            <field name="model">asset.unsubscribe.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Dar de Baja">
+                    <div>
+                        <p>
+                            Se dará de baja el Activo y se borraran las lineas de Depreciación desde el mes de baja ¿Esta seguro?
+                        </p> 
+                    </div>
+                    <group>
+                        <group>
+                            <field name="journal_id"/>
+                            <field name="asset_id" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Dar de Baja" name="unsubscribe" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

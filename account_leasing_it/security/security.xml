@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="group_account_leasing" model="res.groups">
+			<field name="name">Tesoreria: Leasing</field>
+			<field name="category_id" ref="account_treasury_it.module_treasury_hidden"/>
+		</record>
+
+		<record id="leasing_main_paramater_comp_rule" model="ir.rule">
+			<field name="name">Leasing Main Parameter multi-company</field>
+			<field name="model_id" ref="model_leasing_main_parameter"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+
+		<record id="account_leasing_it_comp_rule" model="ir.rule">
+			<field name="name">Leasing Contable multi-company</field>
+			<field name="model_id" ref="model_account_leasing_it"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

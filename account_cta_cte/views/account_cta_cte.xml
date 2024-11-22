@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_cta_cte_form" model="ir.ui.view">
+            <field name="name">account.cta.cte.form</field>
+            <field name="model">account.cta.cte</field>
+            <field name="arch" type="xml">
+                <form string="Cuenta Corriente">
+					<header>
+						<button string="Publicar" type="object" name="action_post" invisible="state != 'draft'" class="oe_highlight"/>
+						<button string="Establecer a borrador" type="object" name="action_draft" invisible="state not in ['posted','cancel']" class="oe_highlight"/>
+						<button string="Cancelar" type="object" name="action_cancel" invisible="state != 'posted'"/>
+						<button name="import_lines" type="object" string="Importar Lineas" icon="fa-plus" widget="statinfo" invisible="state != 'draft'"/>
+						<button name="action_get_report" type="object" string="Generar reporte" widget="statinfo"/>
+						<field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+					<sheet>
+						<div class="oe_title">
+							<h1>
+								<field name="name" class="oe_inline" required="1" readonly="state in ['posted','cancel']"/>
+							</h1>
+						</div>
+						<group>
+							<group>
+								<field name="date" required="1" readonly="state in ['posted','cancel']"/>
+								<field name="type_register" required="1" readonly="state in ['posted','cancel']"/>
+							</group>
+							<group>
+								<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+							</group>
+						</group>
+						<notebook>
+							<page string="Detalle">
+								<field name="line_ids" readonly="state in ['posted','cancel']">
+									<tree editable="bottom">
+										<field name="date" readonly="1" optional="show"/>
+										<field name="journal_id" optional="show"/>
+										<field name="partner_id" optional="show" required="True"/>
+										<field name="type_document_id" optional="show" required="True"/>
+										<field name="nro_comp" force_save="1" optional="show" required="True"/>
+										<field name="invoice_date" optional="hide" required="True"/>
+										<field name="date_maturity" optional="hide" required="True"/>
+										<field name="account_id" optional="show" required="True" domain="[('is_document_an','=',True)]"/>
+										<field name="currency_id" optional="hide"/>
+										<field name="debit" optional="show" sum="debit"/>
+										<field name="credit" optional="show" sum="debit"/>
+										<field name="amount_currency" optional="hide"/>
+										<field name="type_register" readonly="1" optional="show"/>
+										<field name="invoice_user_id" optional="hide"/>
+										<field name="glosa" optional="hide"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_cta_cte_tree" model="ir.ui.view">
+            <field name="name">account.cta.cte.tree</field>
+            <field name="model">account.cta.cte</field>
+            <field name="arch" type="xml">
+                <tree string="Cuenta Corriente">
+                    <field name="name"/>
+                    <field name="date"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+                </tree>
+            </field>
+        </record>
+
+		<record id="action_account_cta_cte" model="ir.actions.act_window">
+            <field name="name">Saldos Iniciales</field>
+            <field name="res_model">account.cta.cte</field>
+            <field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_account_cta_cte_tree"/>
+			<field name="domain">[]</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Saldos Iniciales aqui
+			</p>
+			</field>
+		</record>
+
+        <menuitem id='manu_action_account_cta_cte' 
+				  parent='account_cta_cte.menu_account_account_report' 
+				  action="action_account_cta_cte"
+				  sequence="3"
+				  groups="account_base_it.group_account_tables_user"/>
+    </data>
+</odoo>

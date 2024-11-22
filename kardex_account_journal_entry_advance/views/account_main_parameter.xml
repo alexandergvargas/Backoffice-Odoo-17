@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_kardex" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Kardex" name='kardex'>
+					<group string="Detalle Ingresos/Salidas" name="params">
+						<group>
+							<field name="in_operation_type_ids" widget="many2many_tags"/>
+						</group>
+						<group>
+							<field name="out_operation_type_ids" widget="many2many_tags"/>
+						</group>
+						<group>
+							<field name="type_operation_outproduction"/>
+							<field name="type_operation_gv"/>
+							<field name="type_operation_inproduction"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

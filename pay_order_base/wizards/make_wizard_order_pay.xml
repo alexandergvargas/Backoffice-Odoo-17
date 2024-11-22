@@ -1,0 +1,31 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_make_wizard_order_pay_form">
+			<field name="name">make.wizard.order.pay.form</field>
+			<field name="model">make.wizard.order.pay</field>
+			<field name="arch" type="xml">
+				<form string="Exportar Pago">
+					<group>
+						<group>
+							<field name="multipayment_id" invisible="1"/>
+							<field name="format_type" required="1"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Exportar" name="send_to_order" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="make_wizard_order_pay_action" model="ir.actions.act_window">
+			<field name="name">Exportar Pago</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">make.wizard.order.pay</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="production_costs_it_rule" model="ir.rule">
+			<field name="name">Tablas Costo multi-company</field>
+			<field name="model_id" ref="model_production_costs_it"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+		<record id="production_costs_parameter_rule" model="ir.rule">
+			<field name="name">Tablas Parametros multi-company</field>
+			<field name="model_id" ref="model_production_costs_parameter"/>
+			<field name="global" eval="True"/>
+			<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+		</record>
+	</data>
+</odoo>

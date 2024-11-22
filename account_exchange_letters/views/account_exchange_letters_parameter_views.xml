@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_exchange_letters_parameter_tree" model="ir.ui.view">
+        <field name="name">view.account.exchange.letters.parameter.tree</field>
+        <field name="model">account.exchange.letters.parameter</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+				<field name="company_id" groups="base.group_multi_company"/>  
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_exchange_letters_parameter_form" model="ir.ui.view">
+        <field name="name">view.account.exchange.letters.parameter.form</field>
+        <field name="model">account.exchange.letters.parameter</field>
+        <field name="arch" type="xml">
+			<form string="Account Letters Main Parameter">
+				<sheet>
+					<group>
+						<field name="company_id" readonly="1" required="1"/> 
+					</group>
+					<notebook>
+						<page string="Cuentas">
+							<group>
+								<group string="Por Cobrar">
+									<field name="account_receivable_portfolio_mn"/>
+									<field name="account_receivable_portfolio_me"/>
+									<field name="account_receivable_collection_mn"/>
+									<field name="account_receivable_collection_me"/>
+									<field name="account_receivable_discount_mn"/>
+									<field name="account_receivable_discount_me"/>
+									<!--field name="retention_account_id"/-->
+								</group>
+								<group string="Por Pagar">
+									<field name="account_payable_mn"/>
+									<field name="account_payable_me"/>
+								</group>
+							</group>
+						</page>
+						<page string="Diarios">
+							<group>
+								<group>
+									<field name="exchange_diary_receivable_letters"/>
+									<field name="exchange_diary_payable_letters"/>
+								</group>
+							</group>
+						</page>
+						<page string="Otros">
+							<group>
+								<group>
+									<field name="letter_document_type"/>
+									<field name="serie_id" 
+										domain="[('company_id','=',company_id),('type_document_id','=',letter_document_type)]"/>
+									</group>
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+    </record>
+
+    <!-- Action account_exchange_letters_parameter -->
+    <record id="action_account_exchange_letters_parameter" model="ir.actions.act_window">
+        <field name="name">Parametros para Canje de Letras</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.exchange.letters.parameter</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Crear tus parametros para Letras
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="action_account_exchange_letters_parameter" 
+            id="menu_action_account_exchange_letters_parameter" 
+            parent="account_treasury_it.sub_menu_treasury_it4" 
+            sequence="21" 
+            groups="account_exchange_letters.group_account_exchange_letters"/>
+
+</odoo>

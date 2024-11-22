@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_bank_statement_line_tree_bank_rec_widget_inherit" model="ir.ui.view">
+            <field name="name">account.bank.statement.tree</field>
+            <field name="model">account.bank.statement.line</field>
+            <field name="inherit_id" ref="account_accountant.view_bank_statement_line_tree_bank_rec_widget"/>
+            <field name="arch" type="xml">
+                <field name="statement_id" position="replace">
+                    <field name="statement_id" optional="show" decoration-danger="statement_complete == False or statement_valid == False" widget="bank_rec_list_many2one_multi_id" readonly="1"/>
+                </field>
+
+            </field>
+        </record>
+
+        <record id="view_bank_statement_tree_inherit" model="ir.ui.view">
+            <field name="name">account.bank.statement.tree</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="create">true</attribute>
+                </tree>
+
+            </field>
+        </record>
+
+        <record id="view_bank_statement_tree_inherit_2" model="ir.ui.view">
+            <field name="name">account.bank.statement.tree.inherit</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account_accountant.view_bank_statement_tree"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+                    <attribute name="editable" delete="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="name">account.bank.statement.form</field>
+            <field name="model">account.bank.statement</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <form string="Extractos Bancarios">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="view_account_move" type="object" string="Asientos Contables" icon="fa-bars">
+                            </button>
+                            <button class="oe_stat_button" name="view_account_move_lines" type="object" string="Apuntes Contables" icon="fa-bars">
+                            </button>
+                        </div>
+                        <div class="oe_title oe_inline">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="e.g. BNK/2021/0001"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+
+
+                                <field name="journal_type" invisible="1"/>
+                                <field name="journal_domain_ids" invisible="1"/>
+                                <field name="aux_journal_id" options="{'no_create': True}"/>
+                                <field name="date_aux" options="{'datepicker': {'warn_future': true}}" invisible="0"/>
+                                <field name="attachment_ids" widget="many2many_binary"/>
+                                <field name='company_id' options="{'no_create': True}" groups="base.group_multi_company" />
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="balance_end_real" invisible="1" force_save="1"/>
+                                <label for="balance_start"/>
+                                <div>
+                                    <field name="balance_start" class="oe_inline"/>
+                                </div>
+                                <label for="balance_end_real" string="Saldo final"/>
+                                <div>
+                                    <field name="balance_end_real" class="oe_inline" string="Saldo final" force_save="1"/>
+                                </div>
+                                <label for="partner_id" string="Responsable" invisible="journal_type != 'cash'"/>
+                                <label for="partner_id" string="Empleado" invisible="journal_type != 'surrender'"/>
+                                <div>
+                                    <field name="partner_id" class="oe_inline" string="Saldo final" force_save="1"/>
+                                </div>
+                            </group>
+                        </group>
+
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="balance_end" />
+                            </div>
+                            <field name="balance_end" nolabel="1" class="oe_subtotal_footer_separator"/>
+                        </group>
+                        <div class="oe_clear"/>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="action_bank_statement_tree_it" model="ir.actions.act_window">
+            <field name="name">Extractos Bancarios</field>
+            <field name="res_model">account.bank.statement</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="domain">['|', ('aux_journal_id', '=', False), ('aux_journal_id.type', '=', 'bank')]</field>
+            <field name="context">{'default_journal_type':'bank'}</field>
+            <field name="view_id" ref="account.view_bank_statement_tree"/>
+            <field name="search_view_id" ref="account.view_bank_statement_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Registrar un extracto bancario
+                </p>
+                <p>
+                Un extracto bancario es un resumen de todas las transacciones financieras.
+                que ocurren durante un período de tiempo determinado en una cuenta bancaria. Tú
+                Debería recibirlo periódicamente de su banco.
+                </p>
+                <p>
+                Odoo le permite conciliar una línea de estado de cuenta directamente con
+                las facturas de compra o venta correspondientes.
+                </p>
+            </field>
+        </record>
+
+
+
+        <record id="action_view_bank_statement_tree_cash" model="ir.actions.act_window">
+            <field name="name">Caja Chica</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.bank.statement</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="view_id" ref="account.view_bank_statement_tree"/>
+            <field name="search_view_id" ref="account.view_bank_statement_search"/>
+            <field name="domain">['|', ('aux_journal_id', '=', False), ('aux_journal_id.type', '=', 'cash'),('aux_journal_id.check_surrender', '=', False)]</field>
+            <field name="context">{'default_journal_type':'cash','default_journal_check_surrender': False}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo registro de caja
+                </p>
+                <p>
+                Una Caja Registradora le permite gestionar los asientos de efectivo en su caja
+                revistas. Esta característica proporciona una manera fácil de realizar un seguimiento del efectivo.
+                pagos diariamente.
+                </p>
+            </field>
+        </record>
+        <record id="action_view_bank_statement_tree_surrender" model="ir.actions.act_window">
+            <field name="name">Rendiciones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.bank.statement</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="view_id" ref="account.view_bank_statement_tree"/>
+            <field name="search_view_id" ref="account.view_bank_statement_search"/>
+            <field name="domain">[('aux_journal_id.type', '=', 'cash'),('aux_journal_id.check_surrender', '=', True)]</field>
+            <field name="context">{'default_journal_type':'surrender'}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+				Crea una nueva Rendición
+                </p>
+            </field>
+        </record>
+        <record id="view_bank_statement_line_tree_inherit" model="ir.ui.view">
+            <field name="name">bank.statement.line.tree.inherit.treasury</field>
+            <field name="model">account.bank.statement.line</field>
+            <field name="inherit_id" ref="account_accountant.view_bank_statement_line_tree_bank_rec_widget"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="type_document_id" optional="hide"/>
+                    <field name="catalog_payment_id" optional="hide"/>
+                    <field name="cash_flow_id" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_bank_statement_line_form_bank_rec_widget_inherit" model="ir.ui.view">
+            <field name="name">bank.statement.line.form.inherit.treasury</field>
+            <field name="model">account.bank.statement.line</field>
+            <field name="inherit_id" ref="account_accountant.view_bank_statement_line_form_bank_rec_widget"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="ref"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+    <record model="ir.actions.server" id="reg_account_move_lines_it_account_bank_statement">
+        <field name="name">Regularizar Cuentas Corrientes</field>
+        <field name="model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement" />
+        <field name="state">code</field>
+        <field name="code">action = records.reg_account_move_lines_it()</field>
+    </record>
+    <record model="ir.actions.server" id="reg_account_move_lines_it_account_bank_statement_line">
+        <field name="name">Regularizar Cuentas Corrientes</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line" />
+        <field name="state">code</field>
+        <field name="code">action = records.reg_account_move_lines_it()</field>
+    </record>
+</odoo>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_main_parameter_form_inherit_retentions" model="ir.ui.view">
+		<field name="name">main.parameter.form.inherit</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<field name="profit_result_account" position="after">
+				<field name="retention_account_id"/>
+			</field>
+			<field name="cancelation_product" position="after">				
+				<field name="retention_percentage" widget="percentage"/>
+				<field name="amount_retention"/>
+				<field name="without_retention_document_type_ids" widget="many2many_tags" invisible="0"/>
+			</field>
+		</field>
+	</record>
+</odoo>

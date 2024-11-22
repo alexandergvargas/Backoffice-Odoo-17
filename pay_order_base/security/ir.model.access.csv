@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payment_type_catalog_group_user,payment.type.catalog.group.user,model_payment_type_catalog,account_base_it.group_account_tables_user,1,1,1,1
+access_partner_bank_type_catalog_group_user,partner.bank.type.catalog.group.user,model_partner_bank_type_catalog,account_base_it.group_account_tables_user,1,1,1,1
+access_bank_parameter_it_group_user,bank.parameter.it.group.user,model_bank_parameter_it,account_base_it.group_account_tables_user,1,1,1,1
+access_type_doc_partner_bank_group_user,type.doc.partner.bank.group.user,model_type_doc_partner_bank,account_base_it.group_account_tables_user,1,1,1,1
+access_type_doc_invoice_bank_group_user,type.doc.invoice.bank.group.user,model_type_doc_invoice_bank,account_base_it.group_account_tables_user,1,1,1,1
+access_type_doc_payment_bank_group_user,type.doc.payment.bank.group.user,model_type_doc_payment_bank,account_base_it.group_account_tables_user,1,1,1,1
+access_type_doc_bank_group_user,type.doc.bank.group.user,model_type_doc_bank,account_base_it.group_account_tables_user,1,1,1,1
+access_type_doc_partnerbank_bank_group_user,type.doc.partnerbank.bank.group.user,model_type_doc_partnerbank_bank,account_base_it.group_account_tables_user,1,1,1,1
+access_format_bank_it_group_user,format.bank.it.group.user,model_format_bank_it,account_base_it.group_account_tables_user,1,1,1,1
+access_make_wizard_order_pay_group_user,make.wizard.order.pay.group.user,model_make_wizard_order_pay,account_base_it.group_account_tables_user,1,1,1,1

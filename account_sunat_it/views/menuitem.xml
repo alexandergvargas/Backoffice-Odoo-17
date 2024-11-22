@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_action_account_sunat_table_ri" parent="account_base_it.menu_account_base_it" action="account_sunat_it.action_account_sunat_table_ri" sequence="110"/>
+        <menuitem id="menu_action_account_sunat_table_cp" parent="account_base_it.menu_account_base_it" action="account_sunat_it.action_account_sunat_table_cp" sequence="120"/>
+        <menuitem id="menu_action_account_sunat_table_mi" parent="account_base_it.menu_account_base_it" action="account_sunat_it.action_account_sunat_table_mi" sequence="130"/>
+    </data>
+</odoo>

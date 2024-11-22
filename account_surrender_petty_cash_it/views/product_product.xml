@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="view_product_landed_cost_it_form" model="ir.ui.view">
+		<field name="name">product.template.landed.cost.it.form</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="account.product_template_form_view"/>
+		<field name="arch" type="xml">
+			<group name="bill" position="after">
+				<div>
+					<group string="Rendiciones" name="surrender_it">
+						<field name="surrender_ok"/>
+					</group>
+				</div>
+			</group>
+		</field>
+	</record>
+
+	<record id="surrender_product_template_search_view" model="ir.ui.view">
+		<field name="name">product.template.search.inherit.surrender</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_search_view"/>
+		<field name="arch" type="xml">
+		<xpath expr="//filter[@name='filter_to_purchase']" position="after">
+			<filter string="Sirve para Rendiciones" name="filter_to_surrender" domain="[('surrender_ok', '=', True)]"/>
+		</xpath>
+		</field>
+	</record>
+
+	<record id="view_product_template_form_surrender" model="ir.ui.view">
+		<field name="name">product.template.form.surrender</field>
+		<field name="model">product.template</field>
+		<field name="arch" type="xml">
+			<form string="Productos">
+				<sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Nombre del Producto"/>
+                        <h1>
+                            <div class="d-flex">
+                                <field class="text-break" name="name" options="{'line_breaks': False}" widget="text" placeholder="e.g. Cheese Burger"/>
+                            </div>
+                        </h1>
+                    </div>
+					<group>
+						<field name="default_code"/>
+						<field name="detailed_type"/>
+						<field name="property_account_expense_id"/>
+					</group>
+					<group>
+                        <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="view_product_template_tree_surrender" model="ir.ui.view">
+		<field name="name">product.template.tree.surrender</field>
+		<field name="model">product.template</field>
+		<field name="arch" type="xml">
+			<tree string="Products">
+				<field name="name"/>
+				<field name="default_code"/>
+				<field name="detailed_type"/>
+				<field name="property_account_expense_id"/>
+				<field name="company_id" groups="base.group_multi_company"/>
+			</tree>
+		</field>
+	</record>
+
+  	<record id="product_product_action_surrender" model="ir.actions.act_window">
+		<field name="name">Productos</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.template</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_ids"
+				eval="
+						[
+						(5, 0, 0),
+						(0, 0, {'view_mode': 'tree', 'view_id': ref('view_product_template_tree_surrender')}),
+						(0, 0, {'view_mode': 'form', 'view_id': ref('view_product_template_form_surrender')})
+						]"
+		/>
+		<field name="context">{'search_default_filter_to_surrender': 1,'default_surrender_ok': True}</field>
+		<field name="view_id" ref="account.product_template_view_tree"/>
+		<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crear un nuevo producto para Rendiciones
+			</p>
+		</field>
+	</record>
+
+</odoo>

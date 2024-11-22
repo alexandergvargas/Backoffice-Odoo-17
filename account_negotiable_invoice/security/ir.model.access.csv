@@ -1,0 +1,2 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_move_invoice_cash_manager,move_invoice_cash_manager,model_move_invoice_cash,,1,1,1,1

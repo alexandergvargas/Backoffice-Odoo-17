@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+	<menuitem id="sub_menu_treasury_render_settings" 
+			name="Rendiciones"
+			parent="account_treasury_it.sub_menu_treasury_it4"
+			groups="account_surrender_petty_cash_it.group_menu_surrender_settings_group_manager"
+			sequence="52"/>
+	
+	<menuitem action="account_surrender_petty_cash_it.action_account_surrender_advance_it" id="menu_action_account_surrender_advance_it" parent="account_treasury_it.sub_menu_treasury_it2" sequence="108"/>
+	<menuitem action="account_surrender_petty_cash_it.action_account_petty_cash_advance_it" id="menu_action_account_petty_cash_advance_it" parent="account_treasury_it.sub_menu_treasury_it2" sequence="111"/>
+
+	<menuitem action="account_surrender_petty_cash_it.product_product_action_surrender" id="product_product_menu_purchasable_menu_render" name="Productos" parent="sub_menu_treasury_render_settings" sequence="9"/>
+	<menuitem action="account.res_partner_action_supplier" id="menu_account_supplier_menu_render" name="Proveedores" parent="sub_menu_treasury_render_settings" sequence="12"/>
+	<menuitem action="account_surrender_petty_cash_it.action_render_main_parameter_form" id="menu_action_render_main_parameter_form" parent="sub_menu_treasury_render_settings" sequence="30"/>
+    <menuitem action="account_surrender_petty_cash_it.res_partner_action_employee_surrender" id="menu_account_employee_surrender" name="Empleados" sequence="15" parent="sub_menu_treasury_render_settings"/>
+	
+</odoo>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+	<record id="group_sunat_accounting_menu" model="res.groups">
+		<field name="name">SUNAT (Contabilidad)</field>
+		<field name="category_id" ref="base.module_category_hidden"/>
+	</record>
+
+	<record id="account_sunat_integrated_results_comp_rule" model="ir.rule">
+		<field name="name">Resultado integrales SUNAT multi-company</field>
+		<field name="model_id" ref="model_account_sunat_integrated_results"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+	
+	<record id="account_sunat_efective_flow_comp_rule" model="ir.rule">
+		<field name="name">Flujo Efectivo SUNAT multi-company</field>
+		<field name="model_id" ref="model_account_sunat_efective_flow"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+	
+	<record id="account_sunat_state_patrimony_comp_rule" model="ir.rule">
+		<field name="name">Estado del Patrimonio Neto SUNAT multi-company</field>
+		<field name="model_id" ref="model_account_sunat_state_patrimony"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+	
+	<record id="account_sunat_capital_comp_rule" model="ir.rule">
+		<field name="name">Capital SUNAT multi-company</field>
+		<field name="model_id" ref="model_account_sunat_capital"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+	
+	<record id="account_sunat_shareholding_comp_rule" model="ir.rule">
+		<field name="name">Participaciones Sociales SUNAT multi-company</field>
+		<field name="model_id" ref="model_account_sunat_shareholding"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+	
+	<record id="account_sunat_checking_balance_comp_rule" model="ir.rule">
+		<field name="name">Balance de Comprobación SUNAT multi-company</field>
+		<field name="model_id" ref="model_account_sunat_checking_balance"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+
+	<record id="account_register_values_it_comp_rule" model="ir.rule">
+		<field name="name">Registro de Valores multi-company</field>
+		<field name="model_id" ref="model_account_register_values_it"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+
+	<record id="sunat_table_data_38_comp_rule" model="ir.rule">
+		<field name="name">Tablas Sunat 3.8 multi-company</field>
+		<field name="model_id" ref="model_sunat_table_data_38"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+
+	<record id="sunat_table_data_39_comp_rule" model="ir.rule">
+		<field name="name">Tablas Sunat 3.9 multi-company</field>
+		<field name="model_id" ref="model_sunat_table_data_39"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+	</record>
+</odoo>

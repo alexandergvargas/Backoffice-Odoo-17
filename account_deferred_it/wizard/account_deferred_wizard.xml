@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_deferred_wizard_form" model="ir.ui.view">
+        <field name="name">account.deferred.wizard.form</field>
+        <field name="model">account.deferred.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Lineas de Diferidos">
+                <group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="fiscal_year_id" invisible="1"/>
+                        <field name="period_from" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+                        <field name="period_to"  invisible="1" domain="[('fiscal_year_id','=',fiscal_year_id)]"/>
+                        <field name="type" readonly="1"/>
+                    </group>
+
+                </group>
+                <footer>
+                    <button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+                            or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="account_deferred_expense_wizard_action" model="ir.actions.act_window">
+        <field name="name">Generar Asientos</field>
+        <field name="res_model">account.deferred.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{'default_type': 'expense'}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="account_deferred_income_wizard_action" model="ir.actions.act_window">
+        <field name="name">Generar Asientos</field>
+        <field name="res_model">account.deferred.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{'default_type': 'income'}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="account_deferred_income_wizard_menu" action="account_deferred_income_wizard_action" parent="account_deferred_it.income_account_deferred_menu" sequence="3"/>
+    <menuitem id="account_deferred_expense_wizard_menu" action="account_deferred_expense_wizard_action" parent="account_deferred_it.expense_account_deferred_menu" sequence="3"/>
+
+
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_move_form_inherit_invoice_document_kill" model="ir.ui.view">
+		<field name="name">move.form.inherit.invoice.document.kill</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account_fields_it.view_move_form_inherit_invoice_document"/>
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//field[@name='l10n_latam_document_type_id']" position="attributes">
+					<attribute name="domain">[]</attribute>
+				</xpath>
+			</data>
+		</field>
+	</record>
+
+</odoo>

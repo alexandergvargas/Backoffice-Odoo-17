@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_cta_cte_report_wizard_form">
+			<field name="name">account.cta.cte.report.wizard.form</field>
+			<field name="model">account.cta.cte.report.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Generar Reporte Saldos Iniciales">
+                    <group>
+                        <group>
+                            <field name="type" required="1" widget="radio"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generar" name="get_report" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_account_cta_cte_report_wizard" model="ir.actions.act_window">
+			<field name="name">Generar Reporte Saldos Iniciales</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.cta.cte.report.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+	</data>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="annual_cost_of_sales_view_form" model="ir.ui.view">
+            <field name="name">annual.cost.of.sales.view.form</field>
+            <field name="model">production.costs.it</field>
+            <field name="arch" type="xml">
+                <form string="Costo de ventas anual">
+                    <sheet>
+                        <field name="type_cost" invisible="1"/>
+                        <field name="name" invisible="1" force_save="1"/>
+                        <group>
+                            <group>
+                                <field name="fiscal_year_id" help="Campo 1: Ejercicio" required="1"/>
+                                <field name="inventory_cost" required="1"/>
+                                <field name="production_cost" required="1"/>
+                                <field name="inventory_sale_cost" required="1"/>
+                                <field name="other_settings" required="1"/>
+                                <field name="state" help="Campo 6: Estado de Operación" required="1"/>
+                                <field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>  
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="annual_cost_of_sales_view_tree" model="ir.ui.view">
+            <field name="name">annual.cost.of.sales.view.form</field>
+            <field name="model">production.costs.it</field>
+            <field name="arch" type="xml">
+                <tree string="Costo de ventas anual">
+                    <field name="fiscal_year_id"/>
+					<field name="company_id" groups="base.group_multi_company"/>  
+                </tree>
+            </field>
+        </record>
+
+        <record id="annual_cost_of_sales_action" model="ir.actions.act_window">
+            <field name="name">Costo de ventas anual</field>
+            <field name="res_model">production.costs.it</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('account_sunat_production_costs_it.annual_cost_of_sales_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('account_sunat_production_costs_it.annual_cost_of_sales_view_form')})]"/>
+            <field name="domain">[('type_cost', '=', 'annual_cost_of_sales')]</field>
+            <field name="context">{'default_type_cost': 'annual_cost_of_sales'}</field>
+            <field name="help" type="html">
+                <p>
+                    <strong>¡Bienvenido a los Costos de ventas anuales!</strong>
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="action_get_data_production_costs_it">
+			<field name="name">Traer información</field>
+			<field name="model_id" ref="model_production_costs_it"/>
+			<field name="binding_model_id" ref="model_production_costs_it" />
+			<field name="state">code</field>
+			<field name="code">action = records.action_get_data()</field>
+		</record>
+
+    </data>
+
+
+</odoo>

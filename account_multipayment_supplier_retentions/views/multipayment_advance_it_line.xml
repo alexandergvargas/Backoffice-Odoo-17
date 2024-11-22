@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+        <record id="view_multipayment_advance_it_line_tree_multipayment" model="ir.ui.view">
+            <field name="name">multipayment.advance.it.line.tree.multipayment</field>
+            <field name="model">multipayment.advance.it.line</field>
+            <field name="arch" type="xml">
+                <tree string="PM Invoices Items" edit="false">
+                    <field name="main_id" string="Pago"/>
+                    <field name="partner_id"/>
+                    <field name="cta_abono" optional="hide"/>
+                    <field name="tipo_documento"/>
+                    <field name="invoice_id"/>
+                    <field name="account_id" optional="show"/>
+                    <field name="operation_type" optional="hide"/>
+                    <field name="good_services" optional="hide"/>
+                    <field name="currency_id" optional="show"/>
+                    <field name="fecha_vencimiento" optional="hide"/>
+                    <field name="saldo" optional="show"/>
+                    <field name="importe_divisa" sum="importe_divisa" optional="show"/>
+                    <field name="debe" sum="debe" optional="show"/>
+                    <field name="haber" sum="haber" optional="show"/>
+                    <field name="amount_retention" sum="amount_retention" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

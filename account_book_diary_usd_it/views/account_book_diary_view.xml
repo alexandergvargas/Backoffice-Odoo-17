@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_book_diary_view_usd_tree" model="ir.ui.view">
+            <field name="name">account.book.diary.view.usd.tree</field>
+            <field name="model">account.book.diary.view</field>
+            <field name="arch" type="xml">
+                <tree string="Libro Diario" create="false">
+                    <field name="periodo"/>
+                    <field name="fecha"/>
+                    <field name="libro"/>
+                    <field name="voucher"/>
+                    <field name="cuenta"/>
+                    <field name="debe" sum="debe"/>
+                    <field name="haber" sum="haber"/>
+                    <field name="balance"/>
+                    <field name="moneda"/>
+                    <field name="tc"/>
+                    <field name="glosa"/>
+                    <field name="td_partner" optional="hide"/>
+                    <field name="doc_partner" optional="hide"/>
+                    <field name="partner" optional="hide"/>
+                    <field name="td_sunat" optional="hide"/>
+                    <field name="nro_comprobante" optional="hide"/>
+                    <field name="fecha_doc" optional="hide"/>
+                    <field name="fecha_ven" optional="hide"/>
+                    <field name="col_reg" optional="hide"/>
+                    <field name="monto_reg" optional="hide"/>
+                    <field name="medio_pago" optional="hide"/>
+                    <field name="ple_diario" optional="hide"/>
+                    <field name="ple_compras" optional="hide"/>
+                    <field name="ple_ventas" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

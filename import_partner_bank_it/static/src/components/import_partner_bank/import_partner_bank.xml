@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="import_partner_bank_it.FetchImportResPartnerBank" >
+        <DropdownItem class="'o_import_menu'" onSelected.bind="openFetchImportResPartnerBank">
+           <i class="fa fa-fw fa-download me-1"/> Importar desde Plantilla
+        </DropdownItem>
+    </t>
+</templates>

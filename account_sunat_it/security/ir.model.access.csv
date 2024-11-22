@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_sunat_wizard_group_user,account.sunat.wizard.group.user,model_account_sunat_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_account_sunat_balance_inventory_rep_group_user,account.sunat.balance.inventory.rep.group.user,model_account_sunat_balance_inventory_rep,account_base_it.group_account_tables_user,1,1,1,1
+access_popup_it_balance_inventory_group_user,popup.it.balance.inventory.group.user,model_popup_it_balance_inventory,account_base_it.group_account_tables_user,1,1,1,1
+access_account_sunat_table_ri_manager,account_sunat_table_ri_manager,model_account_sunat_table_ri,,1,1,1,1
+access_account_sunat_table_cp_manager,account_sunat_table_cp_manager,model_account_sunat_table_cp,,1,1,1,1
+access_account_sunat_table_mi_manager,account_sunat_table_mi_manager,model_account_sunat_table_mi,,1,1,1,1

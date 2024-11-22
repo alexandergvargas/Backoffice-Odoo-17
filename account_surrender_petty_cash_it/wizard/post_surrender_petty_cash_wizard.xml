@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_post_surrender_petty_cash_wizard" model="ir.ui.view">
+            <field name="name">post.surrender.petty.cash.wizard.form</field>
+            <field name="model">post.surrender.petty.cash.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Post">
+                    <group>
+                        <group>
+                            <field name="type_selection" widget='radio'/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Publicar" name="post" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

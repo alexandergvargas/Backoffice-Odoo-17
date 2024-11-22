@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="query_ruc_sunat_it.FetchImportQueryRucSunat" >
+        <DropdownItem class="'o_import_menu'" onSelected.bind="openFetchImportQueryRucSunat">
+           <i class="fa fa-fw fa-download me-1"/> Importar desde Plantilla
+        </DropdownItem>
+    </t>
+</templates>

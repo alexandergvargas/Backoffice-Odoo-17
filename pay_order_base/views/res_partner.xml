@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_partner_form_inherit_macro" model="ir.ui.view">
+			<field name="name">res.partner.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="account_fields_it.view_partner_form_inherit"/>
+			<field name="arch" type="xml">
+				<data>
+					<page name="without_address" position="after">
+						<page name="macro" string="Macros">
+							<group>
+								<group>
+									<field name="payment_type_catalog_id"/>
+								</group>
+							</group>
+						</page>
+					</page>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

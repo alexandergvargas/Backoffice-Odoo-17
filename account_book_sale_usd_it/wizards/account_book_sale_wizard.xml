@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_book_sale_wizard_inherit_usd_form">
+			<field name="name">account.book.sale.wizard.form.inherit</field>
+			<field name="model">account.book.sale.wizard</field>
+			<field name="inherit_id" ref="account_book_sale_it.view_account_book_sale_wizard_form"/>
+			<field name="arch" type="xml">
+				<field name="show_by" position="after">
+					<field name="currency"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

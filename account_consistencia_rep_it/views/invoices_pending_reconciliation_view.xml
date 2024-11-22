@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_invoices_pending_reconciliation_view_tree" model="ir.ui.view">
+            <field name="name">invoices.pending.reconciliation.view.tree</field>
+            <field name="model">invoices.pending.reconciliation.view</field>
+            <field name="arch" type="xml">
+                <tree string="Facturas Pendientes de conciliar" create="false">
+                    <field name="fecha"/>
+                    <field name="libro"/>
+                    <field name="partner" optional="hide"/>
+                    <field name="td"/>
+                    <field name="nro_comprobante"/>
+                    <field name="amount" sum="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_invoices_pending_reconciliation_view_it" model="ir.actions.act_window">
+            <field name="name">Facturas Pendientes de conciliar</field>
+            <field name="res_model">invoices.pending.reconciliation.view</field>
+            <field name="view_id" ref="view_invoices_pending_reconciliation_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

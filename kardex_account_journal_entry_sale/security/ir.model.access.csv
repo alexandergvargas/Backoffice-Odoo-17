@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_costs_sales_analysis_book_group_user,costs.sales.analysis.book.group.user,model_costs_sales_analysis_book,account_base_it.group_account_tables_user,1,1,1,1
+access_costs_sales_analysis_it_group_user,costs.sales.analysis.it.group.user,model_costs_sales_analysis_it,account_base_it.group_account_tables_user,1,1,1,1
+access_costs_sales_analysis_wizard_group_user,costs.sales.analysis.wizard.group.user,model_costs_sales_analysis_wizard,account_base_it.group_account_tables_user,1,1,1,1

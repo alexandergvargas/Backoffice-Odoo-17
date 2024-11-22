@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+    <data>
+        <record id="account_move_inherit_form_cuentas_perso" model="ir.ui.view">
+            <field name="name">account.move.inherit.form.cuentas.perso</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account_fields_it.view_move_form_inherit" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[@id='other_tab']/group[@id='other_tab_group']/group[@name='accounting_info_group']" position="inside">
+                    <field name="cuenta_p_p" invisible="move_type == 'entry'" readonly="state != 'draft'"/>
+                    <field name="personalizadas_id" invisible="not cuenta_p_p"  force_save= "1" domain="[('p_type', '=', 'asset_receivable')] if move_type == 'out_invoice' or move_type == 'out_refund' else [('p_type', '=', 'liability_payable')]"/>
+
+                </xpath>
+                
+            </field>
+        </record>          
+    </data>
+</odoo>

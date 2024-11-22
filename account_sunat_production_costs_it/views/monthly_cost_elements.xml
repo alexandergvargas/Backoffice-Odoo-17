@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="monthly_cost_elements_view_form" model="ir.ui.view">
+            <field name="name">monthly.cost.elements.view.form</field>
+            <field name="model">production.costs.it</field>
+            <field name="arch" type="xml">
+                <form string="Elementos del costo mensual">
+                    <sheet>
+                        <field name="type_cost" invisible="1"/>
+                        <field name="name" invisible="1" force_save="1"/>
+                        <group>
+                            <group>
+                                <field name="period_id" required="1"/>
+                            </group>
+                            <group>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group name="costo" string="Costos">
+                                <field name="materials_cost" required="1"/>
+                                <field name="other_cost" required="1"/>
+                                <field name="labor_cost" required="1"/>
+                            </group>
+                            <group name="gasto" string="Gastos">
+                                <field name="materials_expense" required="1"/>
+                                <field name="labor_expense" required="1"/>
+                                <field name="other_expense" required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="state" required="1"/>
+                            
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="monthly_cost_elements_view_tree" model="ir.ui.view">
+            <field name="name">monthly.cost.elements.view.form</field>
+            <field name="model">production.costs.it</field>
+            <field name="arch" type="xml">
+                <tree string="Elementos del costo mensual">
+                    <field name="period_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="monthly_cost_elements_action" model="ir.actions.act_window">
+            <field name="name">Elementos del costo mensual</field>
+            <field name="res_model">production.costs.it</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('account_sunat_production_costs_it.monthly_cost_elements_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('account_sunat_production_costs_it.monthly_cost_elements_view_form')})]"/>
+            <field name="domain">[('type_cost', '=', 'monthly_cost_elements')]</field>
+            <field name="context">{'default_type_cost': 'monthly_cost_elements'}</field>
+            <field name="help" type="html">
+                <p>
+                    <strong>¡Bienvenido a los Elementos del costo mensual!</strong>
+                </p>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

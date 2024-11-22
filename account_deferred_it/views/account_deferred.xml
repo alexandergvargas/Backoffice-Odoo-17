@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_deferred_tree" model="ir.ui.view">
+        <field name="name">account.deferred.tree</field>
+        <field name="model">account.deferred</field>
+        <field name="arch" type="xml">
+            <tree string="Modelos Diferidos">
+                <field name="name"/>
+                <field name="first_date" column_invisible="context.get('default_is_model') == True"/>
+                <field name="amount_origin" column_invisible="context.get('default_is_model') == True"/>
+                <field name="currency_id" column_invisible="context.get('default_is_model') == True"/>
+                <field name="is_model" column_invisible="1"/>
+                <field name="number" column_invisible="context.get('default_is_model') == False"/>
+                <field name="period" column_invisible="context.get('default_is_model') == False"/>
+                <field name="type" column_invisible="context.get('default_is_model') == False"/>
+                <field name="move_id" invisible="1" column_invisible="1"/>
+                <field name="company_id"/>
+                <field name="state" column_invisible="context.get('default_is_model') == True"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_deferred_form" model="ir.ui.view">
+        <field name="name">account.deferred.form</field>
+        <field name="model">account.deferred</field>
+        <field name="arch" type="xml">
+            <form string="Modelos Diferidos">
+                <header>
+                    <field name="move_id" invisible="1"/>
+                    <field name="is_model" invisible="1"/>
+                    <field name="number_moves" invisible="1"/>
+                    <button name="post" string="Validar" type="object" class="oe_highlight" invisible="is_model or state != 'draft'"/>
+                    <button name="create_lines_ids" string="Calcular" type="object" class="oe_highlight" invisible="is_model or state != 'draft'"/>
+                    <button name="action_draft" string="Volver Borrador" type="object" class="oe_highlight" invisible="is_model or state == 'draft'"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,close" invisible="is_model"/>
+
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <field name="number_moves" invisible="1"/>
+                        <button name="view_action_move_ids" class="oe_stat_button" icon="fa-bars" type="object" invisible="number_moves == 0">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">
+                                    <field name="number_moves" nolabel="1"/>
+ Asientos Contables</span>
+                            </div>
+                        </button>
+
+                    </div>
+                    <div class="oe_button_box text-left oe_edit_only" name="model_box" invisible="is_model or move_id">
+                        <div class="o_radio_hide_bullet overflow-auto">
+                            <field name="model_id" string="Modelo" nolabel="1" widget="radio" options="{'horizontal': true}" readonly="state !='draft'"/>
+                        </div>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" name="name_label" string="Modelo de Gastos Diferidos" invisible="type != 'expense'"/>
+                        <label for="name" name="model_name_label" string="Modelo de Ingresos Diferidos" invisible="type != 'income'"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Laptop" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Datos Diferidos" invisible="is_model">
+                            <field name="move_id" invisible="1" readonly="state !='draft'"/>
+                            <field name="amount_origin" invisible="is_model" readonly="state !='draft'"/>
+                            <field name="date_ad" required="1" invisible="is_model" readonly="state !='draft'"/>
+
+                        </group>
+                        <group string="Datos Contables" invisible="is_model">
+                            <field name="move_id" invisible="1" readonly="state !='draft'"/>
+                            <field name="currency_id" invisible="is_model" readonly="state !='draft'"/>
+                        </group>
+                    </group>
+                    <group>
+
+                        <group string="Datos Gastos Diferidos" invisible="type != 'expense'">
+
+                            <label for="number"/>
+                            <div class="o_row">
+                                <field name="number" required="1" readonly="state !='draft'"/>
+                                <field name="period" required="1" nolabel="1" readonly="state !='draft'"/>
+                            </div>
+                            <field name="type" readonly="1" force_save="1"/>
+                            <field name="first_date" force_save="1" invisible="is_model" readonly="state !='draft'"/>
+                        </group>
+                        <group string="Datos Ingresos Diferidos" invisible="type != 'income'">
+
+                            <label for="number"/>
+                            <div class="o_row">
+                                <field name="number" required="1" readonly="state !='draft'"/>
+                                <field name="period" required="1" nolabel="1" readonly="state !='draft'"/>
+                            </div>
+                            <field name="type" readonly="1" force_save="1"/>
+                            <field name="first_date" force_save="1" invisible="is_model" readonly="state !='draft'"/>
+                        </group>
+
+                        <group string="Contabilidad">
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            <field name="account_deferred_id" required="1" readonly="state !='draft'"/>
+                            <field name="account_id" required="1" readonly="state !='draft'"/>
+                            <field name="journal_id" required="1" readonly="state !='draft'"/>
+                            <field name="analytic_distribution" widget="analytic_distribution" readonly="state !='draft'"/>
+                            <field name="move_id" invisible="1" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook invisible="is_model">
+                        <page name="line_ids" string="Tabla">
+                            <field name="line_ids" readonly="state !='draft'">
+                                <tree create="false" edit="false" delete="false">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                    <field name="amount_accumulated"/>
+                                    <field name="amount_next"/>
+                                    <field name="move_id" column_invisible="1"/>
+                                    <button name="view_action_move_id" class="oe_stat_button" icon="fa-eye" type="object" invisible="not move_id"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="other" string="Otra Información" invisible="is_model">
+                            <group name="date_move">
+                                <field name="partner_id" readonly="state !='draft'"/>
+                                <field name="l10n_latam_document_type_id" readonly="state !='draft'"/>
+                                <field name="nro_comp" readonly="state !='draft'"/>
+                                <field name="move_id" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_model_deferred_expense_action" model="ir.actions.act_window">
+        <field name="name">Modelos de Gastos Diferidos</field>
+        <field name="res_model">account.deferred</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', '=', 'expense'),('is_model','=',True)]</field>
+        <field name="context">{'default_type': 'expense','default_is_model': True}</field>
+        <field name="help" type="html">
+            <p>
+                <strong>¡Bienvenido a los Modelos Gastos Diferidos!</strong>
+            </p>
+            <p>En esta sección podrás gestionar los Modelos de gastos diferidos de tu empresa de manera eficiente.</p>
+            <p>¡Explora y gestiona tus gastos diferidos de manera eficaz con esta herramienta!</p>
+        </field>
+    </record>
+
+    <record id="view_account_model_deferred_income_action" model="ir.actions.act_window">
+        <field name="name">Modelos de Ingresos Diferidos</field>
+        <field name="res_model">account.deferred</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', '=', 'income'),('is_model','=',True)]</field>
+        <field name="context">{'default_type': 'income','default_is_model': True}</field>
+        <field name="help" type="html">
+            <p>
+                <strong>¡Bienvenido a los Modelos Ingresos Diferidos!</strong>
+            </p>
+            <p>En esta sección podrás gestionar los Modelos de Ingresos diferidos de tu empresa de manera eficiente.</p>
+            <p>¡Explora y gestiona tus Ingresos diferidos de manera eficaz con esta herramienta!</p>
+        </field>
+    </record>
+
+
+    <record id="view_account_deferred_expense_action" model="ir.actions.act_window">
+        <field name="name">Gastos Diferidos</field>
+        <field name="res_model">account.deferred</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', '=', 'expense'),('is_model','=',False)]</field>
+        <field name="context">{'default_type': 'expense','default_is_model': False}</field>
+        <field name="help" type="html">
+            <p>
+                <strong>¡Bienvenido a Gastos Diferidos!</strong>
+            </p>
+            <p>En esta sección podrás gestionar los gastos diferidos de tu empresa de manera eficiente.</p>
+            <p>¡Explora y gestiona tus gastos diferidos de manera eficaz con esta herramienta!</p>
+        </field>
+    </record>
+
+    <record id="view_account_deferred_income_action" model="ir.actions.act_window">
+        <field name="name">Ingresos Diferidos</field>
+        <field name="res_model">account.deferred</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type', '=', 'income'),('is_model','=',False)]</field>
+        <field name="context">{'default_type': 'income','default_is_model': False}</field>
+        <field name="help" type="html">
+            <p>
+                <strong>¡Bienvenido a Ingresos Diferidos!</strong>
+            </p>
+            <p>En esta sección podrás gestionar los Ingresos diferidos de tu empresa de manera eficiente.</p>
+            <p>¡Explora y gestiona tus Ingresos diferidos de manera eficaz con esta herramienta!</p>
+        </field>
+    </record>
+
+    <!--CONTABILIDAD/ADMINISTRACIÓN-->
+    <menuitem id="admin_account_deferred_menu" name="Administración" parent="account.menu_finance_entries" sequence="10"/>
+    <!--CONTABILIDAD/ADMINISTRACIÓN/DIFERIDOS-->
+    <menuitem id="deferred_account_deferred_menu" name="Diferidos" parent="account_deferred_it.admin_account_deferred_menu" sequence="1"/>
+
+    <!--CONTABILIDAD/ADMINISTRACIÓN/DIFERIDOS/INGRESOS-->
+    <menuitem id="income_account_deferred_menu" name="Ingresos" parent="account_deferred_it.deferred_account_deferred_menu" sequence="1"/>
+    <!--CONTABILIDAD/ADMINISTRACIÓN/DIFERIDOS/INGRESOS/MODELOS INGRESO DIFERIDO-->
+    <menuitem id="account_deferred_model_income_menu" action="view_account_model_deferred_income_action" parent="income_account_deferred_menu" sequence="1"/>
+    <!--CONTABILIDAD/ADMINISTRACIÓN/DIFERIDOS/INGRESOS/INGRESO DIFERIDO-->
+    <menuitem id="account_deferred_income_menu" action="view_account_deferred_income_action" parent="income_account_deferred_menu" sequence="2"/>
+
+    <!--CONTABILIDAD/ADMINISTRACIÓN/DIFERIDOS/GASTOS-->
+    <menuitem id="expense_account_deferred_menu" name="Gastos" parent="account_deferred_it.deferred_account_deferred_menu" sequence="2"/>
+    <!--CONTABILIDAD/ADMINISTRACIÓN/DIFERIDOS/MODELOS GASTOS-->
+    <menuitem id="account_deferred_model_expense_menu" action="view_account_model_deferred_expense_action" parent="expense_account_deferred_menu" sequence="1"/>
+    <!--CONTABILIDAD/ADMINISTRACIÓN/DIFERIDOS/GASTOS Diferidos-->
+    <menuitem id="account_deferred_expense_menu" action="view_account_deferred_expense_action" parent="expense_account_deferred_menu" sequence="2"/>
+</odoo>

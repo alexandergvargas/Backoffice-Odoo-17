@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_copy_configuration_it_form" model="ir.ui.view">
+        <field name="name">account.copy.configuration.it.form</field>
+        <field name="model">account.copy.configuration.it</field>
+        <field name="arch" type="xml">
+            <form>
+                <p>Este Wizard copiará la Configuracion Contable necesaria para la Compañia en la que se encuentra.</p>
+                <group>
+                    <group>
+                        <field name="model_company_id" required="1"/>
+                    </group>
+                </group>
+                <group>
+                    <p>Copiar: </p>
+                </group>
+                <group>
+                    <group>
+                        <field name="copy_account"/>
+                        <field name="copy_journal"/>
+                        <field name="copy_tax"/>
+                        <field name="copy_analytic"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="copy_account_data" string="Copiar" type="object" class="oe_highlight"/>
+                    <button special="cancel" string="Cancel" class="oe_link"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_copy_configuration_it" model="ir.actions.act_window">
+        <field name="name">Copiar desde otra empresa</field>
+        <field name="res_model">account.copy.configuration.it</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_account_copy_configuration_it"
+              parent="account_menu_other_configurations.menu_other_configurations"
+              action="action_account_copy_configuration_it"
+              groups="account.group_account_manager"
+              sequence="21"/>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="multipayment_advance_it_form_view_inherit_payment" model="ir.ui.view">
+		<field name="name">multipayment.advance.it.inherit.payment</field>
+		<field name="model">multipayment.advance.it</field>
+		<field name="inherit_id" ref="account_multipayment_advance_it.multipayment_advance_it_form_view"/>
+		<field name="arch" type="xml">
+			<data>
+                <xpath expr="//header" position="inside">
+                    <button name="action_make_wizard_order_pay_action" string="Exportar Macro" type="object" class="oe_highlight"/>
+				</xpath>
+				<xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_ids']/tree/field[@name='cta_abono']" position="after">
+                    <field name="payment_type_catalog_id" optional="hide"/>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="inherit_view_account_book_honorary_wizard_form_account_book_honorary_usd_it" model="ir.ui.view">
+			<field name="name">account.book.honorary.wizard.inherit.form</field>
+			<field name="model">account.book.honorary.wizard</field>
+			<field name="inherit_id" ref="account_book_honorary_it.view_account_book_honorary_wizard_form"/>
+			<field name="arch" type="xml">
+				<field name="type_show" position="after">
+					<field name="currency_id" required="1"/>
+				</field>
+			</field>
+		</record>	
+	</data>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_account_tag_form_inherit" model="ir.ui.view">
+			<field name="name">account.account.tag.form.inherit</field>
+			<field name="model">account.account.tag</field>
+            <field name="priority">11</field>
+			<field name="inherit_id" ref="account.account_tag_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//group" position="after">
+					<notebook invisible="applicability != 'taxes'">
+						<page string="ITGRUPO">
+							<group>
+								<group>
+									<field name="sequence"/>
+									<field name="record_shop"/>
+									<field name="col_pdb"/>
+								</group>
+								<group>
+									<field name="record_sale"/>
+									<field name="record_fees"/>
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</xpath>
+			</field>
+		</record>
+		<record id="account_tag_tree_inherit" model="ir.ui.view">
+			<field name="name">account.tag.tree.inherit</field>
+			<field name="model">account.account.tag</field>
+			<field name="inherit_id" ref="account.account_tag_view_tree"/>
+			<field name="arch" type="xml">
+				<field name="applicability" position="after">
+					<field name="sequence" optional="show"/>
+					<field name="record_shop" optional="show"/>
+					<field name="record_sale" optional="show"/>
+					<field name="record_fees" optional="show"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

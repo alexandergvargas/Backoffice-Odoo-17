@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="popup_it_production_cost_form" model="ir.ui.view">
+		<field name="name">popup.it.production.cost.form</field>
+		<field name="model">popup.it.production.cost</field>
+		<field name="arch" type="xml">
+			<form string="Archivo">
+				<field name="output_name_1" invisible="1"/>
+				<div invisible="not output_name_1">
+					<label for="output_file_1"/><field name="output_file_1" readonly="1" filename="output_name_1"/>
+				</div>
+				<field name="output_name_2" invisible="1"/>
+				<div invisible="not output_name_2">
+					<label for="output_file_2"/><field name="output_file_2" readonly="1" filename="output_name_2"/>
+				</div>
+				<field name="output_name_3" invisible="1"/>
+				<div invisible="not output_name_3">
+					<label for="output_file_3"/><field name="output_file_3" readonly="1" filename="output_name_3"/>
+				</div>
+				<field name="output_name_4" invisible="1"/>
+				<div invisible="not output_name_4">
+					<label for="output_file_4"/><field name="output_file_4" readonly="1" filename="output_name_4"/>
+				</div>
+				<footer>
+				</footer>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="popup_it_production_cost_action">
+		<field name="name">Archivo</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">popup.it.production.cost</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="popup_it_production_cost_form" />
+		<field name="target">new</field>
+	</record>
+</odoo>

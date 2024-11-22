@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="action_account_journal_form_inherit_it" model="ir.actions.act_window">
+            <field name="name">Diarios</field>
+            <field name="res_model">account.journal</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('type', 'in', ['bank', 'cash'])]</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('account.view_account_journal_tree')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('account.account_journal_view_kanban')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('account.view_account_journal_form')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                Agregar un diario Banco o Caja
+                </p>
+                <p>
+                Se utiliza un diario para registrar transacciones de todos los datos contables.
+                relacionados con el día a día del negocio.
+                </p>
+            </field>
+        </record>
+
+
+    </data>
+
+
+</odoo>

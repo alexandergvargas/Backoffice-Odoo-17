@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_unbalanced_accounting_entries_view_tree" model="ir.ui.view">
+            <field name="name">unbalanced.accounting.entries.view.tree</field>
+            <field name="model">unbalanced.accounting.entries.view</field>
+            <field name="arch" type="xml">
+                <tree string="Asientos Descuadrados" create="false">
+                    <field name="fecha"/>
+                    <field name="libro"/>
+                    <field name="partner" optional="hide"/>
+                    <field name="td"/>
+                    <field name="nro_comprobante"/>
+                    <field name="debe" sum="debe"/>
+                    <field name="haber" sum="haber"/>
+                    <field name="diferencia" sum="diferencia"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_unbalanced_accounting_entries_view_it" model="ir.actions.act_window">
+            <field name="name">Asientos Descuadrados</field>
+            <field name="res_model">unbalanced.accounting.entries.view</field>
+            <field name="view_id" ref="view_unbalanced_accounting_entries_view_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

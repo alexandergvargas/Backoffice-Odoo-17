@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_leasing_invoice_wizard_form">
+			<field name="name">account.leasing.invoice.wizard.form</field>
+			<field name="model">account.leasing.invoice.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Crear Factura">
+					<group>
+						<group>
+							<field name="type_document_id" required="1"/>
+							<field name="nro_comp" required="1"/>
+							<field name="date" required="1"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Crear" name="create_invoice" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_leasing_invoice_wizard_action" model="ir.actions.act_window">
+			<field name="name">Crear Factura</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.leasing.invoice.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

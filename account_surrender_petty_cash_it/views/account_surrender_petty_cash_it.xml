@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_surrender_petty_cash_it_form" model="ir.ui.view">
+            <field name="name">account.surrender.petty.cash.it.form</field>
+            <field name="model">account.surrender.petty.cash.it</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button string="Procesar" type="object" name="action_progress" invisible="state != 'draft'" class="oe_highlight"/>
+                        <button string="Validar" type="object" name="action_done" invisible="state != 'progress'" class="oe_highlight"/>
+                        <button string="Publicar" type="object" name="action_post" invisible="state != 'progress'" class="oe_highlight"/>
+                        <button string="Volver" type="object" name="action_return" invisible="state == 'draft'"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+						<div class="oe_button_box" name="button_box" 
+							invisible="state == 'draft'">
+							<button class="oe_stat_button" string="Facturas" name="open_invoice_entries"  type="object" icon="fa-edit"/>
+							<button class="oe_stat_button" string="Asientos" name="open_entries"  type="object" icon="fa-list"/>
+						</div>
+                        <div class="oe_title">
+                            <h1 class="mt0">
+                                <field name="name" readonly="1" force_save="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="type_surrender" invisible="1"/>
+                                <field name="employee_id" domain="[('is_employee', '=', True)]" readonly="state == 'done'"/>
+                                <field name="journal_id" readonly="state == 'done'" domain="[('check_surrender_advance', '=', True)] if type_surrender == 'surrender' else [('check_petty_cash_advance', '=', True)]"/>
+                                <field name="currency_id" readonly="state == 'done'"/>
+                                <field name="glosa" readonly="state == 'done'"/>
+                            </group>
+                            <group>
+                                <field name="total_income"/>
+                                <field name="total_outcome"/>
+                                <field name="total_balance"/>
+                                <field name="company_id" groups="base.group_multi_company" readonly="1" required="1" options="{'no_create': True}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string='Facturas'>
+                                <field name="invoice_ids" readonly="state != 'progress'" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="partner_id" optional="show" readonly="0" force_save="1"/>
+                                        <field name="date" optional="hide" force_save="1"/>
+                                        <field name="invoice_date" optional="show"/>
+                                        <field name="invoice_date_due" optional="hide" force_save="1"/>
+                                        <field name="currency_id" required="1" optional="show"/>
+                                        <field name="type_document_id" required="1" optional="show"/>
+                                        <field name="nro_comp" required="1" optional="show"/>
+                                        <field name="product_id" optional="show" domain="[('surrender_ok', '=', True)]"/>
+                                        <field name="account_id" readonly="1" force_save="1"/>
+                                        <field name="name" force_save="1" optional="hide"/>
+                                        <field name="price" optional="show" sum="price"/>
+                                        <field name="tax_id" optional="show"/>
+                                        <field name="tc" optional="show" force_save="1"/>
+                                        <field name="invoice_id" column_invisible="1" optional="hide"/>
+                                        <field name="move_id" column_invisible="1" optional="hide"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="delivery" string="Entregas">
+                                <field name="delivery_ids" nolabel="1" readonly="state != 'draft'" context="{'default_type':'delivery'}">
+                                    <tree editable="bottom">
+                                        <field name="type" column_invisible="1"/>
+                                        <field name="date"/>
+                                        <field name="journal_id" />
+                                        <field name="amount" />
+                                        <field name="nro_comp" />
+                                        <field name="payment_method_id" />
+                                        <field name="currency_id"/>
+                                        <field name="tc" force_save="1"/>
+                                        <field name="move_id" readonly="1" optional="show" options="{'no_open': True}" invisible="not move_id"/>
+                                        <button type="object" name="view_account_move" icon="fa-eye" invisible="not move_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="returns" string="Devoluciones">
+                                <field name="returns_ids" nolabel="1" readonly="state != 'progress'" context="{'default_type':'returns'}">
+                                    <tree editable="bottom">
+                                        <field name="type" column_invisible="1"/>
+                                        <field name="date" />
+                                        <field name="journal_id" />
+                                        <field name="amount" />
+                                        <field name="nro_comp" />
+                                        <field name="payment_method_id" />
+                                        <field name="currency_id" />
+                                        <field name="tc" force_save="1"/>
+                                        <field name="move_id" readonly="1" optional="show" options="{'no_open': True}" invisible="not move_id"/>
+                                        <button type="object" name="view_account_move" icon="fa-eye" invisible="not move_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_surrender_petty_cash_it_tree" model="ir.ui.view">
+            <field name="name">account.surrender.petty.cash.it.tree</field>
+            <field name="model">account.surrender.petty.cash.it</field>
+            <field name="arch" type="xml">
+                <tree string="Solicitudes de Entrega">
+                    <field name="name" />
+                    <field name="employee_id" />
+                    <field name="total_income" />
+                    <field name="total_outcome" />
+                    <field name="total_balance" />
+                    <field name="glosa" />
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_surrender_advance_it" model="ir.actions.act_window">
+            <field name="name">Entregas a Rendir Avanzadas</field>
+            <field name="res_model">account.surrender.petty.cash.it</field>
+            <field name="view_mode">tree,form</field>
+			<field name="context">{'default_type_surrender':'surrender'}</field>
+			<field name="domain">[('type_surrender','=','surrender')]</field>
+            <field name="view_id" ref="view_account_surrender_petty_cash_it_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+				Crea tu primera Entrega a Rendir aqui
+                </p>
+            </field>
+        </record>
+
+        <record id="action_account_petty_cash_advance_it" model="ir.actions.act_window">
+            <field name="name">Caja Chica Avanzadas</field>
+            <field name="res_model">account.surrender.petty.cash.it</field>
+            <field name="view_mode">tree,form</field>
+			<field name="context">{'default_type_surrender':'petty_cash'}</field>
+			<field name="domain">[('type_surrender','=','petty_cash')]</field>
+            <field name="view_id" ref="view_account_surrender_petty_cash_it_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+				Crea tu primera Caja Chica aqui
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="action_import_invoices_account_petty_cash_advance_it">
+            <field name="name">Importar Facturas</field>
+            <field name="model_id" ref="account_surrender_petty_cash_it.model_account_surrender_petty_cash_it"/>
+            <field name="binding_model_id" ref="account_surrender_petty_cash_it.model_account_surrender_petty_cash_it" />
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_import_invoices()</field>
+        </record>
+        
+        <record model="ir.actions.server" id="action_import_deliverys_account_petty_cash_advance_it">
+            <field name="name">Importar Entregas</field>
+            <field name="model_id" ref="account_surrender_petty_cash_it.model_account_surrender_petty_cash_it"/>
+            <field name="binding_model_id" ref="account_surrender_petty_cash_it.model_account_surrender_petty_cash_it" />
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_import_deliverys()</field>
+        </record>
+
+        <record model="ir.actions.server" id="action_import_returns_account_petty_cash_advance_it">
+            <field name="name">Importar Devoluciones</field>
+            <field name="model_id" ref="account_surrender_petty_cash_it.model_account_surrender_petty_cash_it"/>
+            <field name="binding_model_id" ref="account_surrender_petty_cash_it.model_account_surrender_petty_cash_it" />
+            <field name="binding_view_types">form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_import_returns()</field>
+        </record>
+
+    </data>
+</odoo>

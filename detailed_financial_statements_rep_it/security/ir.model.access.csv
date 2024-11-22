@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_detailed_financial_statements_wizard_group_user,detailed.financial.statements.wizard.user,model_detailed_financial_statements_wizard,,1,1,1,1
+access_detailed_financial_statements_screen_manager,detailed_financial_statements_screen_manager,model_detailed_financial_statements_screen,,1,1,1,1

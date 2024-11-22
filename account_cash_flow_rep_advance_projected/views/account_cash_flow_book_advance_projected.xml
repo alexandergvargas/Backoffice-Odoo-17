@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_cash_flow_book_advance_projected_tree" model="ir.ui.view">
+            <field name="name">account.cash.flow.book.advance.projected.tree</field>
+            <field name="model">account.cash.flow.book.advance.projected</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Reporte Flujo de Caja Proyectado" create="false">
+                    <field name="journal_id"/>
+                    <field name="voucher"/>
+                    <field name="fecha"/>
+                    <field name="glosa"/>
+                    <field name="account_id"/>
+                    <field name="amount" sum="amount"/>
+                    <field name="grupo"/>
+                    <field name="concepto"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_cash_flow_book_advance_projected_pivot" model="ir.ui.view">
+            <field name="name">account.cash.flow.book.advance.projected.pivot</field>
+            <field name="model">account.cash.flow.book.advance.projected</field>
+            <field name="arch" type="xml">
+                <pivot string="Reporte Flujo de Caja Proyectado">
+                    <field name="amount" type="measure"/>
+                    <field name="grupo" type="row"/>
+                    <field name="concepto" type="row"/>
+                    <field name="fecha" interval="month" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_account_cash_flow_book_advance_projected_graph" model="ir.ui.view">
+            <field name="name">account.cash.flow.book.advance.projected.graph</field>
+            <field name="model">account.cash.flow.book.advance.projected</field>
+            <field name="arch" type="xml">
+                <graph string="Reporte Flujo de Caja Proyectado" type="bar" stacked="1">
+                    <field name="grupo"/>
+                    <field name="concepto"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="action_account_cash_flow_book_advance_projected_it" model="ir.actions.act_window">
+            <field name="name">Reporte Flujo de Caja Proyectado</field>
+            <field name="res_model">account.cash.flow.book.advance.projected</field>
+            <field name="view_id" ref="view_account_cash_flow_book_advance_projected_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,pivot,graph</field>
+        </record>
+
+    </data>
+</odoo>

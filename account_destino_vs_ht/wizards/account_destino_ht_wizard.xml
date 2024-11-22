@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_destino_ht_wizard_form">
+			<field name="name">account.destino.ht.wizard.form</field>
+			<field name="model">account.destino.ht.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="period_id"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_destino_ht_wizard_action" model="ir.actions.act_window">
+			<field name="name">Diferencia Destinos VS Hoja de Trabajo</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.destino.ht.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_destino_ht_wizard_action" 
+		id="menu_action_account_destino_ht_wizard" 
+		parent="account_consistencia_rep_it.menu_account_consistency_report" 
+		sequence="10" 
+		groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--VIEW TREE INVOICES-->
+
+	<record id="view_invoice_tree_inherit_field" model="ir.ui.view">
+		<field name="name">invoice.tree.inherit.field</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_invoice_tree"/>
+		<field name="arch" type="xml">
+			<field name="ref" position="before">
+			</field>
+			<field name="name" position="replace">
+				<field name="vou_number" decoration-bf="1" decoration-danger="made_sequence_hole"/>
+				<field name="partner_l10n_pe_vat_code" optional="show" string="TP"/>
+				<field name="partner_vat" optional="show" string="Doc Partner"/>
+			</field>
+			<field name="invoice_date" position="before">
+				<field name="l10n_latam_document_type_id_code" optional="show" string="TD"/>
+                <field name="nro_comp" optional="show" string="Número"/>
+                <field name="name" optional="hide" string="Nombre"/>
+			</field>
+			<field name="currency_id" position="replace">
+			</field>
+			<field name="invoice_date_due" position="replace">
+				<field name="invoice_date_due" optional="show" invisible="payment_state in ('paid', 'in_payment', 'reversed') or state == 'cancel'"/>
+				<field name="currency_id" optional="show" readonly="state in ['cancel', 'posted']" string="Moneda"/>
+				<field name="currency_rate" optional="show" string="TC"/>
+			</field>
+			<field name="amount_residual_signed" position="after">
+				<field name="amount_residual" string="Adeudado en Divisa" optional="show"/>
+				<field name="glosa" optional="hide"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_out_invoice_tree_field" model="ir.ui.view">
+		<field name="name">invoice.out.tree.inherit.field.modify</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_out_invoice_tree"/>
+		<field name="arch" type="xml">
+			<field name="currency_id" position="attributes">
+				<attribute name="string">Moneda</attribute>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_out_credit_note_tree_modify" model="ir.ui.view">
+		<field name="name">account.out.invoice.tree.modify</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_out_credit_note_tree"/>
+		<field name="arch" type="xml">
+			<field name="currency_id" position="attributes">
+				<attribute name="string">Moneda</attribute>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_in_invoice_tree_modify" model="ir.ui.view">
+		<field name="name">invoice.in.tree.inherit.field.modify</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_in_invoice_bill_tree"/>
+		<field name="arch" type="xml">
+			<field name="currency_id" position="attributes">
+				<attribute name="string">Moneda</attribute>
+			</field>
+		</field>
+	</record>
+
+	<record id="view_in_invoice_refund_tree_modify" model="ir.ui.view">
+		<field name="name">account.in.invoice.tree.modify</field>
+		<field name="model">account.move</field>
+		<field name="inherit_id" ref="account.view_in_invoice_refund_tree"/>
+		<field name="arch" type="xml">
+			<field name="currency_id" position="attributes">
+				<attribute name="string">Moneda</attribute>
+			</field>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_view_account_form_inherit_account" model="ir.ui.view">
+            <field name="name">account.move.view.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <!--INGRESOS-->
+                    <field name="asset_deferred_id" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                    <button name="action_open_deferred_ids" string="Ingresos Diferidos" type="object" class="oe_stat_button" icon="fa-id-card-o" invisible="not asset_deferred_id or state =='draft' or move_type in ['in_refund','in_invoice','out_refund','entry']" context="{'type':'income'}">
+                    </button>
+                    <!--GASTOS-->
+                    <button name="action_open_deferred_ids" string="Gastos Diferidos" type="object" class="oe_stat_button text-danger" icon="fa-id-card-o" invisible="not asset_deferred_id or state =='draft' or move_type in ['in_refund','out_invoice','out_refund','entry']" context="{'type':'expense'}">
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

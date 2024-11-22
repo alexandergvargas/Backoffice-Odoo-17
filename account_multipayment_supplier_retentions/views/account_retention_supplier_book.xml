@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+        <record id="view_account_retention_supplier_book_tree" model="ir.ui.view">
+            <field name="name">account.retention.supplier.book.tree</field>
+            <field name="model">account.retention.supplier.book</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Retenciones" create="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="partner"/>
+                    <field name="ruc"/>
+                    <field name="moneda"/>
+                    <field name="td"/>
+                    <field name="serie"/>
+                    <field name="numero"/>
+                    <field name="invoice_date"/>
+                    <field name="payment_date"/>
+                    <field name="tc"/>
+                    <field name="amount_total_signed" sum="amount_total_signed"/>
+                    <field name="percentage"/>
+                    <field name="amount_retention" sum="amount_retention"/>
+                    <field name="amount_retention_me" sum="amount_retention_me"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_retention_supplier_book_it" model="ir.actions.act_window">
+            <field name="name">Retenciones</field>
+            <field name="res_model">account.retention.supplier.book</field>
+            <field name="view_id" ref="view_account_retention_supplier_book_tree"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+    </data>
+</odoo>

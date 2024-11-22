@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- View detailed.financial.statements.screen View Tree -->
+    <record id="view_detailed_financial_statements_screen_tree" model="ir.ui.view">
+        <field name="name">view.detailed.financial.statements.screen.tree</field>
+        <field name="model">detailed.financial.statements.screen</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="periodo"/>
+                <field name="libro"/>
+                <field name="voucher"/>
+                <field name="group"/>
+                <field name="account"/>
+                <field name="debe" sum="debe"/>
+                <field name="haber" sum="haber"/>
+                <field name="balance" sum="balance"/>
+                <field name="amount_currency" sum="amount_currency"/>
+                <field name="currency_id"/>
+                <field name="date"/>
+                <field name="td"/>
+                <field name="nro_comp"/>
+                <field name="type_ef"/>
+            </tree>
+        </field>
+    </record>
+
+    
+   
+    
+
+</odoo>

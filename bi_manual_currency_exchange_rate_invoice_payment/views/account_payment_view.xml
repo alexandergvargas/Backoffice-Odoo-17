@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bi_view_account_payment_register_invoice_form_exchange_rate_field_add_inherit" model="ir.ui.view">
+            <field name="name">bi.view.account.payment.invoice.form.exchange.rate.field.add.inherit</field>
+            <field name="model">account.payment.register</field>
+            <field name="inherit_id" ref="account_fields_it.view_account_payment_register_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/group/group/field[@name='journal_id']" position="after">
+                    <field name="check_active_currency" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="bi_view_account_payment_invoice_form_exchange_rate_field_add_inherit" model="ir.ui.view">
+            <field name="name">bi.view.account.payment.invoice.form.exchange.rate.field.add.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account_fields_it.view_account_payment_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page/group/group[@name='group2']/field[@name='journal_id']" position="after">
+                     <field name="check_active_currency" invisible="1"/>
+                </xpath>
+                <xpath expr="//notebook/page/group/group[@name='group1']/div[@name='amount_div']/field[@name='amount']" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//notebook/page/group/group[@name='group1']/label[@for='amount']" position="attributes">
+                	<attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//notebook/page/group/group[@name='group1']/div[@name='amount_div']" position="before">
+                	<label for="amount_currency" string="Amount"/>
+                </xpath>
+                <xpath expr="//notebook/page/group/group[@name='group1']/div[@name='amount_div']/field[@name='amount']" position="after">
+                	<field name="amount_currency" readonly="state != 'draft'"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

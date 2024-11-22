@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_leasing_it_group_user,account.leasing.it.group.user,model_account_leasing_it,account_base_it.group_account_tables_user,1,1,1,1
+access_account_leasing_it_line_group_user,account.leasing.it.line.group.user,model_account_leasing_it_line,account_base_it.group_account_tables_user,1,1,1,1
+access_account_leasing_invoice_wizard_group_user,account.leasing.invoice.wizard.group.user,model_account_leasing_invoice_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_import_leasing_line_wizard_group_user,import.leasing.line.wizard.group.user,model_import_leasing_line_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_leasing_main_parameter_manager,leasing.main.parameter.manager,model_leasing_main_parameter,account_base_it.group_account_tables_user,1,1,1,1

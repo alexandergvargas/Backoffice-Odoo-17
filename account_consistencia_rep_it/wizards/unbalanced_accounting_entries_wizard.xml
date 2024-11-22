@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_unbalanced_accounting_entries_wizard_form">
+			<field name="name">unbalanced.accounting.entries.wizard.form</field>
+			<field name="model">unbalanced.accounting.entries.wizard</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="period_from_id" required="1"/>
+							<field name="period_to_id" required="1"/>
+						</group>
+						<group>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_report" type="object" class="oe_highlight"/>
+						or
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="unbalanced_accounting_entries_wizard_action" model="ir.actions.act_window">
+			<field name="name">Asientos Descuadrados</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">unbalanced.accounting.entries.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+	</data>
+
+	<menuitem id='menu_unbalanced_accounting_entries_wizard_action' 
+				  parent='account_consistencia_rep_it.menu_account_consistency_report' 
+				  action="unbalanced_accounting_entries_wizard_action"
+				  sequence="3"/>
+</odoo>

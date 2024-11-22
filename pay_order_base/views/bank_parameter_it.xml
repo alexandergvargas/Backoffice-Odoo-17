@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_bank_parameter_it_form" model="ir.ui.view">
+		<field name="name">bank.parameter.it.form</field>
+		<field name="model">bank.parameter.it</field>
+		<field name="arch" type="xml">
+			<form string="Parametros">
+				<sheet>
+					<group>
+						<field name="bank_id" required="1"/>
+					</group>
+					<group>
+						<field name="format_id" required="1" options="{'no_create_edit': True, 'no_create': True,'no_open': True}"/>
+					</group>
+					<notebook>
+						<page string="Tipo de Documento">
+							<field name="type_doc_partner_ids">
+								<tree editable="bottom">
+									<field name="code" required="1"/>
+									<field name="identification_type_id" required="1"/>
+								</tree>
+							</field>
+						</page>
+                        <page string="Tipo de Comprobante">
+							<field name="type_doc_invoice_ids">
+								<tree editable="bottom">
+									<field name="code" required="1"/>
+									<field name="type_document_id" required="1"/>
+								</tree>
+							</field>
+						</page>
+                        <page string="Tipo de Abono">
+							<field name="type_doc_payment_ids">
+								<tree editable="bottom">
+									<field name="code" required="1"/>
+									<field name="payment_type_id" required="1"/>
+								</tree>
+							</field>
+						</page>
+                        <page string="Tipo de Cuenta">
+							<field name="type_doc_partnerbank_ids">
+								<tree editable="bottom">
+									<field name="code" required="1"/>
+									<field name="partnerbank_type_id" required="1"/>
+								</tree>
+							</field>
+						</page>
+                        <page string="Bancos">
+							<field name="type_doc_bank_ids">
+								<tree editable="bottom">
+									<field name="name" required="1"/>
+									<field name="bank_id" required="1"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+    
+	<record id="view_bank_parameter_it_list" model="ir.ui.view">
+		<field name="name">bank.parameter.it.list</field>
+		<field name="model">bank.parameter.it</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="bank_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_bank_parameter_it_form" model="ir.actions.act_window">
+		<field name="name">Parametros para Bancos</field>
+		<field name="res_model">bank.parameter.it</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_bank_parameter_it_list"/>
+		<field name="domain">[]</field>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Parametros para Bancos aqui.
+		  </p>
+		</field>
+	</record>
+
+    <menuitem action="action_bank_parameter_it_form" 
+              id="menu_action_bank_parameter_it_form" 
+              parent="account_base_it.menu_account_base_it" 
+              sequence="25"/>
+</odoo>

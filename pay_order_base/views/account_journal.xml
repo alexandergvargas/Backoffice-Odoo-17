@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_account_journal_form_inherit_mcro" model="ir.ui.view">
+			<field name="name">view.account.journal.form.inherit.macro</field>
+			<field name="model">account.journal</field>
+			<field name="inherit_id" ref="account_fields_it.view_account_journal_form_inherit"/>
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//field[@name='check_surrender']" position="after">
+						<field name="bank_parameter_id"/>
+					</xpath>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

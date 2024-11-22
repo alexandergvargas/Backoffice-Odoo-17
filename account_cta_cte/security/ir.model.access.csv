@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_cta_cte_group_user,account.cta.cte.group.user,model_account_cta_cte,account_base_it.group_account_tables_user,1,1,1,1
+access_account_cta_cte_si_group_user,account.cta.cte.si.group.user,model_account_cta_cte_si,account_base_it.group_account_tables_user,1,1,1,1
+access_account_cta_cte_report_wizard_group_user,account.cta.cte.report.wizard.group.user,model_account_cta_cte_report_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_import_cta_cte_line_wizard_group_user,import.cta.cte.line.wizard.group.user,model_import_cta_cte_line_wizard,account_base_it.group_account_tables_user,1,1,1,1

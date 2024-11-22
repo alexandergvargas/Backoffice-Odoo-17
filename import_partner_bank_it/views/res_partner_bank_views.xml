@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- View res.partner.bank tree -->
+  <record id="view_res_partner_bank_tree_inherit" model="ir.ui.view">
+    <field name="name">view.res.partner.bank.tree.inherit</field>
+    <field name="model">res.partner.bank</field>
+    <field name="inherit_id" ref="base.view_partner_bank_tree"/>
+    <field name="arch" type="xml">
+      <xpath expr="//tree" position="attributes">
+        <attribute name="js_class">res_partner_bank_list</attribute>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

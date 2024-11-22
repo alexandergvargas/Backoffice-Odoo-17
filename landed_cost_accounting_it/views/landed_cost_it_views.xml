@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="view_landed_cost_it_form_inherit" model="ir.ui.view">
+    <field name="name">view.landed.cost.it.form</field>
+    <field name="model">landed.cost.it</field>
+    <field name="inherit_id" ref="landed_cost_it.view_landed_cost_it_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//button[@name='agregar_lineas']" position="after">
+        <button string="Traer información" type="object" name="get_info" invisible="state != 'draft'" />
+      </xpath>
+      <xpath expr="//button[@name='get_purchases']" position="after">
+        <button name="generate_excel" string="Reporte GV" type="object" class="oe_highlight" invisible=" state == 'draft'"/>
+        <button name="get_excel_saldos" string="Reporte GV Distribuido" type="object" class="oe_highlight" invisible=" state == 'draft'"/>
+      </xpath>
+      <xpath expr="//form/sheet/group" position="before">
+        <div class="oe_button_box" name="button_box">
+          <field name="move_entry_ids" invisible="1"/>
+          <button class="oe_stat_button" string="Asientos de Ingreso" name="open_entries" type="object" icon="fa-list" invisible="not move_entry_ids"/>
+        </div>
+      </xpath>
+    </field>
+  </record>
+
+  <record model="ir.actions.server" id="action_create_moves_landed_cost_it">
+    <field name="name">Generar Asientos de Ingreso</field>
+    <field name="model_id" ref="landed_cost_it.model_landed_cost_it"/>
+    <field name="binding_model_id" ref="landed_cost_it.model_landed_cost_it" />
+    <field name="binding_view_types">form</field>
+    <field name="state">code</field>
+    <field name="code">action = records.action_create_moves()</field>
+  </record>
+</odoo>

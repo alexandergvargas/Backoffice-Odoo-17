@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>        
+            
+        <!--COSTOS DE PRODUCCION-->
+        <menuitem
+            id="production_costs_menu"
+            name="Costos de producción"
+            parent="account_base_sunat_it.menu_sunat_tables"
+            sequence="201"/>
+
+            <menuitem
+                id="annual_cost_of_sales_menu"
+                name="10.1 Costo de ventas anual"
+                action="account_sunat_production_costs_it.annual_cost_of_sales_action"
+                parent="account_sunat_production_costs_it.production_costs_menu"
+                sequence="1"/>
+            
+            <menuitem
+                id="monthly_cost_elements_menu"
+                name="10.2 Elementos del costo mensual"
+                action="account_sunat_production_costs_it.monthly_cost_elements_action"
+                parent="account_sunat_production_costs_it.production_costs_menu"
+                sequence="2"/>
+
+            <menuitem
+                id="annual_valued_cost_of_production_menu"
+                name="10.3 Costo de producción valorizado anual"
+                action="account_sunat_production_costs_it.annual_valued_cost_of_production_action"
+                parent="account_sunat_production_costs_it.production_costs_menu"
+                sequence="3"/>
+            
+            <menuitem
+                id="cost_centers_menu"
+                name="10.4 Centros de costos"
+                action="account_sunat_production_costs_it.cost_centers_action"
+                parent="account_sunat_production_costs_it.production_costs_menu"
+                sequence="4"/>
+
+        <!--PARAMETROS-->
+        <menuitem
+            id="parameters_main_menu"
+            name="Parametros"
+            parent="account_base_sunat_it.menu_sunat_tables"
+            sequence="204"/>
+            
+            <menuitem
+                id="parameters_menu"
+                name="Parametros"
+                action="account_sunat_production_costs_it.parameters_action"
+                parent="account_sunat_production_costs_it.parameters_main_menu"
+                sequence="1"/>
+
+    
+    </data>
+    
+
+</odoo>

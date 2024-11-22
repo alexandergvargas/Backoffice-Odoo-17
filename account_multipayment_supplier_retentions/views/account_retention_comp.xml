@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="account_retention_comp_form_view" model="ir.ui.view">
+			<field name="name">account.retention.comp.form</field>
+			<field name="model">account.retention.comp</field>
+			<field name="arch" type="xml">
+				<form string="Comprobantes de Retencion">
+					<header>
+						<button string="Establecer a borrador" type="object" name="action_draft" invisible="state not in ['done','cancel']" class="oe_highlight"/>
+						<button string="Validar" type="object" name="action_done" invisible = "state != 'draft'" class="oe_highlight"/>
+						<button string="Cancelar" type="object" name="action_cancel" invisible = "state != 'done'" class="oe_highlight"/>
+						<button name="get_lines" string="Obtener Lineas" invisible = "state != 'draft'"  type="object" class="oe_highlight"/>
+						<field name="state" widget="statusbar" readonly="1"/>
+					</header>
+					<group name="main">
+						<group name="main_1"> 
+							<field name="partner_id" required="1" 
+								readonly="state != 'draft'"
+								/>
+							<field name="date" 
+								readonly="state != 'draft'"
+								/>
+							<field name="retention_document_type" invisible="1"/>
+							<field name="serie_id" 
+								readonly="state != 'draft'"
+								domain="[('company_id','=',company_id),('type_document_id','=',retention_document_type)]"/>
+							<field name="name" required="1" 
+								readonly="state != 'draft'"/>
+							<field name="amount" 
+								readonly="state != 'draft'"/>
+						</group>
+						<group name="main_2">
+							<field name="move_id" readonly="1"  invisible="state != 'done'"/> 
+							<field name="company_id" readonly="1" required="1"/> 
+						</group>
+					</group>
+					<notebook>
+						<page string="Detalle" id="detail">
+							<field name="lines_ids" 
+								readonly="state != 'draft'">
+								<tree editable="bottom">
+									<field name="type_document_id" optional="show" readonly="1"/>
+									<field name="invoice_id" optional="show" readonly="1"/>
+									<field name="invoice_date_it" optional="show" readonly="1"/>
+									<field name="amount_total_signed" optional="show" readonly="1"/>
+									<field name="debit" optional="show" readonly="1"/>
+									<field name="amount_retention" optional="show" readonly="1"/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_retention_comp_view_tree" model="ir.ui.view">
+			<field name="name">account.retention.comp.view.tree</field>
+			<field name="model">account.retention.comp</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="date"/>
+					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="amount" />
+					<field name="move_id" />
+					<field name="company_id" groups="base.group_multi_company"/> 
+				</tree>
+			</field>
+		</record>
+
+		<record id="account_retention_comp_action" model="ir.actions.act_window">
+			<field name="name">Emitir Comprobantes de Retencion</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.retention.comp</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+			<p class="o_view_nocontent_smiling_face">
+				Crea tu primera tabla de Comprobantes de Retencion aqui
+			</p>
+			</field>
+		</record>
+
+		<menuitem action="account_retention_comp_action" 
+				  id="menu_account_retention_comp" 
+				  parent="account_treasury_it.sub_menu_treasury_it2" 
+				  sequence="26"/>
+	</data>
+</odoo>

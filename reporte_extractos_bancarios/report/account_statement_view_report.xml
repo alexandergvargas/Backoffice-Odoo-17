@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_statement_it" name="template_name">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="header"/>
+                <div class="page">
+                    <t t-call="web.internal_layout">
+                        <t t-if="doc.journal_type =='bank'">
+                            <h5>EXTRACTO BANCARIO</h5>
+                        </t>
+                        <t t-elif="doc.journal_type =='cash'">
+                            <h5>EXTRACTO CAJA</h5>
+                        </t>
+                        <t t-else="">
+                            <h5>RENDICIÓN</h5>
+                        </t>
+                        <t t-foreach="doc.statement_id" t-as="statement_id">
+                            <div style="width:50% !important;  display: flex !important;  justify-content: left !important;margin-left:0%">
+                                <div class="row">
+                                    <table class="table table-borderless" style="font-size: 12px !important;text-align: left !important;">
+                                        <thead >
+                                            <tr >
+                                                <th scope="col" style="width:auto !important;">DIARIO: </th>
+                                                <th scope="col" style="width:auto !important;">
+                                                    <span t-field="statement_id.journal_id"/>
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                                <th scope="col" style="width:auto !important;">FECHA: </th>
+                                                <th scope="col" style="width:auto !important;">
+                                                    <span t-field="statement_id.date"/>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-borderless" style="font-size: 12px !important;text-align: left !important;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width:30% !important;">SALDO INICIAL: </th>
+                                                <th scope="col" style="width:30% !important;">
+                                                    <span t-field="statement_id.balance_start"/>
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <table class="table table-borderless" style="font-size: 11px !important; border: 1px solid black !important;border-collapse: collapse !important;">
+                                <thead>
+                                    <tr style="border-collapse: collapse; border-bottom: 1px solid;border-top: 1px solid;line-height: 1;!important">
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">FECHA</th>
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">DESCRIPCION</th>
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">PARTNER</th>
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">TD</th>
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">REFERENCIA</th>
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">MEDIO DE PAGO</th>
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">MONTO</th>
+                                        <th scope="col" style="width:auto; border: 1px solid black !important;border-collapse: collapse !important;">CONCILIADO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr t-foreach="statement_id.line_ids" t-as="line">
+
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-field="line.date"/>
+                                        </td>
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-field="line.payment_ref"/>
+                                        </td>
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-field="line.partner_id"/>
+                                        </td>
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-esc="line.type_document_id.code if line.type_document_id else ''"/>
+                                        </td>
+
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-field="line.ref"/>
+                                        </td>
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-esc="line.catalog_payment_id.code if line.catalog_payment_id else ''"/>
+                                        </td>
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-field="line.amount"/>
+                                        </td>
+                                        <td style=" border: 1px solid black !important;border-collapse: collapse !important;">
+                                            <span t-esc="'SI' if line.is_reconciled else 'NO'"/>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </t>
+                    </t>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="paperformat_portrait_statement" model="report.paperformat">
+        <field name="name">portrait pdf statement</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_statement_it" model="ir.actions.report">
+        <field name="name">Reporte Extracto</field>
+        <field name="model">report.extracto.bancario</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">reporte_extractos_bancarios.report_statement_it</field>
+        <field name="report_file">reporte_extractos_bancarios.report_statement_it</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="reporte_extractos_bancarios.paperformat_portrait_statement"/>
+    </record>
+
+
+</odoo>

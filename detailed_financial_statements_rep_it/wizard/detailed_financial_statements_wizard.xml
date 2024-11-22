@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="detailed_financial_statements_rep_it_view_form" model="ir.ui.view">
+            <field name="name">detailed_financial_statements_rep_it.view.form</field>
+            <field name="model">detailed.financial.statements.wizard</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="period_from" />
+                                <field name="period_to" />
+                                <field name="type_show" />
+                            </group>
+                            <group>
+                                <field name="currency_id" />
+                                <field name="company_id" />
+                            </group>
+                        </group>
+                        <footer>
+                            <button string="Aplicar" name="get_report" type="object" class="oe_highlight"/>
+						or
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="detailed_financial_statements_rep_it_action" model="ir.actions.act_window">
+            <field name="name">Detalle Estados Financieros</field>
+            <field name="res_model">detailed.financial.statements.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="detailed_financial_statements_rep_it_menu" name="Detalle Estados Financieros" action="detailed_financial_statements_rep_it_action" parent="account_report_menu_it.menu_account_worksheet" sequence="100"/>
+
+    </data>
+
+
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="res_partner_action_employee_surrender" model="ir.actions.act_window">
+            <field name="name">Empleados</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('is_employee', '=', True)]</field>
+            <field name="context">{'res_partner_search_mode': 'employee', 'default_is_employee': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crea un nuevo Empleado
+                </p>
+
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

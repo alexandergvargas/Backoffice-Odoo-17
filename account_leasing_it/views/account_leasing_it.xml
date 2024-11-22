@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record model="ir.ui.view" id="view_account_leasing_it_form">
+		<field name="name">account.leasing.it.form</field>
+		<field name="model">account.leasing.it</field>
+		<field name="arch" type="xml">
+			<form string="Prestamo">
+				<header>
+					<button string="Volver a Borrador" type="object" name="action_draft" class="oe_highlight" invisible="state != 'posted'"/>
+					<button string="Validar" type="object" name="action_post" class="oe_highlight" invisible="state != 'draft'"/>
+					<button string="Importar Lineas" type="object" name="import_lines" class="oe_highlight" invisible="state != 'draft'"/>
+					<button string="Generar Asiento" type="object" name="create_move" class="oe_highlight" invisible="state != 'posted' or move_id"/>
+					<field name="state" widget="statusbar" readonly="1"/>
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" string="Asiento" name="view_account_move" type="object" icon="fa-book" invisible="not move_id"/>
+						<field name="move_id" invisible="1"/>
+					</div>
+					<group>
+						<group>
+							<field name="name" readonly="state == 'posted'"/>
+							<field name="partner_id" readonly="state == 'posted'"/>
+							<field name="date" readonly="state == 'posted'"/>
+							<field name="total_quotes" readonly="state == 'posted'"/>
+							<field name="currency_id" readonly="state == 'posted'"/>
+							<field name="tc" readonly="state == 'posted'"/>
+							<field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/>
+						</group>
+						<group>
+							<field name="value" readonly="state == 'posted'"/>
+							<field name="interest_value" readonly="state == 'posted'"/>
+							<field name="insurance_value" readonly="state == 'posted'"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Detalle">
+							<field name="line_ids" readonly="state == 'posted'">
+								<tree string="Detalle" editable="bottom">
+									<field name="quote"/>
+									<field name="date_due"/>
+									<field name="amortization" sum="amortization"/>
+									<field name="interest" sum="interest"/>
+									<field name="insurance" sum="insurance"/>
+									<field name="value" sum="value"/>
+									<field name="port" sum="port"/>
+									<field name="amount_quote" sum="amount_quote"/>
+									<field name="tax" sum="tax"/>
+									<field name="total" sum="total"/>
+									<field name="invoice_id" invisible="1"/>
+									<field name="move_id" invisible="1"/>
+									<button string="Generar Factura" type="object" name="action_create_invoice_wizard" class="oe_highlight" invisible="parent.state != 'posted' or invoice_id"/>
+									<button string="Ver Factura" type="object" name="view_account_invoice" icon="fa-eye" invisible="not invoice_id"/>
+									<button string="Generar Asiento" type="object" name="create_move" class="oe_highlight" invisible="parent.state != 'posted' or move_id"/>
+									<button string="Ver Asiento" type="object" name="view_account_move" icon="fa-eye" invisible="not move_id"/>
+								</tree>
+							</field>
+						</page>
+						<page string="Contabilidad">
+							<group>
+								<group>
+									<field name="asset_account_id" readonly="state == 'posted'"/>
+									<field name="deferred_interest_account_id" readonly="state == 'posted'"/>
+									<field name="deferred_insurance_account_id" readonly="state == 'posted'"/>
+									<field name="leasing_payable_account_id" readonly="state == 'posted'"/>
+									<field name="interest_payable_account_id" readonly="state == 'posted'"/>
+									<field name="insurance_payable_account_id" readonly="state == 'posted'"/>
+								</group>
+								<group>
+									<field name="purchase_tax_id" readonly="state == 'posted'"/>
+									<field name="interest_expense_account_id" readonly="state == 'posted'"/>
+									<field name="commission_expense_account_id" readonly="state == 'posted'"/>
+									<field name="insurance_expense_account_id" readonly="state == 'posted'"/>
+								</group>
+							</group>
+							<group string="Diarios">
+								<group>
+									<field name="purchase_journal_id" readonly="state == 'posted'"/>
+									<field name="journal_id" readonly="state == 'posted'"/>
+								</group>
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+				<div class="oe_chatter">
+					<field name="message_follower_ids" widget="mail_followers"/>
+					<field name="message_ids" widget="mail_thread"/>
+				</div>
+			</form>
+        </field>
+    </record>
+	
+    <record model="ir.ui.view" id="view_account_leasing_it_tree">
+		<field name="name">account.leasing.it.tree</field>
+		<field name="model">account.leasing.it</field>
+		<field name="arch" type="xml">
+            <tree string="Leasing">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date"/>
+                <field name="currency_id"/>
+                <field name="value"/>
+				<field name="company_id" groups="base.group_multi_company"/>  
+            </tree>
+        </field>
+    </record>
+
+	<record model="ir.ui.view" id="view_account_leasing_it_line_tree">
+		<field name="name">account.leasing.it.line.tree</field>
+		<field name="model">account.leasing.it.line</field>
+		<field name="arch" type="xml">
+            <tree string="Detalle Leasing" create="0" edit="0" delete="0">
+                <field name="main_id" string="N° de Contrato"/>
+                <field name="quote"/>
+                <field name="date_due"/>
+                <field name="amortization" sum="amortization"/>
+				<field name="interest" sum="interest"/>
+				<field name="insurance" sum="insurance"/>
+				<field name="value" sum="value"/>
+				<field name="port" sum="port"/>
+				<field name="amount_quote" sum="amount_quote"/>
+				<field name="tax" sum="tax"/>
+				<field name="total" sum="total"/>
+				<field name="invoice_id" invisible="1"/>
+				<field name="move_id" invisible="1"/>
+				<button string="Ver Factura" type="object" name="view_account_invoice" icon="fa-eye" invisible="not invoice_id"/>
+				<button string="Ver Asiento" type="object" name="view_account_move" icon="fa-eye" invisible="not move_id"/>
+            </tree>
+        </field>
+    </record>
+
+	<record id="view_account_leasing_it_action" model="ir.actions.act_window">
+		<field name="name">Leasing</field>
+		<field name="res_model">account.leasing.it</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_account_leasing_it_tree"/>
+		<field name="help" type="html">
+		<p class="o_view_nocontent_smiling_face">
+			Crea tu primer Leasing aqui
+		</p>
+		</field>
+	</record>
+
+	<record id="view_account_leasing_it_line_action" model="ir.actions.act_window">
+		<field name="name">Detalle Leasing</field>
+		<field name="res_model">account.leasing.it.line</field>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_account_leasing_it_line_tree"/>
+		<field name="help" type="html">
+		<p class="o_view_nocontent_smiling_face">
+			Crea tu primer Detalle de Leasing desde Tesoreria - Leasing
+		</p>
+		</field>
+	</record>
+
+	 <record model="ir.actions.server" id="create_move_account_leasing_it_line">
+		<field name="name">Generar Asiento Devengos, Intereses y Seguros </field>
+		<field name="model_id" ref="model_account_leasing_it_line"/>
+		<field name="binding_model_id" ref="model_account_leasing_it_line" />
+		<field name="state">code</field>
+		<field name="code">action = records.create_move()</field>
+	</record>
+
+	<menuitem id="menu_view_account_leasing_it_action"
+			parent="account_treasury_it.sub_menu_treasury_it2" 
+			action="view_account_leasing_it_action" 
+			sequence="31" 
+			groups="account_leasing_it.group_account_leasing"/>
+
+	<menuitem id="menu_view_account_leasing_it_line_action"
+			parent="account_treasury_it.sub_menu_treasury_it3" 
+			action="view_account_leasing_it_line_action" 
+			sequence="60" 
+			groups="account_leasing_it.group_account_leasing"/>
+
+</odoo>

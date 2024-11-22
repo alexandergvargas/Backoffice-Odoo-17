@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_production_costs_it_user,production.costs.it.user,model_production_costs_it,account_base_it.group_account_tables_user,1,1,1,1
+access_production_costs_parameter_user,production.costs.parameter.user,model_production_costs_parameter,account_base_it.group_account_tables_user,1,1,1,1
+access_account_sunat_production_cost_wizard_group_user,account.sunat.production.cost.wizard.group.user,model_account_sunat_production_cost_wizard,account_base_it.group_account_tables_user,1,1,1,1
+access_popup_it_production_cost_group_user,popup.it.production.cost.group.user,model_popup_it_production_cost,account_base_it.group_account_tables_user,1,1,1,1

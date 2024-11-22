@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_account_account_config_manager,account_account_config_manager,model_account_account_config,,1,1,1,1
+access_account_account_config_line_manager,account_account_config_line_manager,model_account_account_config_line,,1,1,1,1

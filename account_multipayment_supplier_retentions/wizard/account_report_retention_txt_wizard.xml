@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_report_retention_txt_wizard_form">
+			<field name="name">account.report.retention.txt.wizard.form</field>
+			<field name="model">account.report.retention.txt.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Retenciones">
+					<group>
+						<group>
+							<field name="company_id"/>
+							<field name="fiscal_year_id"/>
+							<field name="period_id" domain="[('fiscal_year_id','=',fiscal_year_id),('is_opening_close','=',False)]"/>
+						</group>
+					</group>
+					<footer>
+						<button string="Mostrar" name="get_txt" type="object" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_report_retention_txt_wizard_action" model="ir.actions.act_window">
+			<field name="name">Retenciones</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.report.retention.txt.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_report_retention_txt_wizard_action" 
+		id="menu:account_report_retention_txt_wizard_action" 
+		parent="account_base_sunat_it.menu_finance_sunat" 
+		sequence="101" 
+		groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

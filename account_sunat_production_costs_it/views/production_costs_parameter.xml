@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="production_costs_parameter_view_form" model="ir.ui.view">
+            <field name="name">production.costs.parameter.view.form</field>
+            <field name="model">production.costs.parameter</field>
+            <field name="arch" type="xml">
+                <form string="Parametros">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="company_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="cv" string="Costo de Ventas">
+                                <group>
+                                    <field name="account_cv_ids" widget="many2many_tags"/>
+                                    <field name="account_cv_adjustment_ids" widget="many2many_tags"/>
+                                    <field name="codes_cv" placeholder="20,21,22"/>
+                                    <field name="codes_cv_adjustment" placeholder="20,21,22"/>
+                                </group>
+                            </page>
+                            <page name="cm" string="Costo Mensual">
+                                <group>
+                                    <field name="account_cm_type" required="1" widget="radio"/>
+                                </group>
+                                <group name="account" string="Cuenta Contable" invisible="account_cm_type =='account_analytic'">
+                                    <group name="costo" string="Costos">
+                                        <field name="materials_cost_account_cm_ids" widget="many2many_tags"/>
+                                        <field name="labor_cost_account_cm_ids" widget="many2many_tags"/>
+                                        <field name="other_cost_account_cm_ids" widget="many2many_tags"/>
+                                    </group>
+                                    <group name="gasto" string="Gastos">
+                                        <field name="materials_expense_account_cm_ids" widget="many2many_tags"/>
+                                        <field name="labor_expense_account_cm_ids" widget="many2many_tags"/>
+                                        <field name="other_expense_account_cm_ids" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                                <group name="account" string="Cuenta Analitica" invisible="account_cm_type =='account'">
+                                    <group name="costo" string="Costos">
+                                        <field name="cc_materials_cost_analytic_cm_ids" widget="many2many_tags"/>
+                                        <field name="cc_labor_cost_analytic_cm_ids" widget="many2many_tags"/>
+                                        <field name="cc_other_cost_analytic_cm_ids" widget="many2many_tags"/>
+                                    </group>
+                                    <group name="gasto" string="Gastos">
+                                        <field name="cc_materials_expense_analytic_cm_ids" widget="many2many_tags"/>
+                                        <field name="cc_labor_expense_analytic_cm_ids" widget="many2many_tags"/>
+                                        <field name="cc_other_expense_analytic_cm_ids" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="cp" string="Costo Producción">
+                                <group>
+                                    <field name="account_cp_type" required="1" widget="radio"/>
+                                    <field name="pp_account_cp_ids" widget="many2many_tags"/>
+                                </group>
+                                <group name="account" string="Cuenta Contable" invisible="account_cp_type =='account_analytic'">
+                                    <group name="costo" string="Costos">
+                                        <field name="materials_cost_account_cp_ids" widget="many2many_tags"/>
+                                        <field name="labor_cost_account_cp_ids" widget="many2many_tags"/>
+                                        <field name="other_cost_account_cp_ids" widget="many2many_tags"/>
+                                    </group>
+                                    <group name="gasto" string="Gastos">
+                                        <field name="materials_expense_account_cp_ids" widget="many2many_tags"/>
+                                        <field name="labor_expense_account_cp_ids" widget="many2many_tags"/>
+                                        <field name="other_expense_account_cp_ids" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                                <group name="account" string="Cuenta Analitica" invisible="account_cp_type =='account'">
+                                    <group name="costo" string="Costos">
+                                        <field name="cc_materials_cost_analytic_cp_ids" widget="many2many_tags"/>
+                                        <field name="cc_labor_cost_analytic_cp_ids" widget="many2many_tags"/>
+                                        <field name="cc_other_cost_analytic_cp_ids" widget="many2many_tags"/>
+                                    </group>
+                                    <group name="gasto" string="Gastos">
+                                        <field name="cc_materials_expense_analytic_cp_ids" widget="many2many_tags"/>
+                                        <field name="cc_labor_expense_analytic_cp_ids" widget="many2many_tags"/>
+                                        <field name="cc_other_expense_analytic_cp_ids" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="cc" string="Centros de Costos">
+                                <group>
+                                    <field name="account_analytic_cc_ids" widget="many2many_tags"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="production_costs_parameter_view_tree" model="ir.ui.view">
+            <field name="name">production.costs.parameter.view.tree</field>
+            <field name="model">production.costs.parameter</field>
+            <field name="arch" type="xml">
+                <tree string="Parametros">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="parameters_action" model="ir.actions.act_window">
+            <field name="name">Parametros</field>
+            <field name="res_model">production.costs.parameter</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p>
+                    <strong>¡Bienvenido a los Parametros!</strong>
+                </p>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

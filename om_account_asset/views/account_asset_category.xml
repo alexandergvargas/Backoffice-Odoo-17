@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record model="ir.ui.view" id="view_account_asset_category_form">
+            <field name="name">account.asset.category.form</field>
+            <field name="model">account.asset.category</field>
+            <field name="arch" type="xml">
+                <form string="Categoria de Activo">
+                    <sheet>
+                        <group>
+                            <div class="oe_title">
+                                <label for="name" string="Categoria de Activo" class="oe_edit_only" invisible="type != 'purchase'"/>
+                                <label for="name" string="Deferred Revenue Type" class="oe_edit_only" invisible="type == 'purchase'"/>
+                                <h1>
+                                    <field name="name" placeholder="e.j. Computadoras"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <field name="type" invisible="1"/>
+                                <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            </group>
+                            <group string="Entradas de Diario">
+                                <field name="journal_id"/>
+                                <div>
+                                    <label for="account_asset_id" invisible="type != 'purchase'" style="font-weight: bold" class="o_light_label"/>
+                                    <label for="account_asset_id" string="Deferred Revenue Account" invisible="type != 'sale'" style="font-weight: bold" class="o_light_label"/>
+                                </div>
+                                <field name="account_asset_id" nolabel="1" invisible="not type"/>
+                                <div>
+                                    <label for="account_depreciation_id" invisible="type != 'purchase'" style="font-weight: bold" class="o_light_label"/>
+                                    <label for="account_depreciation_id" string="Recognition Income Account" invisible="type != 'sale'" style="font-weight: bold" class="o_light_label"/>
+                                </div>
+                                <field name="account_depreciation_id" nolabel="1"/>
+                                <div>
+                                    <label for="account_depreciation_expense_id" invisible="type != 'purchase'" style="font-weight: bold" class="o_light_label"/>
+                                    <label for="account_depreciation_expense_id" string="Recognition Account" invisible="type != 'sale'" style="font-weight: bold" class="o_light_label"/>
+                                </div>
+                                <field name="account_depreciation_expense_id" nolabel="1"/>
+                                <field name="account_retire_id"/>
+                                <field name="analytic_distribution" widget="analytic_distribution"/>
+
+                                <!--<field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>-->
+                            </group>
+                            <group string="Periodicidad">
+                                <field name="method_time" widget="radio" force_save="1" invisible="type != 'purchase'"/>
+                                <label for="depreciation_rate"/>
+                                <div>
+                                    <field name="depreciation_rate" nolabel="1" class="oe_inline"/>
+                                %
+                                </div>
+                                <field name="method_number" invisible="method_time != 'number' or not type" required="method_time == 'number'"/>
+                                <label for="method_period"/>
+                                <div>
+                                    <field name="method_period" nolabel="1" invisible="not type" class="oe_inline"/>
+                                mes(es)
+                                </div>
+                                <field name="method_end" required="method_time == 'end'" invisible="method_time != 'end'"/>
+                            </group>
+                            <group string="Opciones Adicionales">
+                                <field name="open_asset"/>
+                                <field name="group_entries"/>
+                                <field name="date_first_depreciation"/>
+                            </group>
+                            <group invisible="type == 'sale'" string="Metodo de Depreciacion">
+                                <field name="method" widget="radio"/>
+                                <field name="method_progress_factor" invisible="method == 'linear'" required="method == 'degressive'"/>
+                                <field name="prorata" invisible="method_time == 'end'"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_account_asset_asset_category_kanban" model="ir.ui.view">
+            <field name="name">account.asset.category.kanban</field>
+            <field name="model">account.asset.category</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="method"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="row mb4">
+                                    <div class="col-6">
+                                        <strong>
+                                            <span>
+                                                <t t-esc="record.name.value"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <span class="badge badge-pill">
+                                            <strong>
+                                                <t t-esc="record.method.value"/>
+                                            </strong>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <t t-esc="record.journal_id.value"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_asset_category_tree">
+            <field name="name">account.asset.category.tree</field>
+            <field name="model">account.asset.category</field>
+            <field name="arch" type="xml">
+                <tree string="Asset category">
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="method"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_account_asset_category_search">
+            <field name="name">account.asset.category.search</field>
+            <field name="model">account.asset.category</field>
+            <field name="arch" type="xml">
+                <search string="Search Asset Category">
+                    <filter string="Ventas" name="sales" domain="[('type','=', 'sale')]" help="Deferred Revenues"/>
+                    <filter string="Compras" name="purchase" domain="[('type','=', 'purchase')]" help="Assets"/>
+                    <field name="name" string="Categoria"/>
+                    <field name="journal_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Tipo" name="type" domain="[]" context="{'group_by':'type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

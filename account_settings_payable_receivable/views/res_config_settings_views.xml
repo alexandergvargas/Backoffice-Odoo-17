@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.account</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//block[@id='default_accounts'] /setting[2]" position="after">
+                    <setting string="Cuentas predeterminadas en partner" id="account_settings_payable_receivable">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label for="account_receivable" class="col-lg-5 o_light_label" string="Cuenta por cobrar"/>
+                                <field name="account_receivable" placeholder="misma cuenta"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="account_payable" class="col-lg-5 o_light_label" string="Cuenta por pagar"/>
+                                <field name="account_payable" placeholder="misma cuenta"/>
+                            </div>
+                        </div>
+                    </setting>
+                </xpath>               
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<menuitem id="sub_menu_treasury_reports_it" 
+				name="Informes" 
+				parent="account_treasury_it.sub_menu_treasury_it3" 
+				sequence="5"/>
+</odoo>

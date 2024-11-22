@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <record id="inherit_view_account_form_inherit_account_account" model="ir.ui.view">
+            <field name="name">account.account.view.form.inherit</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='accounting']" position="after">
+                    <page string="Automatización" invisible="account_type not in ['liability_non_current','asset_prepayments']">
+                        <group>
+                            <group> 
+                                <separator string="Opciones de diferidos"/>
+                                <td class="o_td_label">
+                                    <label for="type_deferrend" string="Automatizar diferidos"/>
+                                </td>
+                                <field name="type_deferrend" nolabel="1" widget="radio"/>
+                                <td class="o_td_label">
+                                    <label for="account_deferrend_id" string="Modelo diferidos" invisible="type_deferrend == 'no'"/>
+                                </td>
+                                <field name="account_deferrend_domain_ids" invisible="1"/>
+                                <field name="account_deferrend_id" invisible="type_deferrend == 'no'" required="type_deferrend != 'no'" nolabel="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+
+
+</odoo>

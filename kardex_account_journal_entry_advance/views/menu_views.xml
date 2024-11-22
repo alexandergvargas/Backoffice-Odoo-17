@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+        <menuitem id="kardex_menu_account" 
+                name="Contabilidad"
+                parent="kardex_menu_master.menu_reportes_kardex_master"
+                sequence="50"
+                groups="account_base_it.group_account_tables_user"/>
+	</data>
+</odoo>

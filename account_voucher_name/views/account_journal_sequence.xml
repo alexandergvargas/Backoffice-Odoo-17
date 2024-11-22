@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_journal_sequence_form" model="ir.ui.view">
+		<field name="name">account.journal.sequence.form</field>
+		<field name="model">account.journal.sequence</field>
+		<field name="arch" type="xml">
+			<form string="Secuencia de Diario">
+				<sheet>
+					<group>
+						<group>
+							<field name="journal_id" required="1"/>
+							<field name="fiscal_year_id" required="1"/>
+							<field name="opening"/>
+							<field name="january"/>
+							<field name="february"/>
+							<field name="march"/>
+							<field name="april"/>
+							<field name="may"/>
+							<field name="june"/>
+							<field name="july"/>
+							<field name="august"/>
+							<field name="september"/>
+							<field name="october"/>
+							<field name="november"/>
+							<field name="december"/>
+							<field name="closing"/>
+							<field name="company_id"/>
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="view_account_journal_sequence_list" model="ir.ui.view">
+		<field name="name">account.journal.sequence.list</field>
+		<field name="model">account.journal.sequence</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="journal_id" optional="show"/>
+				<field name="fiscal_year_id" optional="show"/>
+				<field name="company_id" optional="show"/>
+			</tree>
+		</field>
+	</record>
+	<record id="action_account_journal_sequence_form" model="ir.actions.act_window">
+		<field name="name">Secuencias de Diarios</field>
+		<field name="res_model">account.journal.sequence</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_account_journal_sequence_list"/>
+		<field name="help" type="html">
+		  <p class="o_view_nocontent_smiling_face">
+			Crea tu primera tabla de Secuencias de Diario aqui
+		  </p>
+		</field>
+	</record>
+
+	<menuitem action="action_account_journal_sequence_form" 
+				  id="menu_action_account_journal_sequence_form" 
+				  groups="account_base_it.group_account_tables_user"
+				  parent="account_base_it.menu_account_base_it"
+				  sequence="24"/>
+</odoo>

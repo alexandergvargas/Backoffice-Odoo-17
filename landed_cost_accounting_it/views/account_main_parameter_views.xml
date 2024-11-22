@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_account_main_parameter_form_inherit_landed_cost" model="ir.ui.view">
+		<field name="name">account.main.parameter.form.inherit.landed.cost</field>
+		<field name="model">account.main.parameter</field>
+		<field name="inherit_id" ref="account_base_it.view_account_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//notebook" position="inside">
+				<page string="Gastos Vinculados" name='landed_cost'>
+					<group name="main_1">
+						<group>
+							<field name="lc_account_id"/>
+							<field name="lc_journal_id"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

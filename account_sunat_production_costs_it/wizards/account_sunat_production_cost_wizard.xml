@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_account_sunat_production_cost_wizard_form">
+			<field name="name">account.sunat.production.cost.wizard.form</field>
+			<field name="model">account.sunat.production.cost.wizard</field>
+			<field name="arch" type="xml">
+				<form string="PLE Libro Costos de Produccion">
+						<group>
+							<group>
+								<field name="company_id"/>
+								<field name="fiscal_year_id" required="1"/>
+							</group>
+							<group>
+								<field name="show_1"/>
+								<field name="show_2"/>
+								<field name="show_3"/>
+								<field name="show_4"/>
+							</group>
+						</group>
+						<footer>
+							<button string="Generar PLEs" name="get_production_cost" type="object" class="oe_highlight"/>
+							or
+							<button string="Cancel" class="oe_link" special="cancel"/>
+						</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="account_sunat_production_cost_wizard_action" model="ir.actions.act_window">
+			<field name="name">Libro Costos de Produccion</field>
+			<field name="res_model">account.sunat.production.cost.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="view_ids"
+				   eval="
+							[
+							(5, 0, 0),
+							(0, 0, {'view_mode': 'form', 'view_id': ref('view_account_sunat_production_cost_wizard_form')}),
+							(0, 0, {'view_mode': 'kanban'})
+						  ]"
+			/>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem action="account_sunat_production_cost_wizard_action" 
+				id="menu_finance_sunat_production_cost" 
+				parent="account_base_sunat_it.menu_finance_sunat_ple" 
+				sequence="106"/>
+
+</data>
+</odoo>

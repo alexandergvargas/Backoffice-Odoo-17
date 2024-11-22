@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <record id="account_deferred_line_view_tree" model="ir.ui.view">
+            <field name="name">account.deferred.line.view.tree</field>
+            <field name="model">account.deferred.line</field>
+            <field name="arch" type="xml">
+                <tree string="Lineas de diferidos" create="false" edit="false" delete="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="amount"/>
+                    <field name="amount_accumulated"/>
+                    <field name="amount_next"/>
+                    <field name="move_id" column_invisible="1"/>
+                    <field name="currency_id" column_invisible="1"/>
+                    <button name="view_action_move_id" class="oe_stat_button" icon="fa-eye" type="object" invisible="not move_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_deferred_line_action" model="ir.actions.act_window">
+            <field name="name">Lineas de diferidos</field>
+            <field name="res_model">account.deferred.line</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+
+
+        <record model="ir.actions.server" id="account_deferred_line_server">
+            <field name="name">Generar Asiento</field>
+            <field name="model_id" ref="model_account_deferred_line"/>
+            <field name="binding_model_id" ref="model_account_deferred_line" />
+            <field name="state">code</field>
+            <field name="code">action = records.post_line()</field>
+        </record>
+
+    </data>
+
+
+</odoo>

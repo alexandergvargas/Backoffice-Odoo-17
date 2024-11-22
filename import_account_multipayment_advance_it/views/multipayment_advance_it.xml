@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>        
+        <record model="ir.actions.server" id="action_account_confirm_payments">
+            <field name="name">Importar Lineas de Caja</field>
+            <field name="model_id" ref="account_multipayment_advance_it.model_multipayment_advance_it"/>
+            <field name="binding_model_id" ref="account_multipayment_advance_it.model_multipayment_advance_it"/>
+			<field name="state">code</field>
+			<field name="code">action = records.action_import_account_multipayment_advance_wizard()</field>
+		</record>
+    </data>
+
+
+</odoo>

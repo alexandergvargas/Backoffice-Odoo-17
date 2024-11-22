@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_account_transfer_it_form" model="ir.ui.view">
+        <field name="name">account.transfer.it.form</field>
+        <field name="model">account.transfer.it</field>
+        <field name="arch" type="xml">
+            <form string="Internal Account Transfer">
+                <header>
+                    <button string="Publicar" type="object" name="action_post" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button string="Establecer a borrador" type="object" name="action_draft" invisible="state != 'done'" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="main">
+                        <group name="main_1"> 
+                            <field name="date" required="1" readonly="state in ('done')"/>
+                            <field name="journal_id_origin" required="1" readonly="state in ('done')" domain="[('type','in',['cash','bank'])]"/>
+                            <field name="journal_id_destination" required="1" readonly="state in ('done')"  domain="[('type','in',['cash','bank'])]"/>
+                            <field name="tc" readonly="state in ('done')" required="1"/>
+                            <field name="glosa" readonly="state in ('done')"/>
+                        </group>
+                        <group name="main_2">
+                            <field name="amount" readonly="state in ('done')"/>
+                            <field name="number_origin" readonly="state in ('done')"/>
+                            <field name="amount_dest" readonly="state in ('done')" force_save="1"/>
+                            <field name="number_dest" readonly="state in ('done')"/>
+                            <field name="move_id" invisible="state in ('draft')" readonly="1"/>
+                            <field name="move_id_dest" invisible="state in ('draft')" readonly="1"/>
+                            <field name="company_id" readonly="1" required="1" groups="base.group_multi_company"/> 
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_transfer_it_tree" model="ir.ui.view">
+        <field name="name">account.transfer.it.tree</field>
+        <field name="model">account.transfer.it</field>
+        <field name="arch" type="xml">
+            <tree string="Internal Account Transfers">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="journal_id_origin"/>
+                <field name="journal_id_destination"/>
+                <field name="tc" optional="hide"/>
+                <field name="amount"/>
+                <field name="amount_dest"/>
+                <field name="number_origin" optional="show"/>
+                <field name="number_dest" optional="show"/>
+                <field name="move_id" optional="hide"/>
+                <field name="move_id_dest" optional="hide"/>
+                <field name="glosa" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_account_transfer_it" model="ir.actions.act_window">
+        <field name="name">Transferencias Internas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.transfer.it</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            Crea tu primera tabla de Transferencias Internas aqui
+        </p>
+        </field>
+    </record>
+
+    <record model="ir.ui.menu" id="account_treasury_it.menu_transfers2">
+        <field name="action" ref="account_transfer_it.action_account_transfer_it"/>
+    </record>
+</odoo>

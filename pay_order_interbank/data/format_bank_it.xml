@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='format.bank.it'>
+			<field name='name'>interbank</field>
+		</record>
+	</data>
+</odoo>

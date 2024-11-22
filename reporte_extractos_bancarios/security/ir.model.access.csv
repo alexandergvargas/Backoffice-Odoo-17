@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_extracto_bancario_users,report_extracto_bancario_users,model_report_extracto_bancario,,1,1,1,1
+access_account_statement_view_group_user,Account Statement View,model_account_statement_view,,1,1,1,1

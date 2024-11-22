@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="import_account_multipayment_advance_wizard_form" model="ir.ui.view">
+            <field name="name">import.account.multipayment.advance.wizard.form</field>
+            <field name="model">import.account.multipayment.advance.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Importador Lineas de caja">
+                    <group>
+                         <group>
+                            <field name="multipayment_advance_id" readonly="1"/>
+                            <field name="name_file" invisible="1"/>
+						    <field name="document_file" filename="name_file" string="Excel"/>
+                         </group>
+                    </group>
+                    <footer>
+                        <button name="download_template" string="Descargar Plantilla" icon="fa-download" type="object" class="btn-primary oe_inline"/>
+                        <button name="import_line_cash" string="Importar" type="object" class="btn-primary oe_inline"/>
+                        o
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_import_account_multipayment_advance_wizard" model="ir.actions.act_window">
+			<field name="name">Importador Lineas de Caja</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">import.account.multipayment.advance.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+    </data>
+</odoo>
