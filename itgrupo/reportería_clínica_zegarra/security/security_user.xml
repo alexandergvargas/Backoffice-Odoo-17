@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <record id="group_view_permiso_zegarra" model="res.groups">
-        <field name="name">Permiso - Zegarra</field>
-        <field name="comment">Permisos de Administrador
-        </field>
-        <field name="category_id" ref="base.module_category_hidden"/>
-    </record>
-</odoo>

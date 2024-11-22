@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_reporte_clinica_corporal,reporte_clinica_corporal,model_reporte_clinica_corporal,base.group_user,1,1,1,1
-access_reporte_corporal,reporte_corporal,model_reporte_corporal,base.group_user,1,1,1,1
-access_control_medidas,control_medidas,model_control_medidas,base.group_user,1,1,1,1
-access_control_terapista,control_terapista,model_control_terapista,base.group_user,1,1,1,1
-access_reporte_centro_quirurgico,reporte_centro_quirurgico,model_reporte_centro_quirurgico,base.group_user,1,1,1,1
-access_uso_equipamiento,uso_equipamiento,model_uso_equipamiento,base.group_user,1,1,1,1
