@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="group_hr_manager" model="res.groups">
+		<field name="name">Reabrir/Cerrar Planillas</field>
+		<field name="category_id" ref="base.module_category_human_resources_payroll"/>
+		<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+	</record>
+	<record id="hr_payroll.ir_rule_hr_payroll_structure_multi_company" model="ir.rule">
+		<field name="domain_force">[('company_id', 'in', company_ids)]</field>
+	</record>
+	<record id="hr_payroll.ir_rule_hr_payslip_input_type_multi_company" model="ir.rule">
+		<field name="domain_force">[('company_id', 'in', company_ids)]</field>
+	</record>
+	<record id="hr_salary_rule_not_shared_multi_company_rule" model="ir.rule">
+		<field name="name">Non Shared Records: Salary Rule</field>
+		<field name="model_id" ref="hr_fields.model_hr_salary_rule"/>
+		<field name="global" eval="True"/>
+		<field name="domain_force">[('company_id', 'in', company_ids)]</field>
+	</record>
+
+	 <record id="hr_work_entry_validated_inherit" model="ir.rule">
+        <field name="name">hr.work.entry: actualizar entradas de trabajo</field>
+        <field name="model_id" ref="hr_work_entry.model_hr_work_entry"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('hr_payroll.group_hr_payroll_manager'))]"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+        <field name="perm_read" eval="0"/>
+    </record>
+</odoo>

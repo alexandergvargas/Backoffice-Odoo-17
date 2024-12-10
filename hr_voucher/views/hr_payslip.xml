@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_payslip_form_inherit" model="ir.ui.view">
+		<field name="name">hr.payslip.form.inherit</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//header" position="inside">
+				<button name="get_vouchers" string="Imprimir Boleta" type="object" class="oe_highlight"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_hr_payslip_email_tree_inherit" model="ir.ui.view">
+		<field name="name">view.hr.payslip.email.tree.inherit</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_tree"/>
+		<field name="arch" type="xml">
+			<field name="state" position="after">
+				<field name="date_send" optional="show"/>
+				<field name="is_verified" readonly="1" force_save="1" widget="boolean_toggle" optional="hide"/>
+				<field name="date_confirmation" optional="hide"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="voucher_by_email_hr_payslip" model="ir.actions.server">
+		<field name="name">Enviar Boletas por Correo</field>
+		<field name="model_id" ref="hr_voucher.model_hr_payslip"/>
+		<field name="binding_model_id" ref="hr_voucher.model_hr_payslip"/>
+		<field name="state">code</field>
+		<field name="code">action = records.send_vouchers_by_email()</field>
+	</record>
+</odoo>

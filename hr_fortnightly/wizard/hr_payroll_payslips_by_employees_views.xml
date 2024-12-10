@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_payslip_by_employees_fortnightly" model="ir.ui.view">
+        <field name="name">hr_payroll_payslip_employees_fortnightly</field>
+        <field name="model">hr.payslip.employees.fortnightly</field>
+        <field name="arch" type="xml">
+            <form string="Adelanto Quincenal de Empleados">
+                <span nolabel="1" colspan="2">Este asistente generará Adelantos quincenales de los empleados seleccionados en función de las fechas especificadas.</span>
+                <separator string="Estructura Salarial"/>
+                <div class="o_row">
+                    <p class="text-muted w-50">Establezca una estructura salarial específica para generar los recibos de adelantos quincenales,
+                        para todos los empleados seleccionados, según la configuración de sus contratos.</p>
+                    <field name="structure_id" nolabel="1"/>
+                </div>
+                <separator string="Departamentos" colspan="2"/>
+                <div class="o_row">
+                    <p class="text-muted w-50">Establezca un departamento específico si desea seleccionar todos los empleados de este departamento a la vez.</p>
+                    <field name="department_id" nolabel="1"/>
+                </div>
+                <separator string="Empleados"/>
+                <field name="employee_ids" nolabel="1">
+                    <tree>
+                        <field name="name"/>
+                        <field name="work_email"/>
+                        <field name="department_id"/>
+                    </tree>
+                </field>
+                <footer>
+                    <button string="Generar" name="compute_sheet_multi" type="object" class="oe_highlight" data-hotkey="q"/>
+                    <button string="Cancelar" class="btn btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+<!--                <group colspan="4"></group>-->
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_payslip_by_employees_fortnightly" model="ir.actions.act_window">
+        <field name="name">Generar Adelanto Quincenal</field>
+        <field name="res_model">hr.payslip.employees.fortnightly</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hr_payslip_by_employees_fortnightly"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

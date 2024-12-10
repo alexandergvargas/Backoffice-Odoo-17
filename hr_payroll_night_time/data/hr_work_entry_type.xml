@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+
+		<record id='hr_work_entry.work_entry_type_attendance' model='hr.work.entry.type'>
+			<field name='code'>DLAB</field>
+			<field name='name'>DIAS LABORADOS DIURNOS</field>
+			<field name='sequence'>1</field>
+<!--			<field name='color'></field>-->
+			<field name="is_leave">False</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure')])]"/>
+		</record>
+		<record id='wd_DLABN' model='hr.work.entry.type'>
+			<field name='code'>DLABN</field>
+			<field name='name'>DIAS LABORADOS NOCTURNOS</field>
+			<field name='sequence'>2</field>
+			<field name='color'>8</field>
+			<field name="is_leave">False</field>
+			<field name="round_days">NO</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure')])]"/>
+		</record>
+
+		<record id='wd_HEN25' model='hr.work.entry.type'>
+			<field name='code'>HEN25</field>
+			<field name='name'>HORAS EXTRAS NOCTURNAS 25%</field>
+			<field name='sequence'>28</field>
+			<field name='rate'>25</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure')])]"/>
+		</record>
+		<record id='wd_HEN35' model='hr.work.entry.type'>
+			<field name='code'>HEN35</field>
+			<field name='name'>HORAS EXTRAS NOCTURNAS 35%</field>
+			<field name='sequence'>29</field>
+			<field name='rate'>35</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure')])]"/>
+		</record>
+		<record id='wd_HEN100' model='hr.work.entry.type'>
+			<field name='code'>HEN100</field>
+			<field name='name'>HORAS EXTRAS NOCTURNAS 100%</field>
+			<field name='sequence'>30</field>
+			<field name='rate'>100</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure')])]"/>
+		</record>
+
+	</data>
+</odoo>

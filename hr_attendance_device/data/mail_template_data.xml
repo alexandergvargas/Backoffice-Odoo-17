@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--Email template -->
+        <record id="email_template_attendance_device" model="mail.template">
+            <field name="name">Dispositivo de Asistencia - Send by Email</field>
+            <field name="email_from">System</field>
+            <field name="subject">Problema de conexión del dispositivo de asistencia (Ref {{object.name or 'n/a' }})</field>
+            <field name="partner_to">{{object.user_id.partner_id.id}}</field>
+            <field name="model_id" ref="hr_attendance_device.model_attendance_device"/>
+            <field name="lang">{{object.user_id.partner_id.lang}}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Hola <t t-esc="object.user_id.partner_id.name"></t> ,</p>
+
+    <p>Hay algunos problemas con el dispositivo de asistencia: <t t-esc="object.name"></t>. </p>
+    
+    <p>Por favor verifique y solucione el problema.</p>
+    
+    <p>Saludos Cordiales,</p>
+
+</div>
+            ]]></field>
+        </record>
+        
+        <record id="email_template_not_safe_to_clear_attendance" model="mail.template">
+            <field name="name">No es seguro borrar datos de Asistencia - Send by Email</field>
+            <field name="email_from">System</field>
+            <field name="subject">No es seguro borrar los datos de asistencia (Ref {{object.name}})</field>
+            <field name="partner_to">{{object.user_id.partner_id.id}}</field>
+            <field name="model_id" ref="hr_attendance_device.model_attendance_device"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">{{object.user_id.partner_id.lang}}</field>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: #FFF; ">
+
+    <p>Hola <t t-esc="object.user_id.partner_id.name"></t>,</p>
+    
+    <p>Odoo intentó eliminar los datos de asistencia del dispositivo <t t-esc="object.name"></t> pero no encontró una condición segura para eliminarlos ya que no se descargaron todos los datos del dispositivo en Odoo.</p>
+    <p>Asegúrese también de que todos los usuarios de dispositivos hayan sido asignados con los empleados de Odoo. De lo contrario, tampoco es seguro eliminar los datos de asistencia</p>
+    <p>Por favor verifique y solucione el problema.</p>
+    <p>En el caso de que los usuarios realicen check-in/out mientras Odoo descarga datos, podría aparecer este mensaje. En tal caso, puedes ignorar este mensaje..</p>
+    
+    <p>Saludos Cordiales,</p>
+
+</div>
+            ]]></field>
+        </record>
+        
+        <record id="email_template_error_get_attendance" model="mail.template">
+            <field name="name">Error al descargar datos de Asistencia - Send by Email</field>
+            <field name="email_from">System</field>
+            <field name="subject">Error al descargar datos de asistencia (Ref {{object.name}})</field>
+            <field name="partner_to">{{object.user_id.partner_id.id}}</field>
+            <field name="model_id" ref="hr_attendance_device.model_attendance_device"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">{{object.user_id.partner_id.lang}}</field>
+            <field name="body_html"><![CDATA[
+<div>
+    <p>Hola <t t-esc="object.user_id.partner_id.name"></t>,</p>
+    <p>Odoo intentó descargar datos de asistencia desde el dispositivo <t t-esc="object.name"></t> pero falló.</p>
+    <p>NOTA:</p>
+    <p>Es posible que el dispositivo no devuelva todos los datos de asistencia cuando se solicite, lo que podría provocar este error.</p>
+    <p>Si tal es el caso, desconecte el dispositivo de Odoo y luego descargue los datos con otro medio desde su red local. Después de eso, vuelva a conectar el dispositivo con Odoo y continúe con la sincronización de datos.</p>
+    <p>Saludos Cordiales,</p>
+</div>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>

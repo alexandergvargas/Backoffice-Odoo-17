@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="view_attendance_data_form" model="ir.ui.view">
+			<field name="name">Attendance Data Form</field>
+			<field name="model">user.attendance</field>
+			<field name="arch" type="xml">
+				<form string="Datos de asistencia">
+					<sheet>
+						<group>
+							<group>
+								<field name="user_id" />
+								<field name="timestamp" />
+								<field name="status" groups="base.group_no_one" />
+								<field name="attendance_state_id" />
+								<field name="activity_id"/>
+								<field name="valid" />
+								<field name="employee_id" />
+								<field name="hr_attendance_id" groups="base.group_no_one" />
+								<field name="device_id" />
+							</group>
+							<group></group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_attendance_data_pivot" model="ir.ui.view">
+			<field name="name">Attendance Data Pivot</field>
+			<field name="model">user.attendance</field>
+			<field name="arch" type="xml">
+				<pivot string="Datos de asistencia">
+					<field name="timestamp" type="col" />
+					<field name="user_id" type="row" />
+				</pivot>
+			</field>
+		</record>
+
+		<record id="view_attendance_data_tree" model="ir.ui.view">
+			<field name="name">Attendance Data Tree</field>
+			<field name="model">user.attendance</field>
+			<field name="arch" type="xml">
+				<tree string="Datos de asistencia" create="false" edit="false">
+					<field name="timestamp" />
+					<field name="user_id" optional="show"/>
+					<field name="status" groups="base.group_no_one" />
+					<field name="attendance_state_id" optional="show"/>
+					<field name="activity_id" optional="show"/>
+					<field name="valid" optional="show"/>
+					<field name="employee_id" />
+					<field name="hr_attendance_id" groups="base.group_no_one" />
+					<field name="device_id" optional="show"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="user_attendance_data_search_view" model="ir.ui.view">
+			<field name="name">Attendance Data Search</field>
+			<field name="model">user.attendance</field>
+			<field name="arch" type="xml">
+				<search string="Buscar datos de asistencia de usuarios">
+					<field name="user_id" />
+					<field name="device_id" />
+					<field name="employee_id" />
+					<separator />
+					<filter string="Válido" name="valid" domain="[('valid','=',True)]"
+						help="Mostrar registros de asistencia que sean válidos para sincronizar con HR Atteandnce de Odoo" />
+					<separator />
+					<filter name="today" string="Hoy"
+						domain="[('timestamp', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0)),('timestamp', '&lt;=', datetime.datetime.now().replace(hour=23, minute=59, second=59))]" />
+					<separator />
+					<filter string="No Sincronizado" name="not_synch" domain="[('hr_attendance_id','=',False)]"
+						help="Mostrar registros de asistencia que no tienen vínculo con la asistencia de recursos humanos de Odoo" />
+					<group expand="0" string="Agrupar por...">
+						<filter string="Fecha de Marcacion" name="group_fecha" context="{'group_by':'timestamp'}"/>
+						<filter string="Usuario" name="user_id" context="{'group_by': 'user_id'}" />
+						<filter string="Dispositivo" name="device_id" context="{'group_by': 'device_id'}" />
+						<filter string="Empleado" name="employe" context="{'group_by': 'employee_id'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_server_sync_attendance" model="ir.actions.server">
+			<field name="name">Sincronizar</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="model_user_attendance" />
+			<field name="binding_model_id" ref="model_user_attendance" />
+			<field name="state">code</field>
+			<field name="code">records.action_sync_attendance()</field>
+		</record>
+
+		<record id="action_user_attendance_data" model="ir.actions.act_window">
+			<field name="name">Registros de Asistencia</field>
+			<field name="res_model">user.attendance</field>
+			<field name="view_mode">tree,pivot</field>
+			<field name="context">{'search_default_valid':1, 'search_default_group_fecha': 1, 'search_default_employe': 1}
+			</field>
+		</record>
+
+		<menuitem id="user_attendance_data_menu"
+				  name="Registros de Asistencia"
+				  parent="attendace_device_menu"
+				  sequence="10"
+				  action="action_user_attendance_data"
+				  groups="hr_attendance.group_hr_attendance_officer" />
+
+	</data>
+</odoo>

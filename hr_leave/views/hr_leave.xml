@@ -1,0 +1,293 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="hr_leave_view_tree_my_inherit" model="ir.ui.view">
+        <field name="name">hr.holidays.view.tree.inherit</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree_my"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_view_tree_my_it" model="ir.ui.view">
+        <field name="name">hr.holidays.view.tree.it</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="attributes">
+                <attribute name="column_invisible">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='all_employee_ids']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="work_suspension_id"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <field name="state" position="before">
+                <field name="payslip_state" widget="state_selection" options="{'hide_label': True}" string="Enviado a Planillas" class="ms-auto mb-2" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_leave_view_form_susp" model="ir.ui.view">
+		<field name="name">hr.leave.view.form.susp</field>
+		<field name="model">hr.leave</field>
+		<field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+		<field name="priority">2</field>
+		<field name="arch" type="xml">
+<!--			<xpath expr="//sheet/div/div/div[@name='title']" position="attributes">-->
+<!--                <attribute name="invisible">0</attribute>-->
+<!--			</xpath>-->
+<!--            <xpath expr="//group/field[@name='employee_ids']" position="attributes">-->
+<!--                <attribute name="invisible">0</attribute>-->
+<!--                <attribute name="widget">many2many_avatar_employee</attribute>-->
+<!--			</xpath>-->
+<!--            <xpath expr="//sheet/div/div/div/field[@name='display_name']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--			</xpath>-->
+<!--            <field name="holiday_status_id" position="before">-->
+<!--                <field name="payslip_run_id" required="0" attrs="{'readonly':[('state','not in',['draft','confirm'])]}"/>-->
+<!--            </field>-->
+            <field name="holiday_status_id" position="after">
+                <field name="work_suspension_id" readonly="state not in ['draft','confirm']"/>
+            </field>
+		</field>
+	</record>
+
+    <record id="hr_leave_view_form_inherit_susp" model="ir.ui.view">
+        <field name="name">hr.leave.view.form.inherit.susp</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_payroll_holidays.hr_leave_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payslip_state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='holiday_status_id']" position="before">
+                <field name="payslip_state" widget="state_selection" class="ms-auto mb-2"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_hr_leave_all_susp_form" model="ir.ui.view">
+        <field name="name">view.hr.leave.all_susp.form</field>
+        <field name="model">hr.leave</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Solicitud de Ausencia">
+                <field name="can_reset" invisible="1"/>
+                <field name="can_approve" invisible="1"/>
+                <sheet>
+                    <field name="state" invisible="1"/>
+                    <field name="tz_mismatch" invisible="1"/>
+                    <field name="holiday_type" invisible="1"/>
+                    <field name="leave_type_request_unit" invisible="1"/>
+                    <field name="employee_company_id" invisible="1"/>
+
+                    <group name="col_left">
+                        <field name="employee_id"/>
+                        <field name="employee_ids" invisible="1"/>
+                        <field name="department_id" readonly="1" force_save="1"/>
+                        <field name="name" invisible="1" widget="text"/>
+                        <field name="user_id" invisible="1"/>
+                    </group>
+                    <group>
+                        <group name="col_left">
+                            <field name="holiday_status_id" force_save="1" domain="['|', ('requires_allocation', '=', 'no'), '&amp;', ('has_valid_allocation', '=', True), '&amp;', ('virtual_remaining_leaves', '&gt;', 0), ('max_leaves', '>', '0')]" context="{'employee_id':employee_id, 'default_date_from':date_from, 'default_date_to':date_to}" options="{'no_create': True, 'no_open': True, 'request_type':'leave'}" />
+                        </group>
+                        <group name="col_right">
+                            <field name="leave_type_support_document" invisible="1"/>
+                            <label for="supported_attachment_ids" string="Documento de Sustento"
+                                   invisible="leave_type_support_document == False or state not in ('draft', 'confirm', 'validate1')"/>
+                            <field name="supported_attachment_ids" widget="many2many_binary" nolabel="1"
+                                   invisible="leave_type_support_document == False or state not in ('draft', 'confirm', 'validate1')"/>
+                        </group>
+                    </group>
+                    <group name="col_left">
+                        <field name="work_suspension_id" readonly="state not in ['draft','confirm']"/>
+                        <field name="validation_type" invisible="1"/>
+                        <label for="request_date_from" string="Fechas" id="label_dates"/>
+                        <div>
+                            <field name="date_from" invisible="1" widget="daterange"/>
+                            <field name="date_to" invisible="1"/>
+                            <div class="o_row o_row_readonly">
+                                <span class="oe_inline">
+                                    Desde
+                                </span>
+                                <field name="request_date_from" class="oe_inline" nolabel="1"
+                                       readonly="state not in ('draft', 'confirm')" required="date_from == False or date_to == False"
+                                       widget="daterange" options="{'related_end_date': 'request_date_to'}"/>
+                                <span class="oe_inline">
+                                    Hasta
+                                </span>
+                                <field name="request_date_to" class="oe_inline"
+                                       readonly="state not in ('draft', 'confirm')" required="date_from == False or date_to == False"
+                                       widget="daterange" options="{'related_start_date': 'request_date_from'}"/>
+                            </div>
+                        </div>
+                        <label for="number_of_days" string="Duracion"/>
+                        <div name="duration_display">
+                            <div class="o_row">
+                                <div groups="hr_holidays.group_hr_holidays_manager" class="o_row">
+                                    <field name="number_of_days" nolabel="1" class="oe_inline"/>
+                                    <span>Dias</span>
+                                </div>
+                            </div>
+                        </div>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'always'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_leave_view_calendar_all_susp" model="ir.ui.view">
+        <field name="name">hr.leave.view.calendar.all_susp</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="//calendar" position="attributes">
+                <attribute name="form_view_id">%(hr_leave.view_hr_leave_all_susp_form)d</attribute>
+<!--                <attribute name="mode">month</attribute>-->
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_action_new_request_all_susp" model="ir.actions.act_window">
+        <field name="name">Tablero</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">calendar</field>
+        <field name="domain">[('employee_id.company_id', 'in', allowed_company_ids)]</field>
+        <field name="context">{'short_name': 1, 'search_default_active_time_off': 1}</field>
+<!--        <field name="search_view_id" ref="hr_holidays.hr_leave_view_search_my"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Llene un registro de Ausencias.
+            </p><p>
+                Una excelente manera de realizar un seguimiento de sus solicitudes de Vacaciones, días de enfermedad etc.
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="hr_holidays.hr_leave_menu_new_request"
+        parent="hr_holidays.menu_hr_holidays_my_leaves"
+        action="hr_leave_action_new_request_all_susp"
+        sequence="1"/>
+
+
+<!--    VISTA PERSONALIZADA PARA VER TODAS LAS AUSENCIAS-->
+    <record id="view_hr_leave_all_susp_tree" model="ir.ui.view">
+        <field name="name">view.hr.leave.all_susp.tree</field>
+        <field name="model">hr.leave</field>
+        <field name="arch" type="xml">
+            <tree string="Solicitud de Ausencias" sample="1">
+                <field name="employee_id" widget="many2one_avatar_employee" decoration-muted="not active_employee"/>
+                <field name="department_id" optional="hidden"/>
+                <field name="work_suspension_id"/>
+                <field name="holiday_status_id" class="font-weight-bold"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="number_of_days"/>
+                <field name="payslip_state" widget="state_selection" options="{'hide_label': True}" string="Enviado a Planillas" class="ms-auto mb-2" optional="show"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state in ('confirm','validate1')" decoration-success="state == 'validate'"/>
+                <field name="active_employee" column_invisible="1"/>
+                <field name="user_id" column_invisible="1"/>
+                <field name="message_needaction" column_invisible="1"/>
+                <button string="Aprobar" name="action_approve" type="object"
+                        icon="fa-thumbs-up"
+                        invisible="state != 'confirm'"
+                        groups="hr_holidays.group_hr_holidays_responsible"/>
+                <button string="Validar" name="action_validate" type="object"
+                        icon="fa-check"
+                        invisible="state != 'validate1'"
+                        groups="hr_holidays.group_hr_holidays_user"/>
+                <button string="Rechazar" name="action_refuse" type="object"
+                        icon="fa-times"
+                        invisible="state not in ('confirm', 'validate1')"
+                        groups="hr_holidays.group_hr_holidays_user"/>
+                <field name="activity_exception_decoration" widget="activity_exception"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hr_leave_all_susp_filter" model="ir.ui.view">
+        <field name="name">view.hr.leave.all_susp.filter</field>
+        <field name="model">hr.leave</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Solicitud de Ausencia">
+                <field name="employee_id"/>
+                <field name="department_id" operator="child_of"/>
+                <field name="holiday_status_id"/>
+                <field name="name"/>
+                <filter domain="[('state','in',('confirm','validate1'))]" string="Para Aprobar" name="approve"/>
+                <filter domain="[('state', '=', 'validate1')]" string="Necesita segunda aprobación" name="second_approval"/>
+                <filter string="Ausencias Aprobadas" domain="[('state', '=', 'validate')]" name="validated"/>
+                <separator/>
+                <filter string="Empleado Activo" name="active_employee" domain="[('active_employee','=',True)]"/>
+                <filter name="filter_date_from" date="date_from"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_employee" string="Empleados" context="{'group_by':'employee_id'}"/>
+                    <filter name="group_type" string="Tipo" context="{'group_by':'holiday_status_id'}"/>
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}"/>
+                    <separator/>
+                    <filter name="group_date_from" string="Fecha de Inicio" context="{'group_by':'date_from'}"/>
+                </group>
+                <searchpanel>
+                    <field name="holiday_status_id" string="Tipo" icon="fa-file-text" color="#338FFC" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_hr_leave_all_susp" model="ir.actions.act_window">
+        <field name="name">Solicitudes de Ausencias</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.leave</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_group_date_from': 1}</field>
+        <field name="search_view_id" ref="view_hr_leave_all_susp_filter"/>
+        <field name="view_id" ref="hr_leave.view_hr_leave_all_susp_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Lleve un registro de Ausencias.
+            </p><p>
+                Una excelente manera de realizar un seguimiento de sus solicitudes de Vacaciones, días de enfermedad etc.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="hr_holidays.menu_hr_holidays_dashboard"
+              name="Todas las Ausencias"
+              parent="hr_holidays.menu_hr_holidays_root"
+              sequence="1"/>
+
+    <menuitem id="menu_hr_holidays_dashboard_extend"
+              name="Informacion General"
+              parent="hr_holidays.menu_hr_holidays_dashboard"
+              action="hr_holidays.action_hr_holidays_dashboard"
+              sequence="1"/>
+
+    <menuitem id="menu_hr_leave_all_susp"
+              name="Todas las Ausencias"
+              parent="hr_holidays.menu_hr_holidays_dashboard"
+              action="action_hr_leave_all_susp"
+              sequence="2"/>
+
+    <record id="hr_holidays.hr_holidays_mandatory_day_menu_configuration" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('hr_base.group_hr_show_menu_root')])]"/>
+    </record>
+
+</odoo>

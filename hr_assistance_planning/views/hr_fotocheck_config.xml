@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_hr_fotocheck_config_tree" model="ir.ui.view">
+			<field name="name">hr.fotocheck.config.tree</field>
+			<field name="model">hr.fotocheck.config</field>
+			<field name="arch" type="xml">
+				<tree string="Configuraciones de Fotocheck">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_hr_fotocheck_config_form" model="ir.ui.view">
+			<field name="name">hr.fotocheck.config.form</field>
+			<field name="model">hr.fotocheck.config</field>
+			<field name="arch" type="xml">
+				<form string="Configuraciones de Fotocheck">
+					<sheet>
+						<group>
+							<group>
+								<field name="logo_cert_1" widget="image" class="oe_avatar"/>
+								<field name="logo_cert_2" widget="image" class="oe_avatar"/>
+								<field name="logo_cert_3" widget="image" class="oe_avatar"/>
+								<field name="logo_cert_4" widget="image" class="oe_avatar"/>
+								<field name="logo_cert_5" widget="image" class="oe_avatar"/>
+							</group>
+							<group>
+								<field name="company_id"/>
+								<field name="backimg" widget="image" class="oe_avatar"/>
+								<field name="fondo_front" widget="image" class="oe_avatar"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>	
+
+		<record id="hr_fotocheck_config_action" model="ir.actions.act_window">
+			<field name="name">Configuraciones fotocheck</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.fotocheck.config</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+	    <menuitem id="menu_hr_fotocheck_config"
+				  action="hr_fotocheck_config_action"
+				  parent="hr.menu_human_resources_configuration"
+				  sequence="99"/>
+	
+	</data>
+</odoo>

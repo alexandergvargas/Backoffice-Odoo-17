@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="attendance_activity_form_view_inherit" model="ir.ui.view">
+			<field name="name">attendance.activity.form.inherit</field>
+			<field name="model">attendance.activity</field>
+			<field name="inherit_id" ref="hr_assistance_planning.attendance_activity_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/group" position="after">
+					<notebook>
+						<page string="Tipos de Marcacion">
+							<field name="attendance_status_ids">
+								<tree name="attendance_status_ids">
+									<field name="name" />
+									<field name="code" />
+									<field name="type" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="attendance_activity_tree_view_inherit" model="ir.ui.view">
+			<field name="name">attendance.activity.tree.inherit</field>
+			<field name="model">attendance.activity</field>
+			<field name="inherit_id" ref="hr_assistance_planning.attendance_activity_form_view"/>
+			<field name="arch" type="xml">
+				<field name="color" position="after">
+					<field name="status_count" optional="show"/>
+				</field>
+			</field>
+		</record>
+
+<!--		<record id="attendance_activity_tree_action" model="ir.actions.act_window">-->
+<!--			<field name="name">Tipos de Asistencia</field>-->
+<!--			<field name="res_model">attendance.activity</field>-->
+<!--			<field name="view_mode">tree,form</field>-->
+<!--			<field name="help" type="html">-->
+<!--				<p class="oe_view_nocontent_create">Crea el primer tipo de asistencia-->
+<!--				</p>-->
+<!--			</field>-->
+<!--		</record>-->
+
+<!--		<menuitem id="attendance_activity_menu"-->
+<!--				  name="Tipos de Asistencia"-->
+<!--				  parent="hr_attendance.menu_hr_attendance_settings"-->
+<!--				  sequence="1100"-->
+<!--				  action="attendance_activity_tree_action"-->
+<!--				  groups="hr_attendance.group_hr_attendance_manager"/>-->
+
+	</data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    Demo data for document type-->
+    <data noupdate="1">
+        <record id="document_type_record_01" model="hr.document.type">
+            <field name="name">Licencia de Conducir</field>
+        </record>
+        <record id="document_type_record_02" model="hr.document.type">
+            <field name="name">Pasaporte</field>
+        </record>
+        <record id="document_type_record_03" model="hr.document.type">
+            <field name="name">Constancia Alta T-Registro</field>
+        </record>
+    </data>
+</odoo>

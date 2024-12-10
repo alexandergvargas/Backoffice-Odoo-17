@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<data>
+		<record id="wizard_form_view" model="ir.ui.view">
+			<field name="name">Employee Upload wizard</field>
+			<field name="model">employee.upload.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Sincronizar Datos">
+					<div>
+						Este asistente cargará los empleados seleccionados al dispositivo seleccionado.
+						<br />
+						Nota: En caso de que obtenga un error de tiempo de espera,
+						intente reducir la cantidad de empleados para cargar.
+					</div>
+					<group>
+						<group>
+							<field name="device_ids" widget="many2many_tags" />
+						</group>
+					</group>
+					<notebook>
+						<page id="unmapped_employees" string="Empleados no Asignados">
+							<field name="employee_ids" />
+						</page>
+						<page id="upload_details" string="Cargar detalles">
+							<field name="line_ids">
+								<tree editable="bottom">
+									<field name="employee_id" />
+									<field name="device_id" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+					<footer>
+						<button name="action_employee_upload" type="object"
+							groups="hr_attendance.group_hr_attendance_manager"
+							string="Subir Empleados" class="oe_highlight" />
+						<button special="cancel" string="Cancelar" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+<!--		<act_window id="action_employee_upload"-->
+<!--			name="Subir al Dispositivo de asistencia" binding_model="hr.employee"-->
+<!--			res_model="employee.upload.wizard" view_mode="form" target="new"-->
+<!--			context="{'employee_ids':active_ids}" />-->
+
+		<record id="action_employee_upload" model="ir.actions.act_window">
+            <field name="name">Subir al Dispositivo de Asistencia</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">employee.upload.wizard</field>
+			<field name="context">{'employee_ids': active_ids}</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+	</data>
+</odoo>

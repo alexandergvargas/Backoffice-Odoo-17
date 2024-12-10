@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+        <function model="resource.calendar" name="store_resource_calendar"/>
+
+        <record id="resource.resource_calendar_std" model="resource.calendar">
+            <field name="name">Jornada Laboral 6 dias</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="full_time_required_hours">48</field>
+            <field name="attendance_ids"
+                   eval="[(5, 0, 0),
+                (0, 0, {'name': 'Dia Lunes', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Martes', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Miercoles', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Jueves', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Viernes', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Sabado', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Domingo', 'dayofweek': '6', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1, 'work_entry_type_id':ref('hr_fields.wd_DOM')}),
+            ]"
+            />
+        </record>
+
+        <record id="resource_calendar_workday_JOR5" model="resource.calendar">
+            <field name="name">Jornada Laboral 5 dias</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">8.0</field>
+            <field name="full_time_required_hours">40</field>
+            <field name="attendance_ids"
+                   eval="[(5, 0, 0),
+                (0, 0, {'name': 'Dia Lunes', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Martes', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Miercoles', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Jueves', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Viernes', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 17, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Sabado', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 16, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1, 'work_entry_type_id':ref('hr_fields.wd_DOM')}),
+                (0, 0, {'name': 'Dia Domingo', 'dayofweek': '6', 'hour_from': 8, 'hour_to': 16, 'day_period': 'morning', 'lunch_time': 1, 'duration_days': 1, 'work_entry_type_id':ref('hr_fields.wd_DOM')}),
+            ]"
+            />
+        </record>
+
+        <record id="resource_calendar_workday_part_time" model="resource.calendar">
+            <field name="name">Jornada Part time</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="hours_per_day">4</field>
+            <field name="full_time_required_hours">24</field>
+            <field name="attendance_ids"
+                   eval="[(5, 0, 0),
+                (0, 0, {'name': 'Dia Lunes', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Martes', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Miercoles', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Jueves', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Viernes', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Sabado', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'duration_days': 1}),
+                (0, 0, {'name': 'Dia Domingo', 'dayofweek': '6', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'duration_days': 1,'work_entry_type_id':ref('hr_fields.wd_DOM')}),
+            ]"
+            />
+        </record>
+
+    </data>
+</odoo>

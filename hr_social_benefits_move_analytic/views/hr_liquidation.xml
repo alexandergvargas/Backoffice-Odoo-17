@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_liquidation_move_tree" model="ir.ui.view">
+		<field name="name">hr.liquidation.move.tree</field>
+		<field name="model">hr.liquidation.move</field>
+		<field name="arch" type="xml">
+			<tree editable="bottom" create="0" delete="0">
+				<field name="preserve_record" string="No R." optional="show"/>
+				<field name="identification_id" optional="show" readonly="1"/>
+				<field name="employee_id"/>
+				<field name="admission_date" optional="show" readonly="1"/>
+				<field name="cessation_date" optional="show" readonly="1"/>
+				<button name="get_liquidation_move_wizard" string="Generar Asiento" type="object" class="oe_highlight"/>
+				<field name="account_move_id" optional="show" readonly="1"/>
+			</tree>
+		</field>
+	</record>
+
+<!--	VISTA DE LIQUIDACION-->
+	<record id="hr_liquidation_form_inherit_move" model="ir.ui.view">
+		<field name="name">hr.liquidation.form.inherit.move</field>
+		<field name="model">hr.liquidation</field>
+		<field name="inherit_id" ref="hr_advances_and_loans.hr_liquidation_form_inherit"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='get_liquidation_employees']" position="after">
+				<button name="action_open_asiento" type="object"
+						class="oe_stat_button" icon="fa-list" help="Asientos de Cesados"
+						invisible="move_count == 0">
+					<div class="o_field_widget o_stat_info">
+						<span class="o_stat_value"><field name="move_count"/></span>
+						<span class="o_stat_text">Asientos</span>
+					</div>
+				</button>
+			</xpath>
+			<xpath expr="//notebook" position="inside">
+				<page string="Contabilidad">
+					<field name="liq_move_ids" readonly="state == 'exported'" context="{'tree_view_ref': 'hr_social_benefits_move_analytic.hr_liquidation_move_tree'}"/>
+				</page>
+			</xpath>
+			<xpath expr="//button[@name='compute_liquidation_all']" position="after">
+				<button name="compute_provision_liqui" type="object" string="Obtener Provision" class="oe_highlight" invisible="state != 'draft'"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="hr_liquidation_vacation_line_tree_move" model="ir.ui.view">
+		<field name="name">hr.liquidation.vacation.line.tree.move</field>
+		<field name="model">hr.liquidation.vacation.line</field>
+		<field name="inherit_id" ref="hr_social_benefits.hr_liquidation_vacation_line_tree"/>
+		<field name="arch" type="xml">
+			<field name="total" position="after">
+				<field name="prov_acumulado" sum="prov_acumulado" optional="show"/>
+			</field>
+		</field>
+	</record>
+
+<!--	<record id="wizard_hr_liquidation_move" model="ir.actions.server">-->
+<!--		<field name="name">Generar Asiento Contable</field>-->
+<!--		<field name="model_id" ref="hr_social_benefits.model_hr_liquidation"/>-->
+<!--		<field name="binding_model_id" ref="hr_social_benefits.model_hr_liquidation"/>-->
+<!--		<field name="state">code</field>-->
+<!--		<field name="code">action = records.get_move_wizard()</field>-->
+<!--	</record>-->
+
+</odoo>

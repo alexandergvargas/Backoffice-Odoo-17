@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_work_entry_type_view_form_inherit" model="ir.ui.view">
+		<field name="name">hr.work.entry.type.form.inherit</field>
+		<field name="model">hr.work.entry.type</field>
+		<field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form"/>
+		<field name="arch" type="xml">
+			<field name="external_code" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<xpath expr="//group[@name='main_group']" position="inside">
+				<group class="o_form_fw_labels">
+					<field name="rate"/>
+					<field name="struct_ids" widget="many2many_tags"/>
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="hr_work_entry_type_view_tree_inherit" model="ir.ui.view">
+		<field name="name">hr.work.entry.type.tree.inherit</field>
+		<field name="model">hr.work.entry.type</field>
+		<field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_tree"/>
+		<field name="arch" type="xml">
+			<field name="code" position="attributes">
+				<attribute name="string">Codigo</attribute>
+			</field>
+			<field name="code" position="after">
+				<field name="rate" optional="show"/>
+				<field name="struct_ids" optional="show" widget="many2many_tags"/>
+<!--				<field name="company_id" optional="hide" groups="base.group_multi_company"/>-->
+			</field>
+		</field>
+	</record>
+</odoo>

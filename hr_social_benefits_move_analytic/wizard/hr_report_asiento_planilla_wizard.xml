@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+<!--		WIZARD PARA REPORTE DE ASIENTO DE PLANILLAS DETALLADO-->
+		<record id="view_report_asiento_planilla_wizard_form" model="ir.ui.view">
+			<field name="name">report.asiento.planilla.wizard.form</field>
+			<field name="model">hr.report.asiento.planilla.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Reporte Asiento Planilla Detallado">
+					<group>
+						<group>
+							<field name="type_report"/>
+							<field name="payslip_run_id" invisible="type_report != 'plani'" options="{'no_create': True, 'no_create_edit':True}"/>
+							<field name="gratification_id" invisible="type_report != 'grati'" options="{'no_create': True, 'no_create_edit':True}"/>
+							<field name="cts_id" invisible="type_report != 'cts'" options="{'no_create': True, 'no_create_edit':True}"/>
+							<field name="allemployees"/>
+						</group>
+						<group>
+							<field name="company_id"/>
+							<field name="type_show"/>
+						</group>
+					</group>
+					<notebook>
+                        <page string="Empleados" invisible="allemployees == True">
+                            <field name="employees_ids" nolabel="True" />
+                        </page>
+                    </notebook>
+					<footer>
+						<button string="Mostrar" name="get_journals" type="object" class="oe_highlight" invisible="allemployees == True"/>
+                        <button string="Mostrar Todo" name="get_all" type="object" class="oe_highlight" invisible="allemployees == False"/>
+                        or
+                        <button string="Cancelar" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="report_asiento_planilla_wizard_action" model="ir.actions.act_window">
+			<field name="name">Asiento Planilla Detallado</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.report.asiento.planilla.wizard</field>
+			<field name="view_id" ref="view_report_asiento_planilla_wizard_form"/>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem id="hr_payslip_run_move.menu_payslip_run_move_wizard"
+				  action="report_asiento_planilla_wizard_action"
+				  parent="hr_payroll.menu_hr_payroll_report"
+				  sequence="2"
+				  groups="hr_payroll.group_hr_payroll_manager"/>
+	</data>
+</odoo>

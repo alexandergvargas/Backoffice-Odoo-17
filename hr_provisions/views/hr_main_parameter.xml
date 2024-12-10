@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_inherit_provisions" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.inherit.provisions</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_social_benefits.hr_main_parameter_form_inherit"/>
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='liquidation']" position="after">
+				<page name="provisions" string="Provisiones BB.SS.">
+					<group string="Contabilidad">
+						<group>
+							<field name="journal_id"/>
+							<field name="type_doc_pla" string='T.D. para Asiento Provision'/>
+						</group>
+						<group>
+							<field name="detallar_provision"/>
+						</group>
+					</group>
+					<separator string="Cuentas Contables"/>
+					<div class="row">
+						<table>
+							<tr>
+								<td></td>
+								<th style="padding:6px"><center>Debe</center></th>
+								<th style="padding:6px"><center>Haber</center></th>
+							</tr>
+							<tr>
+								<th style="padding:5px">CTS</th>
+								<td style="padding:5px"><field name="cts_debe" required="0"/></td>
+								<td style="padding:5px"><field name="cts_haber" required="0"/></td>
+							</tr>
+							<tr>
+								<th style="padding:5px">Gratificacion</th>
+								<td style="padding:5px"><field name="grati_debe" required="0"/></td>
+								<td style="padding:5px"><field name="grati_haber" required="0"/></td>
+							</tr>
+							<tr>
+								<th style="padding:5px">Bonificacion</th>
+								<td style="padding:5px"><field name="boni_debe" required="0"/></td>
+								<td style="padding:5px"><field name="boni_haber" required="0"/></td>
+							</tr>
+							<tr>
+								<th style="padding:5px">Vacacion</th>
+								<td style="padding:5px"><field name="vaca_debe" required="0"/></td>
+								<td style="padding:5px"><field name="vaca_haber" required="0"/></td>
+							</tr>
+						</table>
+					</div>
+
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

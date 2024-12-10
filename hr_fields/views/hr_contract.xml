@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_contract_form_inherit" model="ir.ui.view">
+		<field name="name">hr.contract.form.inherit</field>
+		<field name="model">hr.contract</field>
+		<field name="inherit_id" ref="hr_payroll.hr_contract_form_inherit"/>
+		<field name="arch" type="xml">
+			<field name="date_start" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="date_end" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="structure_type_id" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+<!--			<field name="hr_responsible_id" position="attributes">-->
+<!--				<attribute name="required">0</attribute>-->
+<!--			</field>-->
+			<xpath expr="//field[@name='structure_type_id'][2]" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<field name="employee_id" position="after">
+				<field name="structure_type_id" string="Tipo de Planilla"/>
+				<field name="structure_id" />
+			</field>
+			<xpath expr="//field[@name='work_entry_source']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+
+			<xpath expr="//page[@name='other']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//page[@name='information']" position="before">
+				<page string="Detalles del contrato" name="other" groups="hr_contract.group_hr_contract_manager">
+					<group name="duration_group" string="Terminos del Contrato">
+						<group>
+							<field name="worker_type_id"/>
+							<field name="date_start" string="Fecha de Inicio"/>
+							<label for="date_end" string="Fecha Final"/>
+							<div class="o_row">
+								<field name="date_end" nolabel="1"/>
+								<span class="text-muted">(Fecha de Cese)</span>
+							</div>
+						</group>
+						<group/>
+					</group>
+					<group name="notes_group" string="Notas">
+						<field name="notes" nolabel="1" colspan="2" placeholder="Escriba notas sobre este contrato..."/>
+					</group>
+				</page>
+			</xpath>
+<!--			<xpath expr="//field[@name='schedule_pay']" position="attributes">-->
+<!--				<attribute name="invisible">1</attribute>-->
+<!--			</xpath>-->
+			<xpath expr="//label[@for='hourly_wage']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+			<xpath expr="//div[@name='hourly_wage']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+			<xpath expr="//label[@for='wage']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <xpath expr="//div[@name='wage']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+
+			<xpath expr="//page[@name='information']" position="after">
+				<page name="labor_data" string="Datos Laborales">
+					<group name="data" string="Datos">
+						<group>
+							<field name="membership_id"/>
+							<field name="is_afp" invisible="1"/>
+							<field name="commision_type" invisible="is_afp == False" required="is_afp != False"/>
+							<field name="cuspp" invisible="is_afp == False" required="is_afp != False"/>
+							<field name="social_insurance_id"/>
+							<field name="distribution_id"/>
+<!--							<field name="workday_id"/>-->
+						</group>
+						<group>
+							<field name="situation_id"/>
+							<field name="situation_code" invisible="1"/>
+							<field name="situation_reason_id" invisible="situation_code != '0'"/>
+							<field name="labor_regime"/>
+							<field name="less_than_four" widget="boolean_toggle"/>
+							<field name="other_employers" widget="boolean_toggle"/>
+<!--							<field name="sctr_id"/>-->
+						</group>
+					</group>
+					<separator string="Contribuciones"/>
+					<div class="row">
+                        <div class="o_td_label col-6 col-md-6">
+							<field name="contributions_ids" widget="many2many_checkboxes" nolabel="1" class="o_form_label"/>
+                        </div>
+                    </div>
+					<group name="afp_net" string="AFP NET">
+						<group>
+							<field name="exception"/>
+							<field name="is_older" widget="boolean_toggle"/>
+						</group>
+						<group>
+							<field name="work_type"/>
+						</group>
+					</group>
+				</page>
+				<page name="work_suspension" string="Suspension Laboral">
+					<field name="work_suspension_ids">
+						<tree editable="bottom">
+							<field name="suspension_type_id"/>
+							<field name="reason"/>
+							<field name="request_date_from" optional="hide"/>
+							<field name="request_date_to" optional="hide"/>
+							<field name="days"/>
+							<field name="periodo_id"/>
+						</tree>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+	<record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
+<!--		<field name="context">{'search_default_group_by_state': 1}</field>-->
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'sequence': 2, 'view_id': ref('hr_payroll.hr_contract_view_kanban')})]"/>
+    </record>
+	<menuitem
+            id="hr_contract.hr_menu_contract"
+            name="Contratos"
+            action="hr_contract.action_hr_contract"
+            parent="hr.menu_hr_employee_payroll"
+            sequence="4"
+            groups="hr_contract.group_hr_contract_manager"/>
+</odoo>

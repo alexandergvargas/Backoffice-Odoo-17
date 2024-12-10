@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+
+		<record id='hr_work_entry.work_entry_type_attendance' model='hr.work.entry.type'>
+			<field name='code'>DLAB</field>
+			<field name='name'>DIAS LABORADOS</field>
+			<field name='sequence'>1</field>
+			<field name="is_leave">False</field>
+			<field name='rate'>0</field>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_DOM' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_FER' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_FAL' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_TAR' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_DMED' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_DPAT' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_LCGH' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_LSGH' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_HE25' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_HE35' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_DVAC' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_SMAR' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id='hr_fields.wd_SENF' model='hr.work.entry.type'>
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+
+	</data>
+</odoo>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_subsidies_lot_form" model="ir.ui.view">
+            <field name="name">hr.subsidies.lot.form</field>
+            <field name="model">hr.subsidies.lot</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="get_subsidies" string="Procesar" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+<!--                        <button name="compute_vaca_line_all" string="Recalcular" type="object" invisible="state != 'draft'"/>-->
+<!--                        <button name="export_vacation" string="Exportar Vacaciones" type="object" class="oe_highlight" invisible="state != 'draft'" confirm="¿Esta seguro que desea exportar los montos de Vacaciones a su respectivo Lote de Nominas?"/>-->
+<!--                        <button name="get_excel_vacation" string="Descargar Excel" type="object" class="oe_highlight"/>-->
+                        <button name="turn_done" string="Cerrar" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="turn_draft" string="Volver a Borrador" type="object" invisible="state != 'done'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_subsidies" class="oe_stat_button" icon="fa-book" type="object" help="Subsidios" invisible="subsidies_count == 0">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value"><field name="subsidies_count"/></span>
+                                    <span class="o_stat_text">Subsidios</span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+<!--                                <field name="name" invisible="1"/>-->
+                                <field name="periodo_id" readonly="state == 'done'"/>
+                            </group>
+                            <group>
+                                <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Empleados">
+                                <field name="line_ids" readonly="state == 'done'" context="{'tree_view_ref':'hr_subsidies.view_hr_subsidies_tree',
+													'form_view_ref':'hr_subsidies.view_hr_subsidies_form'}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_subsidies_lot_tree" model="ir.ui.view">
+            <field name="name">hr.subsidies.lot.tree</field>
+            <field name="model">hr.subsidies.lot</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="periodo_id"/>
+                    <field name="state" optional="show"/>
+                    <field name="subsidies_count" optional="show"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        CALCULO POR EMPLEADO-->
+        <record id="view_hr_subsidies_form" model="ir.ui.view">
+            <field name="name">hr.subsidies.form</field>
+            <field name="model">hr.subsidies</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Subsidios">
+                    <header>
+                        <button name="get_information" type="object" string="Traer Informacion" invisible="state != 'draft'" class="oe_highlight"/>
+                        <button name="get_calculation" type="object" string="Calcular Subsidio" invisible="state != 'close'" class="oe_highlight"/>
+                        <button name="set_draft" string="Volver a Borrador" type="object" invisible="state != 'close'" class="oe_highlight" confirm="eliminaras todas las lineas que existen actualmente ¿Esta seguro que desea hacer esto?"/>
+                        <field name="state" widget="statusbar" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+							<group>
+								<field name="employee_id" required="1" readonly="state == 'close'" options="{'no_create': True, 'no_create_edit':True}"/>
+								<field name="leave_id" readonly="state == 'close'" options="{'no_open': True, 'no_edit': True, 'no_create': True, 'no_delete':True}"/>
+								<label for="date_start" string="Fechas de Contingencia"/>
+								<div name="dates_contingencia">
+									<field name="date_start" class="oe_inline"/> - <field name="date_end" class="oe_inline"/>
+								</div>
+							</group>
+                            <group>
+                                <field name="type" readonly="state == 'close'" required="1"/>
+                                <field name="is_compute_20_days" invisible="type == 'maternity'" readonly="state == 'close'"/>
+                                <field name="preserve_record" />
+                                <field name="company_id" invisible="1"/>
+                            </group>
+                        </group>
+                        
+                        <field name="subsidies_line_ids" invisible="state != 'close'">
+                            <tree editable="top">
+                                <field name="periodo_id" optional="show"/>
+                                <field name="wage" sum="wage" optional="show"/>
+                                <field name="vacation" sum="vacation" optional="show"/>
+                                <field name="household_allowance" sum="household_allowance" optional="show"/>
+								<field name="commission" sum="commission" optional="show"/>
+								<field name="extra_hours" sum="extra_hours" optional="show"/>
+                              	<field name="others_income" sum="others_income" optional="show"/>
+								<field name="lacks" sum="lacks" optional="show"/>
+								<field name="total" sum="Total" optional="show"/>
+                            </tree>
+                        </field>
+						<div class="oe_title" id="cal_sub_tal" invisible="state != 'close'" style="width: 50% !important">
+							<h5>CÁLCULO DE SUBSIDIO TOTAL</h5>
+    						<field name="subsidies_total_ids">
+    							<tree editable="bottom" create="0" delete="0">
+    								<field name="total_rem" optional="show"/>
+    								<field name="sub_dia" optional="show"/>
+    								<field name="days_total" optional="show"/>
+    								<field name="days" optional="show"/>
+    								<field name="total_sub" optional="show"/>
+    							</tree>
+    						</field>
+						</div>
+						<div class="oe_title" id="calsub_per" invisible="state != 'close'" style="width: 90% !important">
+							<h5>CÁLCULO DE SUBSIDIO POR PERIODOS</h5>
+    						<field name="subsidies_periodo_ids">
+    							<tree editable="bottom" create="0" delete="0">
+    								<field name="periodo_id" optional="show"/>
+    								<field name="days" sum="days" optional="show"/>
+    								<field name="sub_dia" optional="show"/>
+    								<field name="total_sub" sum="total_sub" optional="show"/>
+    								<field name="validation" readonly="1" optional="show"/>
+    								<button name="set_not_payed" type="object" icon="fa-rotate-left" invisible="validation != 'paid out'" string="Cambiar a No Pagado" help="Cambiar a No Pagado" confirm="¿Esta seguro que desea Cambiar el estado de este Subsidio a No Pagado?" class="oe_edit_only"/>
+    							</tree>
+    						</field>
+						</div>
+                    </sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids"/>
+						<field name="activity_ids"/>
+						<field name="message_ids"/>
+					</div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_subsidies_tree" model="ir.ui.view">
+            <field name="name">hr.subsidies.tree</field>
+            <field name="model">hr.subsidies</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="preserve_record" string="No R." optional="show"/>
+                    <field name="employee_id"/>
+                    <field name="type" optional="show"/>
+                    <field name="leave_id" optional="show"/>
+                    <field name="date_start" optional="show"/>
+                    <field name="date_end" optional="show"/>
+                    <field name="state" optional="show"/>
+                    <field name="company_id" optional="hide" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_subsidies_search" model="ir.ui.view">
+            <field name="name">hr.subsidies.search</field>
+            <field name="model">hr.subsidies</field>
+            <field name="arch" type="xml">
+                <search string="subsidios">
+                    <field name="employee_id"/>
+                    <field name="date_start"/>
+                    <separator/>
+                    <filter string="Fecha de Inicio" name="filter_date_start" date="date_start"/>
+                    <filter string="Borrador" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Hecho" name="filter_close" domain="[('state', '=', 'close')]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Fecha de Inicio" name="group_by_date_start" context="{'group_by':'date_start'}"/>
+                        <filter string="Empleado" name="group_by_employee_id" context="{'group_by':'employee_id'}"/>
+                        <filter string="Estado" name="group_by_state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_subsidies_lot" model="ir.actions.act_window">
+            <field name="name">Subsidios</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.subsidies.lot</field>
+            <field name="view_mode">tree,form</field>
+<!--            <field name="context">{'search_default_group_by_employee_id': 1}</field>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Haga click aqui para crear un nuevo Lote de Subsidios.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="hr_subsidies_menu"
+                  action="action_hr_subsidies_lot"
+                  parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+                  sequence="75"
+                  groups="hr_subsidies.group_hr_subsidies_root"/>
+	</data>
+</odoo>

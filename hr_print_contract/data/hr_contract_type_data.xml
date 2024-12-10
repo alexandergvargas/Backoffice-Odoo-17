@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <function model="hr.contract.type" name="store_contract_type"/>
+
+        <record id="contract_type_1" model="hr.contract.type">
+            <field name="name">CONTRATO POR INICIO O INCREMENTO DE ACTIVIDAD</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="contract_type_2" model="hr.contract.type">
+            <field name="name">CONTRATO POR NECESIDAD DE MERCADO</field>
+            <field name="sequence">2</field>
+        </record>
+
+        <record id="contract_type_3" model="hr.contract.type">
+            <field name="name">CONTRATO OCASIONAL</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="contract_type_4" model="hr.contract.type">
+            <field name="name">CONTRATO DE SUPLENCIA</field>
+            <field name="sequence">4</field>
+        </record>
+
+        <record id="contract_type_5" model="hr.contract.type">
+            <field name="name">CONTRATO INTERMITENTE</field>
+            <field name="sequence">5</field>
+        </record>
+
+
+
+        <record id="hr.home_work_location" model="hr.work.location">
+            <field name="name">Hogar</field>
+            <field name="location_type">home</field>
+            <field name="address_id" ref="base.main_partner"/>
+        </record>
+
+        <record id="hr.home_work_office" model="hr.work.location">
+            <field name="name">Oficina</field>
+            <field name="location_type">office</field>
+            <field name="address_id" ref="base.main_partner"/>
+        </record>
+
+        <record id="hr.home_work_other" model="hr.work.location">
+            <field name="name">Otros</field>
+            <field name="location_type">other</field>
+            <field name="address_id" ref="base.main_partner"/>
+        </record>
+    </data>
+</odoo>

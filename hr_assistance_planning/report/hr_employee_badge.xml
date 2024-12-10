@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="print_employee_badge_inherit_sentrix" inherit_id="hr.print_employee_badge">
+        <xpath expr="//t" position="replace">
+            <t t-call="web.basic_layout">
+                <div class="page" style="padding-top=5px;margin-top=5px;">
+                    <t t-foreach="docs" t-as="employee">
+                        <t t-foreach="request.env['hr.fotocheck.config'].search([],limit=1)" t-as="conf">
+                            <div style="max-width:346px; max-height:215px; width:346px; height:215px; float:left; margin-left:7px; background-image:url(/hr_assistance_planning/static/img/fondo2.png); background-position: center; background-repeat: no-repeat;" >
+                                <div style="margin-top=7px;float:left;z-index:1">
+                                    <img t-if="conf.company_id.logo" t-att-src="image_data_uri(conf.company_id.logo)" style="max-height:35px;max-width:100px;height:23;width:100px;margin-right:85px;margin-left:6px;" alt="Company Logo"/>
+                                </div>
+                                <div style="margin-top=7px;float:left;">
+                                    <img t-if="conf.logo_cert_1" t-att-src="image_data_uri(conf.logo_cert_1)" style="max-height:23px;max-width:23px;margin-right:6px" alt="Company Logo"/>
+                                </div>
+                                <div style="margin-top=7px;float:left;">
+                                    <img t-if="conf.logo_cert_2" t-att-src="image_data_uri(conf.logo_cert_2)" style="max-height:23px;max-width:23px;margin-right:6px" alt="Company Logo"/>
+                                </div>
+                                <div style="margin-top=7px;float:left;">
+                                    <img t-if="conf.logo_cert_3" t-att-src="image_data_uri(conf.logo_cert_3)" style="max-height:23px;max-width:23px;margin-right:6px" alt="Company Logo"/>
+                                </div>
+                                <div style="margin-top=7px;float:left;">
+                                    <img t-if="conf.logo_cert_4" t-att-src="image_data_uri(conf.logo_cert_4)" style="max-height:23px;max-width:23px;margin-right:6px" alt="Company Logo"/>
+                                </div>
+                                <div style="margin-top=7px;float:left">
+                                    <img t-if="conf.logo_cert_5" t-att-src="image_data_uri(conf.logo_cert_5)" style="max-height:23px;max-width:23px;margin-right:6px" alt="Company Logo"/>
+                                </div>
+                                <div style="clear:both;"></div>
+                                <div style="margin-top=5px;float:left;">
+                                    <img t-if="employee.avatar_1920" t-att-src="image_data_uri(employee.avatar_1920)" style="max-height:133px;max-width:101px; height:133px; width:101px; margin-left:19px;" alt="Company Logo"/>
+                                </div>
+                                <div  style="margin-bottom:0px;margin-top:18px;  float:left;width:204px; max-width:204px;">
+                                    <div t-if="len(employee.names)&lt;=11" align="center" style="font-weight:bold;font-size:16pt;">
+                                        <t t-esc="employee.names"/>
+                                    </div>
+                                    <div t-if="len(employee.names)&gt;=12" align="center" style="font-weight:bold;font-size:12pt;">
+                                        <t t-esc="employee.names"/>
+                                    </div>
+                                    <div t-if="len(employee.last_name)+len(employee.m_last_name)&lt;=11" style="font-size:16pt; margin-bottom:0pt;margin-top:0pt;" align="center">
+                                        <t t-esc="employee.last_name"/> <t t-esc="employee.m_last_name"/>
+                                    </div>
+                                    <div t-if="len(employee.last_name)+len(employee.m_last_name)&gt;=12" style="font-size:10pt; margin-bottom:0pt;margin-top:0pt;" align="center">
+                                        <t t-esc="employee.last_name"/> <t t-esc="employee.m_last_name"/>
+                                    </div>
+                                    <div t-if="employee.barcode" t-field="employee.barcode" t-options="{'widget': 'barcode', 'width': 600, 'height': 120, 'img_style': 'max-height:23px;max-width:175px;height:23px;width:175px;', 'img_align': 'center'}"  align="center"/>
+                                    <div style="font-size:10pt; margin-bottom:0pt;margin-top:0pt;" align="center">
+                                        <t t-esc="employee.barcode"/>
+                                    </div>
+                                </div>
+                                <div style="clear:both;"></div>
+                                <div t-if="len(employee.job_id.name)&gt;=23" style="margin-bottom:0px;margin-top:10px;font-size:8pt;margin-left:7px;font-weight:bold;" align="center">
+                                    <t t-esc="employee.job_id.name"/>
+                                </div>
+                                <div t-if="len(employee.job_id.name)&lt;=22" style="margin-bottom:0px;margin-top:5px;font-size:14pt;margin-left:7px;font-weight:bold;" align="center">
+                                    <t t-esc="employee.job_id.name"/>
+                                </div>
+                            </div>
+                            <div style="max-width=10px;max-height:215px; width=10px; height:215px; float:left;margin-left:10px;"></div>
+                            <div style="max-width=346px;max-height:215px; width=346px; height:215px;">
+                                <img t-if="conf.backimg" t-att-src="image_data_uri(conf.backimg)" style="width:346px;height:215px;font-weight:bold;"/>
+                            </div>
+                            <div style="margin-top:10px;clear:both;"></div>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

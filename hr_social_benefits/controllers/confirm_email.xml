@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+        <template id="template_confirm_email_bbss">
+            <t t-call="web.html_container">
+                <style>
+                .boleta-not-found {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                    background-color: #f6f6f6;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 5px;
+                    margin: 20px 0;
+                }
+
+                .boleta-not-found .icon {
+                    font-size: 40px;
+                    color: #f44336; /* rojo */
+                    margin-right: 20px;
+                }
+
+                .boleta-not-found .message h2 {
+                    margin: 0;
+                    color: #333; /* gris oscuro */
+                }
+
+                .boleta-not-found .message p {
+                    margin-top: 10px;
+                    color: #777; /* gris medio */
+                }
+                </style>
+                <div class="boleta-not-found">
+                    <div class="message">
+                        <h2>¡CONFIRMACIÓN ENVIADA!</h2>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

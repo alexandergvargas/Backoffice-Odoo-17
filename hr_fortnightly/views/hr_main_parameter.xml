@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_form_inherit_fortnightly" model="ir.ui.view">
+		<field name="name">hr.main.parameter.form.inherit.fortnightly</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_base.hr_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//form/sheet/notebook" position="inside">
+				<page string="Adelantos Quincenales">
+					<group>
+						<group name="advance_fortnightly" string="Metodo de Calculo">
+							<field name="fortnightly_type"/>
+							<field name="tasa" widget="percentage" invisible="fortnightly_type != 'percentage'"/>
+							<field name="compute_afiliacion"/>
+							<field name="compute_af"/>
+						</group>
+						<group string="Variables de Calculo">
+							<field name="net_fortnightly_sr_id" domain="[('struct_id.name', '=', 'ADE_QUINCENAL')]"/>
+							<field name="fortnightly_input_id"/>
+						</group>
+					</group>
+<!--					<group name="advance_loan_quin" string="Adelatos y Prestamos">-->
+<!--						<group>-->
+<!--							<field name="quin_advance_id"/>-->
+<!--						</group>-->
+<!--						<group>-->
+<!--							<field name="quin_loan_id"/>-->
+<!--						</group>-->
+<!--					</group>-->
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+		<record model='hr.salary.rule' id="salary_rule_BAS_AQ">
+			<field name='name'>Basico</field>
+			<field name='code'>BAS_AQ</field>
+			<field name='sunat_code'>0121</field>
+			<field name='sequence'>1</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+MainParameter = payslip.env['hr.main.parameter'].get_main_parameter()
+if MainParameter.fortnightly_type == 'percentage':
+	result = payslip.wage * MainParameter.tasa
+else:
+	total_dias = worked_days['DLAB'].number_of_days+worked_days['DOM'].number_of_days+worked_days['FAL'].number_of_days+worked_days['DVAC'].number_of_days+worked_days['DMED'].number_of_days+worked_days['DPAT'].number_of_days+worked_days['LCGH'].number_of_days+worked_days['LSGH'].number_of_days
+	dias_lab = worked_days['DLAB'].number_of_days+worked_days['DOM'].number_of_days+worked_days['FAL'].number_of_days
+	if total_dias >= payslip.date_to.day:
+		if dias_lab >= payslip.date_to.day:
+			result = payslip.wage/2
+		else:
+			result = (dias_lab + (30-payslip.date_to.day)) * (payslip.wage/30)
+	else:
+		result = dias_lab * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_FER_AQ">
+			<field name='name'>Feriado o Descanso Laborado</field>
+			<field name='code'>FER_AQ</field>
+			<field name='sunat_code'>0107</field>
+			<field name='sequence'>2</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days['FER'].number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_FAL_AQ">
+			<field name='name'>Faltas</field>
+			<field name='code'>FAL_AQ</field>
+			<field name='sunat_code'>0705</field>
+			<field name='sequence'>5</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days['FAL'].number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.DES_AFE'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TAR_AQ">
+			<field name='name'>Tardanzas</field>
+			<field name='code'>TAR_AQ</field>
+			<field name='sunat_code'>0704</field>
+			<field name='sequence'>6</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days['TAR'].number_of_hours * (payslip.wage/30/8)
+			</field>
+			<field name='category_id' ref='hr_fields.DES_AFE'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_DMED_AQ">
+			<field name='name'>Descanso Médico</field>
+			<field name='code'>DMED_AQ</field>
+			<field name='sunat_code'>0907</field>
+			<field name='sequence'>7</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days['DMED'].number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_DPAT_AQ">
+			<field name='name'>Descanso Paternidad</field>
+			<field name='code'>DPAT_AQ</field>
+			<field name='sunat_code'>0907</field>
+			<field name='sequence'>8</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days['DPAT'].number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_LCGH_AQ">
+			<field name='name'>Licencia con Goce de Haber</field>
+			<field name='code'>LCGH_AQ</field>
+			<field name='sunat_code'>0907</field>
+			<field name='sequence'>9</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days['LCGH'].number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_LSGH_AQ">
+			<field name='name'>Licencia sin Goce de Haber</field>
+			<field name='code'>LSGH_AQ</field>
+			<field name='sunat_code'>0707</field>
+			<field name='sequence'>10</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = worked_days['LSGH'].number_of_days * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.DES_AFE'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_BAS_M_AQ">
+			<field name='name'>Basico Quincenal</field>
+			<field name='code'>BAS_M_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>15</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS_AQ + FER_AQ - FAL_AQ - TAR_AQ + DMED_AQ + DPAT_AQ + LCGH_AQ - LSGH_AQ
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_AF_AQ">
+			<field name='name'>Asignación Familiar</field>
+			<field name='code'>AF_AQ</field>
+			<field name='sunat_code'>0201</field>
+			<field name='sequence'>16</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+MainParameter = payslip.env['hr.main.parameter'].get_main_parameter()
+if MainParameter.compute_af:
+	if MainParameter.fortnightly_type == 'percentage':
+		result = payslip.rmv * 0.10 * MainParameter.tasa
+	else:
+		if employee.children > 0 and contract.labor_regime !='fourth-fifth':
+			if worked_days['DVAC'].number_of_days ==30 or worked_days['SENF'].number_of_days ==30 or worked_days['SMAR'].number_of_days ==30:
+				result=0
+			else:
+				result = payslip.rmv * 0.10
+		else:
+			result = 0
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_HE25_AQ">
+			<field name='name'>Horas extras 25%</field>
+			<field name='code'>HE25_AQ</field>
+			<field name='sunat_code'>0105</field>
+			<field name='sequence'>17</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = (((payslip.wage+AF_AQ)/30/8) * (1+worked_days['HE25'].rate/100)) * worked_days['HE25'].number_of_hours
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_HE35_AQ">
+			<field name='name'>Horas extras 35%</field>
+			<field name='code'>HE35_AQ</field>
+			<field name='sunat_code'>0106</field>
+			<field name='sequence'>18</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = (((payslip.wage+AF_AQ)/30/8) * (1+worked_days['HE35'].rate/100)) * worked_days['HE35'].number_of_hours
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TOT_EXT_AQ">
+			<field name='name'>Total Horas Extras</field>
+			<field name='code'>TOT_EXT_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>20</field>
+			<field name='appears_on_payslip'>False</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = HE25_AQ + HE35_AQ
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_BONR_AQ">
+			<field name='name'>Bonificaciones regulares</field>
+			<field name='code'>BONR_AQ</field>
+			<field name='sunat_code'>0306</field>
+			<field name='sequence'>25</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs['BONRER'].amount if inputs['BONRER'] else 0
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_SMAR_AQ">
+			<field name='name'>Subsidio Maternidad</field>
+			<field name='code'>SMAR_AQ</field>
+			<field name='sunat_code'>0915</field>
+			<field name='sequence'>27</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs['SMAR'].amount if inputs['SMAR'] else 0
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_SENF_AQ">
+			<field name='name'>Subsidio por Enfermedad</field>
+			<field name='code'>SENF_AQ</field>
+			<field name='sunat_code'>0916</field>
+			<field name='sequence'>28</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs['SENF'].amount if inputs['SENF'] else 0
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_VAC_AQ">
+			<field name='name'>Vacaciones</field>
+			<field name='code'>VAC_AQ</field>
+			<field name='sunat_code'>0118</field>
+			<field name='sequence'>29</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if inputs['VAC'].amount >0:
+    result = inputs['VAC'].amount if inputs['VAC'] else 0
+else:
+    result = (worked_days['DVAC'].number_of_days) * (payslip.wage/30)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_COMI_AQ">
+			<field name='name'>Comisiones</field>
+			<field name='code'>COMI_AQ</field>
+			<field name='sunat_code'>0103</field>
+			<field name='sequence'>38</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs['COMI'].amount if inputs['COMI'] else 0
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_TINGR_AQ">
+			<field name='name'>Total Ingresos Quincena</field>
+			<field name='code'>TINGR_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>54</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = BAS_M_AQ+AF_AQ+TOT_EXT_AQ+BONR_AQ+SMAR_AQ+SENF_AQ+VAC_AQ+COMI_AQ
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_AONP_AQ">
+			<field name='name'>Ingresos Afectos ONP</field>
+			<field name='code'>AONP_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>55</field>
+			<field name='appears_on_payslip'>False</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+MainParameter = payslip.env['hr.main.parameter'].get_main_parameter()
+result = (BAS_M_AQ+AF_AQ+TOT_EXT_AQ+BONR_AQ+VAC_AQ+COMI_AQ) if MainParameter.compute_afiliacion else 0
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_AAFP_AQ">
+			<field name='name'>Ingresos Afectos AFP</field>
+			<field name='code'>AAFP_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>56</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.exception in ('I','O'):
+	result=0
+else:
+	MainParameter = payslip.env['hr.main.parameter'].get_main_parameter()
+	result = (BAS_M_AQ+AF_AQ+TOT_EXT_AQ+BONR_AQ+SMAR_AQ+SENF_AQ+VAC_AQ+COMI_AQ) if MainParameter.compute_afiliacion else 0
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_ONP_AQ">
+			<field name='name'>ONP</field>
+			<field name='code'>ONP_AQ</field>
+			<field name='sunat_code'>0607</field>
+			<field name='sequence'>57</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.membership_id.name == 'ONP':
+	result = round((payslip.retirement_fund/100) * AONP_AQ, 2)
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='hr_fields.APOR_TRA'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_A_JUB_AQ">
+			<field name='name'>AFP Aporte Fondo de Pensiones</field>
+			<field name='code'>A_JUB_AQ</field>
+			<field name='sunat_code'>0608</field>
+			<field name='sequence'>58</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.membership_id.name == 'ONP':
+	result = 0
+elif payslip.membership_id.name == 'AFP HABITAT':
+	result = round((payslip.retirement_fund/100) * AAFP_AQ, 2)
+elif payslip.membership_id.name == 'AFP INTEGRA':
+	result = round((payslip.retirement_fund/100) * AAFP_AQ, 2)
+elif payslip.membership_id.name == 'AFP PRIMA':
+	result = round((payslip.retirement_fund/100) * AAFP_AQ, 2)
+elif payslip.membership_id.name == 'AFP PROFUTURO':
+	result = round((payslip.retirement_fund/100) * AAFP_AQ, 2)
+elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+	result = round((payslip.retirement_fund/100) * AAFP_AQ, 2)
+elif payslip.membership_id.name == 'SIN REGIMEN':
+	result = 0
+			</field>
+			<field name='category_id' ref='hr_fields.APOR_TRA'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_COMFI_AQ">
+			<field name='name'>AFP Comisión Sobre Flujo</field>
+			<field name='code'>COMFI_AQ</field>
+			<field name='sunat_code'>0601</field>
+			<field name='sequence'>59</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.commision_type == 'flow':
+	if payslip.membership_id.name == 'ONP':
+		result = 0
+	elif payslip.membership_id.name == 'AFP HABITAT':
+		result = round((payslip.fixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'AFP INTEGRA':
+		result = round((payslip.fixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'AFP PRIMA':
+		result = round((payslip.fixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'AFP PROFUTURO':
+		result = round((payslip.fixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+		result = round((payslip.fixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'SIN REGIMEN':
+		result = 0
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='hr_fields.APOR_TRA'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_COMMIX_AQ">
+			<field name='name'>AFP Comisión Mixta</field>
+			<field name='code'>COMMIX_AQ</field>
+			<field name='sunat_code'>0601</field>
+			<field name='sequence'>60</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if payslip.commision_type == 'mixed':
+	if payslip.membership_id.name == 'ONP':
+		result = 0
+	elif payslip.membership_id.name == 'AFP HABITAT':
+		result = round((payslip.mixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'AFP INTEGRA':
+		result = round((payslip.mixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'AFP PRIMA':
+		result = round((payslip.mixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'AFP PROFUTURO':
+		result = round((payslip.mixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+		result = round((payslip.mixed_commision/100) * AAFP_AQ, 2)
+	elif payslip.membership_id.name == 'SIN REGIMEN':
+		result = 0
+else:
+	result = 0
+			</field>
+			<field name='category_id' ref='hr_fields.APOR_TRA'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_SEGI_AQ">
+			<field name='name'>AFP Prima de Seguros</field>
+			<field name='code'>SEGI_AQ</field>
+			<field name='sunat_code'>0606</field>
+			<field name='sequence'>61</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.is_older:
+    result = 0
+else:
+    if payslip.membership_id.name == 'ONP':
+        result = 0
+    elif payslip.membership_id.name == 'AFP HABITAT':
+        if AAFP_AQ &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP_AQ, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'AFP INTEGRA':
+        if AAFP_AQ &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP_AQ, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'AFP PRIMA':
+        if AAFP_AQ &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP_AQ, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'AFP PROFUTURO':
+        if AAFP_AQ &lt; payslip.insurable_remuneration:
+            result = round((payslip.prima_insurance/100) * AAFP_AQ, 2)
+        else:
+            result = round((payslip.prima_insurance/100) * payslip.insurable_remuneration, 2)
+    elif payslip.membership_id.name == 'JUB PROFUT TRANSITO':
+        result = 0
+    elif payslip.membership_id.name == 'SIN REGIMEN':
+        result = 0
+			</field>
+			<field name='category_id' ref='hr_fields.APOR_TRA'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_QUINTA_AQ">
+			<field name='name'>Quinta Categoría</field>
+			<field name='code'>QUINTA_AQ</field>
+			<field name='sunat_code'>0605</field>
+			<field name='sequence'>66</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs['QUINTA'].amount if inputs['QUINTA'] else 0
+			</field>
+			<field name='category_id' ref='hr_fields.APOR_TRA'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TAT_AQ">
+			<field name='name'>Total Aportes Trabajador</field>
+			<field name='code'>TAT_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>67</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = ONP_AQ+A_JUB_AQ+COMFI_AQ+COMMIX_AQ+SEGI_AQ+QUINTA_AQ
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_ADELANTO_AQ">
+			<field name='name'>Adelanto de Remuneracion</field>
+			<field name='code'>ADELANTO_AQ</field>
+			<field name='sunat_code'>0701</field>
+			<field name='sequence'>69</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs['ADELANTO'].amount if inputs['ADELANTO'] else 0
+			</field>
+			<field name='category_id' ref='hr_fields.DES_NET'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_PREST_AQ">
+			<field name='name'>Prestamos al Personal</field>
+			<field name='code'>PREST_AQ</field>
+			<field name='sunat_code'>0706</field>
+			<field name='sequence'>75</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = inputs['PREST'].amount if inputs['PREST'] else 0
+			</field>
+			<field name='category_id' ref='hr_fields.DES_NET'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_TDESN_AQ">
+			<field name='name'>Total Descuentos al Neto</field>
+			<field name='code'>TDESN_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>85</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = ADELANTO_AQ+PREST_AQ
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_TDES_AQ">
+			<field name='name'>Total descuentos</field>
+			<field name='code'>TDES_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>86</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = TAT_AQ + TDESN_AQ
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_NETO_AQ">
+			<field name='name'>Neto a pagar Quincena </field>
+			<field name='code'>NETO_AQ</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>87</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = TINGR_AQ - TDES_AQ
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fortnightly.fortnightly_structure'/>
+		</record>
+	</data>
+</odoo>

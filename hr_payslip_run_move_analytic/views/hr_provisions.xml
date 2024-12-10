@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="hr_provisiones_form_view_inherit" model="ir.ui.view">
+            <field name="name">hr_provisiones_form_view_inherit</field>
+            <field name="model">hr.provisiones</field>
+            <field name="inherit_id" ref="hr_provisions.hr_provisiones_form_view"/>
+            <field name="arch" type="xml">
+                <field name="cts_debe" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+                <field name="grati_debe" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+                <field name="boni_debe" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+                <field name="vaca_debe" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+
+                <field name="cts_haber" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+                <field name="grati_haber" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+                <field name="boni_haber" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+                <field name="vaca_haber" position="attributes">
+					<attribute name="required">0</attribute>
+                    <attribute name="invisible">1</attribute>
+				</field>
+                <xpath expr="//sheet/div[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//sheet/h1[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+</odoo>

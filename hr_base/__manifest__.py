@@ -1,0 +1,42 @@
+# -*- encoding: utf-8 -*-
+{
+	'name': 'Hr Base',
+	'category': 'Generic Modules/Human Resources',
+	'author': 'ITGRUPO-HR',
+	'depends': ['popup_it','report_tools','hr','hr_payroll','hr_work_entry_contract_enterprise','l10n_latam_base', 'account_accountant'],
+	'version': '1.0',
+	'description':"""
+	Modulo base para agregar tablas de la localizacion peruana en Nominas
+	""",
+	'auto_install': False,
+	'demo': [],
+	'data':	[
+		'security/security.xml',
+		'security/ir.model.access.csv',
+		'data/hr_membership.xml',
+		'data/hr_situation.xml',
+		'data/hr_social_insurance.xml',
+		'data/hr_contributions.xml',
+		'data/hr_suspension_type.xml',
+		'data/hr_type_document.xml',
+		'data/hr_worker_type.xml',
+		'data/hr_reasons_leave.xml',
+		'wizard/hr_membership_wizard.xml',
+		'wizard/hr_period_generator_wizard.xml',
+		'views/hr_main_parameter.xml',
+		'views/hr_analytic_distribution.xml',
+		'views/hr_membership.xml',
+		'views/hr_contributions.xml',
+		'views/hr_situation.xml',
+		'views/hr_social_insurance.xml',
+		'views/hr_suspension_type.xml',
+		'views/hr_type_document.xml',
+		'views/hr_worker_type.xml',
+		'views/hr_reasons_leave.xml',
+		'views/account_fiscal_year.xml',
+		'views/hr_period.xml',
+		'views/hr_menus.xml'
+	],
+	'installable': True,
+	'license': 'LGPL-3',
+}

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="work_entry_type_leave_form_inherit_susp" model="ir.ui.view">
+        <field name="name">work_entry.type.leave.form.inherit.susp</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_work_entry_holidays.work_entry_type_leave_form_inherit"/>
+        <field name="arch" type="xml">
+            <field name="work_entry_type_id" position="after">
+                <field name="suspension_type_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_holiday_status_normal_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.leave.type.normal.tree.inherit</field>
+        <field name="model">hr.leave.type</field>
+		<field name="inherit_id" ref="hr_holidays.view_holiday_status_normal_tree"/>
+        <field name="arch" type="xml">
+<!--            <xpath expr="//field[@name='code']" position="attributes">-->
+<!--				<attribute name="invisible">1</attribute>-->
+<!--			</xpath>-->
+			<field name="allocation_validation_type" position="after">
+				<field name="suspension_type_id" optional="show"/>
+<!--				<field name="work_entry_type_id" optional="show"/>-->
+			</field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- Form view -->
+		<record id="view_device_record_form" model="ir.ui.view">
+			<field name="name">attendance.device.form</field>
+			<field name="model">attendance.device</field>
+			<field name="arch" type="xml">
+				<form string="Dispositivo de asistencia">
+					<header>
+						<button name="action_check_connection" type="object" string="Verificar la Conexión" class="oe_highlight" invisible="state != 'draft'" groups="hr_attendance.group_hr_attendance_officer"/>
+						<button name="action_device_information" type="object" string="Obtener Información" invisible="state != 'draft'" groups="hr_attendance.group_hr_attendance_officer"
+							help="Esto conectará el dispositivo y recuperará su información (por ejemplo, versión de firmware, número de serie, etc.) y luego la almacenará en la base de datos."/>
+						<button name="action_attendance_download" type="object" string="Descargar Asistencia" class="oe_highlight" invisible="state != 'confirmed'" groups="hr_attendance.group_hr_attendance_officer"
+							help="Esto descargará todos los datos de asistencia y los almacenará en la base de datos de Odoo (es decir, en Asistencia del usuario, no en Asistencia de recursos humanos de Odoo)"/>
+						<button name="action_user_download" type="object" string="Descargar Usuarios" invisible="state != 'confirmed'" help="Descargar usuarios del dispositivo" groups="hr_attendance.group_hr_attendance_officer"
+							confirm="Odoo conectará y descargará a todos los usuarios desde su dispositivo (sin asignarlos a los empleados existentes en Odoo). Quieres proceder?"/>
+						<button name="action_user_upload" type="object"	string="Subir Usuarios" invisible="state != 'confirmed'" help="Cargar empleados en el dispositivo" groups="hr_attendance.group_hr_attendance_officer"
+							confirm="Odoo asignará a los usuarios existentes con los empleados de Odoo. Los empleados no asignados se cargarán en el dispositivo como nuevos usuarios y luego descargarán esos nuevos usuarios en Odoo y los asignarán nuevamente con los empleados no asignados. Quieres proceder?"/>
+						<button name="action_employee_map" type="object" string="Mapear Empleados" invisible="state != 'confirmed'" help="Mapear empleados de Odoo y usuarios del dispositivo" groups="hr_attendance.group_hr_attendance_officer"
+							confirm="Odoo conectará y descargará a todos los usuarios desde su dispositivo e intentará mapearlos con sus empleados. Quieres proceder?"/>
+						<button name="action_finger_template_download" type="object" string="Descargar Huellas Dactilares" invisible="state != 'confirmed'" help="Descargar Huellas Dactilares" groups="hr_attendance.group_hr_attendance_officer"
+							confirm="Odoo se conectará y descargará todas las huellas dactilares desde su dispositivo. Quieres proceder?"/>
+						<button name="action_clear_data" type="object" string="Limpiar Datos" invisible="state != 'confirmed'" help="Borrar todos los datos del dispositivo" groups="hr_attendance.group_hr_attendance_manager"
+							safe_confirm="Odoo conectará y borrará todos los datos del dispositivo (incluidos: usuario, informe de asistencia, base de datos de dedos, etc.). ¿Estas seguro acerca de esto?"/>
+						<button name="action_restart" type="object" string="Reiniciar" invisible="state != 'confirmed'" help="Esto reiniciará este dispositivo." groups="hr_attendance.group_hr_attendance_manager"
+							confirm="¿Estás seguro de reiniciar este dispositivo?"/>
+						<button name="action_show_time" type="object" string="Mostrar Hora" invisible="state != 'confirmed'" help="Esto muestra el tiempo de la máquina." groups="base.group_no_one" />
+						<button name="set_cancel" class="oe_highlight" string="Cancelar" type="object" invisible="state != 'confirmed'"/>
+						<button name="set_draft" string="Volver a Borrador" type="object" invisible="state != 'cancelled'" class="oe_highlight"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,cancelled" />
+					</header>
+					<sheet>
+						<div class="oe_button_box" name="button_box">
+							<button name="action_view_users" type="object"
+								class="oe_stat_button"
+								help="Lista de usuarios del dispositivo que se han descargado para este dispositivo en Odoo"
+								icon="fa-users">
+								<field name="device_users_count" widget="statinfo" string="Usuarios" />
+							</button>
+							<button name="action_view_mapped_employees" type="object"
+								class="oe_stat_button" icon="fa-user-secret"
+								help="Lista de empleados que han sido asignados con los usuarios de este dispositivo">
+								<field name="mapped_employees_count" widget="statinfo" string="Empleados" />
+							</button>
+							<button name="action_view_finger_template" type="object"
+								class="oe_stat_button" icon="fa-address-card"
+								help="Mostrar plantillas de huellas dactilares de este empleado">
+								<field name="total_finger_template_records" widget="statinfo" />
+							</button>
+							<button name="action_view_attendance_data" type="object"
+								class="oe_stat_button" icon="fa-calendar-check-o"
+								help="Lista de registros de asistencia recuperados del dispositivo">
+								<field name="total_att_records" widget="statinfo" />
+							</button>
+						</div>
+						<widget name="web_ribbon" title="Archivado" bg_color="bg-danger" invisible="active == True"/>
+						<group>
+							<field name="active" invisible="1"/>
+							<group>
+								<field name="name" />
+								<field name="ip" groups="hr_attendance.group_hr_attendance_officer" />
+								<field name="port" groups="hr_attendance.group_hr_attendance_officer" />
+								<field name="protocol" groups="hr_attendance.group_hr_attendance_officer" />
+								<field name="password" password="True" groups="hr_attendance.group_hr_attendance_officer" />
+								<field name="user_id" />
+								<field name="location_id" />
+								<!-- <field name="device_name" /> -->
+								<field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" />
+							</group>
+							<group>
+								<field name="oem_vendor" />
+								<field name="device_name" />
+								<field name="serialnumber" />
+								<field name="platform" groups="base.group_no_one" />
+								<field name="firmware_version" />
+								<field name="work_code" groups="base.group_no_one" />
+								<field name="fingerprint_algorithm" groups="base.group_no_one" />
+								<field name="unaccent_user_name" groups="hr_attendance.group_hr_attendance_officer" />
+								<field name="last_attendance_download" />
+							</group>
+						</group>
+						<div>
+							<label for="description" />
+							<div>
+								<field name="description" />
+								<field name="umapped_device_user_count" invisible="1"/>
+							</div>
+						</div>
+						<notebook>
+							<page name="attendance_status_code" string="Códigos de tipos de Marcacion">
+								<group>
+									<field name="ignore_unknown_code" />
+								</group>
+								<field name="attendance_device_state_line_ids">
+									<tree name="attendance_device_state_line_ids" editable="bottom">
+										<field name="attendance_state_id" />
+										<field name="code" />
+										<field name="activity_id" />
+										<field name="type" />
+									</tree>
+								</field>
+							</page>
+							<page name="unmapped_device_users" string="Usuarios del disp no Mapeados" invisible="umapped_device_user_count == 0">
+								<field name="umapped_device_user_ids">
+									<tree name="umapped_device_user_ids" nolable="1" editable="bottom">
+										<field name="id" column_invisible="1" />
+										<field name="name" />
+										<field name="user_id" readonly="id &gt; 0"/>
+										<field name="employee_id" />
+										<field name="password" groups="base.group_no_one" password="True" />
+										<field name="group_id" groups="base.group_no_one" />
+										<field name="privilege" groups="base.group_no_one" />
+										<field name="uid" groups="base.group_no_one" />
+										<field name="del_user" groups="base.group_no_one" />
+									</tree>
+								</field>
+							</page>
+							<page name="unmapped_employees" string="Empleados no Mapeados" invisible="unmapped_employee_ids == []">
+<!--								attrs="{'invisible':[('unmapped_employee_ids','=',[])]}">-->
+								<field name="unmapped_employee_ids">
+									<tree name="unmapped_employee_ids">
+										<field name="name" />
+										<field name="department_id" />
+										<field name="job_id" />
+										<field name="parent_id" />
+									</tree>
+								</field>
+							</page>
+							<page name="tech_settings" string="Configuraciones técnicas">
+								<group>
+									<group>
+										<field name="timeout" groups="hr_attendance.group_hr_attendance_officer" />
+										<field name="tz" groups="hr_attendance.group_hr_attendance_officer" />
+										<field name="unique_uid" groups="base.group_no_one" />
+										<field name="omit_ping" groups="base.group_no_one" />
+										<field name="max_size_TCP" groups="base.group_no_one" />
+										<field name="max_size_UDP" groups="base.group_no_one" />
+									</group>
+									<group>
+										<field name="map_before_dl" groups="hr_attendance.group_hr_attendance_officer" />
+										<field name="create_employee_during_mapping" groups="hr_attendance.group_hr_attendance_officer" />
+										<field name="download_error_notification" groups="hr_attendance.group_hr_attendance_officer" />
+										<field name="auto_clear_attendance"/>
+										<field name="auto_clear_attendance_schedule" invisible="auto_clear_attendance == False"/>
+										<field name="auto_clear_attendance_hour" widget="float_time"
+											invisible="auto_clear_attendance == False or auto_clear_attendance_schedule == 'on_download_complete'"/>
+										<field name="auto_clear_attendance_dow"
+											invisible="auto_clear_attendance == False or auto_clear_attendance_schedule == 'on_download_complete'"/>
+										<field name="auto_clear_attendance_error_notif" invisible="auto_clear_attendance == False"/>
+										<field name="debug_message" groups="hr_attendance.group_hr_attendance_officer" />
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers" />
+						<field name="activity_ids" widget="mail_activity" />
+						<field name="message_ids" widget="mail_thread" />
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_device_tree" model="ir.ui.view">
+			<field name="name">attendance.device.tree</field>
+			<field name="model">attendance.device</field>
+			<field name="arch" type="xml">
+				<tree string="Dispositivos de asistencia" decoration-bf="message_needaction==True" decoration-muted="state=='cancelled'">
+					<field name="message_needaction" column_invisible="1" />
+					<field name="name" />
+					<field name="oem_vendor" optional="show"/>
+					<field name="device_name" optional="show"/>
+					<field name="ip" optional="show"/>
+					<field name="port" optional="show"/>
+					<field name="last_attendance_download" optional="hide"/>
+					<field name="location_id" optional="hide"/>
+					<field name="tz" optional="hide"/>
+					<field name="device_users_count" optional="show"/>
+					<field name="mapped_employees_count" optional="show"/>
+					<field name="total_att_records" optional="show"/>
+					<field name="auto_clear_attendance" optional="hide"/>
+					<field name="state" optional="show"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_attendance_device_filter" model="ir.ui.view">
+			<field name="name">attendance.device.filter</field>
+			<field name="model">attendance.device</field>
+			<field name="arch" type="xml">
+				<search string="Buscar dispositivos de asistencia">
+					<field name="name" filter_domain="['|', ('name','ilike',self), ('device_name','=like',str(self)+'%')]" string="Dispositivo" />
+					<field name="oem_vendor" />
+					<separator />
+					<filter name="inactive" string="Inactive" domain="[('active','=',False)]" />
+					<separator />
+					<filter name="draft" string="Borrador" domain="[('state','=','draft')]" />
+					<filter name="confirmed" string="Confirmado" domain="[('state','=','confirmed')]" />
+				</search>
+			</field>
+		</record>
+
+		<record id="attendance_device_list_action" model="ir.actions.act_window">
+			<field name="name">Información de dispositivos</field>
+			<field name="res_model">attendance.device</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_device_tree" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">Crear el primer dispositivo de asistencia
+				</p>
+			</field>
+		</record>
+
+		<menuitem id="attendace_device_menu"
+				  name="Dispositivos de Asistencia"
+				  parent="hr_attendance.menu_hr_attendance_root"
+				  sequence="29"
+				  groups="hr_attendance.group_hr_attendance_manager" />
+
+		<menuitem id="default_attendace_device_manager_menu"
+				  name="Administrar Dispositivos"
+				  parent="attendace_device_menu"
+				  action="attendance_device_list_action"
+				  sequence="1"
+				  groups="hr_attendance.group_hr_attendance_manager" />
+
+	</data>
+</odoo>

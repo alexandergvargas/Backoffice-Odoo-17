@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Creating Document type view -->
+    <record id="hr_document_type_view_form" model="ir.ui.view">
+        <field name="name">hr.document.type.view.form</field>
+        <field name="model">hr.document.type</field>
+        <field name="arch" type="xml">
+            <form string="Etiquetas de empleados">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--Tree view of the model hr.document.type-->
+    <record id='hr_document_type_view_tree' model='ir.ui.view'>
+        <field name="name">hr.document.type.view.tree</field>
+        <field name="model">hr.document.type</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <!--Action of the model hr.document.type-->
+    <record id="hr_document_type_action" model="ir.actions.act_window">
+        <field name="name">Tipos de Documentos</field>
+        <field name="res_model">hr.document.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!--Menu of the model hr.document.type-->
+    <menuitem id="document_type_menu"
+              name="Tipos de Documentos"
+              parent="hr.menu_human_resources_configuration"
+              sequence="6"
+              action="hr_employee_documents.hr_document_type_action"/>
+</odoo>

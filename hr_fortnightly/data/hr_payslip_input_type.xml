@@ -1,0 +1,30 @@
+<odoo>
+	<data noupdate="0">
+
+		<record id="hr_fields.input_type_VAC" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id="hr_fields.input_type_SENF" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id="hr_fields.input_type_SMAR" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id="hr_fields.input_type_BONRER" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id="hr_fields.input_type_COMI" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		
+		<record id="hr_fields.input_type_ADELANTO" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id="hr_fields.input_type_PREST" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+		<record id="hr_fields.input_type_QUINTA" model="hr.payslip.input.type">
+			<field name="struct_ids" eval="[(6, 0, [ref('hr_fields.base_structure'), ref('hr_fortnightly.fortnightly_structure')])]"/>
+		</record>
+	</data>
+</odoo>

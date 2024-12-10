@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+<!--    TIPOS DE TURNOS    -->
+        <record id="attendance_activity_tree_view" model="ir.ui.view">
+			<field name="name">attendance.activity.tree</field>
+			<field name="model">attendance.activity</field>
+			<field name="arch" type="xml">
+				<tree string="Tipos de Asistencia" multi_edit="1">
+                    <field name="sequence" widget="handle" optional="show"/>
+                    <field name="name" placeholder="Ejemplo: Turno A"/>
+                    <field name="color" widget="color_picker" optional="show"/>
+				</tree>
+			</field>
+		</record>
+
+        <record id="attendance_activity_form_view" model="ir.ui.view">
+			<field name="name">attendance.activity.form</field>
+			<field name="model">attendance.activity</field>
+			<field name="arch" type="xml">
+				<form string="Tipos de Asistencia">
+					<sheet>
+                        <widget name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/>
+						<group>
+                            <field name="active" invisible="1" />
+							<field name="name" />
+                            <field name="color" widget="color_picker"/>
+                            <field name="sequence" groups="base.group_no_one"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+        <record id="view_hr_attendance_activity_kanban" model="ir.ui.view">
+            <field name="name">hr.attendance.activity.kanban</field>
+            <field name="model">attendance.activity</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_dashboard">
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-menu">
+                            <a t-if="widget.editable" role="menuitem" type="edit" class="dropdown-item">Editar</a>
+                            <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Eliminar</a>
+                            <ul class="oe_kanban_colorpicker" data-field="color" role="popup"/>
+                        </t>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <field name="name" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_hr_attendance_activity_search" model="ir.ui.view">
+            <field name="name">hr.attendance.activity.search</field>
+            <field name="model">attendance.activity</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <separator/>
+                    <filter name="archived" string="Archivado" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="attendance_activity_tree_action" model="ir.actions.act_window">
+            <field name="name">Tipos de Asistencia</field>
+            <field name="res_model">attendance.activity</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="help" type="html">
+                <div class="d-none d-sm-block" style="margin-top:-25%">
+                    <div class="o_gantt_view pe-none mb-5"><div class="o_gantt_renderer o_renderer bg-view o_planning_gantt" style="--Gantt__RowHeader-width:229px;--Gantt__Pill-height:36px;--Gantt__Row-height:4px;--Gantt__Template-rows:66;--Gantt__Template-columns:3"><b class="o_gantt_header o_gantt_row_sidebar position-sticky top-0 bg-view d-flex align-items-center justify-content-center">Horarios</b><div class="o_gantt_header o_gantt_header_slots o_gantt_grid_columns position-sticky top-0 bg-view"><b class="o_gantt_header_scale d-flex align-items-center justify-content-center">12 Febrero 2024 - 18 Febrero 2024</b><div class="o_gantt_header_cell d-flex align-items-center justify-content-center p-2" style="grid-column:1">Monday, 13</div><div class="o_gantt_header_cell d-flex align-items-center justify-content-center p-2" style="grid-column:2">Tuesday, 14</div><div class="o_gantt_header_cell d-flex align-items-center justify-content-center p-2" style="grid-column:3">Wednesday, 15</div></div><div class="o_gantt_row_headers o_gantt_grid_rows"><div class="o_gantt_row_header o_gantt_row_sidebar text-truncate position-relative align-items-center o_gantt_group o_gantt_hoverable o_group_open" style="grid-row:1 / span 6" data-row-id="[{'role_id':[4,'Bartender']}]"><div class="o_gantt_row_title position-absolute text-truncate w-100 text-start" style="grid-column:2 / -1" title="Bartender"><i class="fa small fa-minus me-1"></i>Bartender</div></div><div class="o_gantt_row_header o_gantt_row_sidebar text-truncate position-relative align-items-center o_gantt_hoverable o_group_open" style="grid-row:7 / span 18" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':false}]"><div class="o_gantt_row_title position-absolute text-truncate w-100 text-start" style="grid-column:3 / -1" title="Open Shifts">Open Shifts</div></div><div class="o_gantt_row_header o_gantt_row_sidebar text-truncate position-relative align-items-center o_gantt_hoverable o_group_open" style="grid-row:25 / span 9" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[15,'Doris Cole (Bartender)']}]"><div class="o_gantt_row_title position-absolute text-truncate w-100 text-start" style="grid-column:3 / -1" title="Doris Cole (Bartender)"><div class="o_clickable_m2x_avatar o_field_many2one_avatar o_field_widget"><div class="o_m2o_avatar"><img class="o_avatar rounded me-2" src="/hr/static/img/employee_jep-image.jpg"/><span>Doris Cole <span class="text-muted">(Bartender)</span></span></div></div></div></div><div class="o_gantt_row_header o_gantt_row_sidebar text-truncate position-relative align-items-center o_gantt_hoverable o_group_open" style="grid-row:34 / span 9" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[11,'Jeffrey Kelly (Bartender)']}]"><div class="o_gantt_row_title position-absolute text-truncate w-100 text-start" style="grid-column:3 / -1" title="Jeffrey Kelly (Bartender)"><div class="o_clickable_m2x_avatar o_field_many2one_avatar o_field_widget"><div class="o_m2o_avatar"><img class="o_avatar rounded me-2" src="/hr/static/img/employee_ngh-image.jpg"/><span>Jeffrey Kelly <span class="text-muted">(Bartender)</span></span></div></div></div></div><div class="o_gantt_row_header o_gantt_row_sidebar text-truncate position-relative align-items-center o_gantt_group o_gantt_hoverable o_group_open" style="grid-row:43 / span 6" data-row-id="[{'role_id':[5,'Waiter']}]"><div class="o_gantt_row_title position-absolute text-truncate w-100 text-start" style="grid-column:2 / -1" title="Waiter"><i class="fa small fa-minus me-1"></i>Waiter</div></div><div class="o_gantt_row_header o_gantt_row_sidebar text-truncate position-relative align-items-center o_gantt_hoverable o_group_open" style="grid-row:49 / span 9" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':false}]"><div class="o_gantt_row_title position-absolute text-truncate w-100 text-start" style="grid-column:3 / -1" title="Open Shifts">Open Shifts</div></div><div class="o_gantt_row_header o_gantt_row_sidebar text-truncate position-relative align-items-center o_gantt_hoverable o_group_open" style="grid-row:58 / span 9" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':[19,'Eli Lambert (Waiter)']}]"><div class="o_gantt_row_title position-absolute text-truncate w-100 text-start" style="grid-column:3 / -1" title="Eli Lambert (Waiter)"><div class="o_clickable_m2x_avatar o_field_many2one_avatar o_field_widget"><div class="o_m2o_avatar"><img class="o_avatar rounded me-2" src="/hr/static/img/employee_lur-image.jpg"/><span>Eli Lambert <span class="text-muted">(Waiter)</span></span></div></div></div></div></div><div class="o_gantt_cells o_gantt_grid_rows o_gantt_grid_columns position-relative"><div class="o_gantt_cell o_gantt_group o_gantt_hoverable o_group_open" style="grid-column:1;grid-row:1 / span 6;" data-row-id="[{'role_id':[4,'Bartender']}]" data-column-index="0"></div><div class="o_gantt_cell o_gantt_group o_gantt_hoverable o_group_open" style="grid-column:2;grid-row:1 / span 6;" data-row-id="[{'role_id':[4,'Bartender']}]" data-column-index="1"></div><div class="o_gantt_cell o_gantt_group o_gantt_hoverable o_group_open" style="grid-column:3;grid-row:1 / span 6;" data-row-id="[{'role_id':[4,'Bartender']}]" data-column-index="2"></div><div class="o_gantt_pill_wrapper o_gantt_group_pill align-items-center o_group_open" style="grid-column:1;grid-row:1 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill position-relative overflow-visible" title="12:00"></div><span class="o_gantt_pill_title bg-view text-truncate px-1 z-index-1">12:00</span></div><div class="o_gantt_pill_wrapper o_gantt_group_pill align-items-center o_group_open" style="grid-column:2;grid-row:1 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill position-relative overflow-visible" title="08:00"></div><span class="o_gantt_pill_title bg-view text-truncate px-1 z-index-1">08:00</span></div><div class="o_gantt_pill_wrapper o_gantt_group_pill align-items-center o_group_open" style="grid-column:3;grid-row:1 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill position-relative overflow-visible" title="04:00"></div><span class="o_gantt_pill_title bg-view text-truncate px-1 z-index-1">04:00</span></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:1;grid-row:7 / span 18;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':false}]" data-column-index="0"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:2;grid-row:7 / span 18;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':false}]" data-column-index="1"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:3;grid-row:7 / span 18;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':false}]" data-column-index="2"></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:1;grid-row:7 / span 9" data-pill-id="__pill__7"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center o_gantt_color_3"><span class="o_gantt_pill_title text-truncate mx-1">1:00 PM - 5:00 PM (4h)</span></div></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:1;grid-row:16 / span 9" data-pill-id="__pill__8"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center o_gantt_color_3"><span class="o_gantt_pill_title text-truncate mx-1">8:00 AM - 12:00 PM (4h)</span></div></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:3;grid-row:7 / span 9" data-pill-id="__pill__9"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center o_gantt_color_3"><span class="o_gantt_pill_title text-truncate mx-1">8:00 AM - 12:00 PM (4h)</span></div></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:1;grid-row:25 / span 9;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[15,'Doris Cole (Bartender)']}]" data-column-index="0"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:2;grid-row:25 / span 9;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[15,'Doris Cole (Bartender)']}]" data-column-index="1"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:3;grid-row:25 / span 9;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[15,'Doris Cole (Bartender)']}]" data-column-index="2"></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:2;grid-row:25 / span 9" data-pill-id="__pill__10"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center decoration-warning o_gantt_color_3"><span class="o_gantt_pill_title text-truncate mx-1">8:00 AM - 12:00 PM (4h) - Doris Cole</span></div></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:1;grid-row:34 / span 9;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[11,'Jeffrey Kelly (Bartender)']}]" data-column-index="0"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:2;grid-row:34 / span 9;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[11,'Jeffrey Kelly (Bartender)']}]" data-column-index="1"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:3;grid-row:34 / span 9;" data-row-id="[{'role_id':[4,'Bartender']},{'resource_id':[11,'Jeffrey Kelly (Bartender)']}]" data-column-index="2"></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:1;grid-row:34 / span 9" data-pill-id="__pill__11"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center decoration-warning o_gantt_color_3"><span class="o_gantt_pill_title text-truncate mx-1">1:00 PM - 5:00 PM (4h) - Jeffrey Kelly</span></div></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:2;grid-row:34 / span 9" data-pill-id="__pill__12"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center decoration-warning o_gantt_color_3"><span class="o_gantt_pill_title text-truncate mx-1">1:00 PM - 5:00 PM (4h) - Jeffrey Kelly</span></div></div><div class="o_gantt_cell o_gantt_group o_gantt_hoverable o_group_open" style="grid-column:1;grid-row:43 / span 6;" data-row-id="[{'role_id':[5,'Waiter']}]" data-column-index="0"></div><div class="o_gantt_cell o_gantt_group o_gantt_hoverable o_group_open" style="grid-column:2;grid-row:43 / span 6;" data-row-id="[{'role_id':[5,'Waiter']}]" data-column-index="1"></div><div class="o_gantt_cell o_gantt_group o_gantt_hoverable o_group_open" style="grid-column:3;grid-row:43 / span 6;" data-row-id="[{'role_id':[5,'Waiter']}]" data-column-index="2"></div><div class="o_gantt_pill_wrapper o_gantt_group_pill align-items-center o_group_open" style="grid-column:1;grid-row:43 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill position-relative overflow-visible" title="04:00"></div><span class="o_gantt_pill_title bg-view text-truncate px-1 z-index-1">04:00</span></div><div class="o_gantt_pill_wrapper o_gantt_group_pill align-items-center o_group_open" style="grid-column:2;grid-row:43 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill position-relative overflow-visible" title="04:00"></div><span class="o_gantt_pill_title bg-view text-truncate px-1 z-index-1">04:00</span></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:1;grid-row:49 / span 9;" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':false}]" data-column-index="0"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:2;grid-row:49 / span 9;" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':false}]" data-column-index="1"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:3;grid-row:49 / span 9;" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':false}]" data-column-index="2"></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:2;grid-row:49 / span 9" data-pill-id="__pill__17"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center o_gantt_color_2"><span class="o_gantt_pill_title text-truncate mx-1">8:00 AM - 12:00 PM (4h)</span></div></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:1;grid-row:58 / span 9;" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':[19,'Eli Lambert (Waiter)']}]" data-column-index="0"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:2;grid-row:58 / span 9;" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':[19,'Eli Lambert (Waiter)']}]" data-column-index="1"></div><div class="o_gantt_cell o_gantt_hoverable o_group_open" style="grid-column:3;grid-row:58 / span 9;" data-row-id="[{'role_id':[5,'Waiter']},{'resource_id':[19,'Eli Lambert (Waiter)']}]" data-column-index="2"></div><div class="o_gantt_pill_wrapper o_draggable o_resizable" style="grid-column:1;grid-row:58 / span 9" data-pill-id="__pill__18"><div class="o_gantt_pill position-relative h-100 d-flex align-items-center decoration-warning o_gantt_color_2"><span class="o_gantt_pill_title text-truncate mx-1">8:00 AM - 12:00 PM (4h) - Eli Lambert</span></div></div></div><div class="o_gantt_row_sidebar bg-view d-flex align-items-center justify-content-end"><h4 class="o_gantt_row_title pe-3 my-0 fw-bold" title="Total">Total</h4></div><div class="o_gantt_row_total o_gantt_grid_columns bg-view"><div class="o_gantt_cell" style="grid-column:1;grid-row:1"></div><div class="o_gantt_cell" style="grid-column:2;grid-row:1"></div><div class="o_gantt_cell" style="grid-column:3;grid-row:1"></div><div class="o_gantt_pill_wrapper position-relative p-0 h-100 d-flex align-items-end" style="grid-column:1;grid-row:1 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill w-100 d-flex align-items-end justify-content-center" title="16:00" style="height: 90%;"><span class="o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1">16:00</span></div></div><div class="o_gantt_pill_wrapper position-relative p-0 h-100 d-flex align-items-end" style="grid-column:2;grid-row:1 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill w-100 d-flex align-items-end justify-content-center" title="12:00" style="height: 67.5%;"><span class="o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1">12:00</span></div></div><div class="o_gantt_pill_wrapper position-relative p-0 h-100 d-flex align-items-end" style="grid-column:3;grid-row:1 / span 6"><div class="o_gantt_pill o_gantt_consolidated_pill w-100 d-flex align-items-end justify-content-center" title="04:00" style="height: 22.5%;"><span class="o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1">04:00</span></div></div></div></div></div>
+                    <p class="text-dark" style="font-size: 125%;font-weight: bold;">
+                        No se encontraron tipos de turnos. ¡Creemos uno!
+                    </p>
+                    <p class="text-muted">
+                        Defina los tipos de asistencia que desempeñan sus empleados. Cree turnos abiertos para los horarios que necesitará. Luego, asigna esos turnos abiertos a los empleados que estén disponibles.
+                    </p>
+                </div>
+                <p class="d-block d-sm-none o_view_nocontent_smiling_face">
+                    No se encontraron tipos de asistencias. ¡Creemos uno!
+                </p>
+                <p class="d-block d-sm-none">
+                    Defina los tipos de asistencia que desempeñan sus empleados. Cree turnos abiertos para los horarios que necesitará. Luego, asigna esos turnos abiertos a los empleados que estén disponibles.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="attendance_activity_menu"
+				  name="Tipos de Asistencia"
+				  parent="hr_attendance.menu_hr_attendance_settings"
+				  sequence="20"
+				  action="attendance_activity_tree_action"
+				  groups="hr_attendance.group_hr_attendance_manager"/>
+
+
+
+<!--    TURNOS PLANTILLAS-->
+        <record id="view_hr_shift_template_form" model="ir.ui.view">
+            <field name="name">hr.shift.template.form</field>
+            <field name="model">hr.shift.template</field>
+            <field name="arch" type="xml">
+                <form string="Plantillas para Turnos">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archivado" bg_color="text-bg-danger" invisible="active"/>
+                        <group>
+                            <group>
+                                <label for="start_time" string="Hora de Inicio y fin" widget="float_time"/>
+                                <div class="d-flex flex-column flex-shrink-1">
+                                    <div class="d-flex">
+                                        <field name="start_time" widget="float_time" class="oe_inline"/>
+                                        <i class="fa fa-long-arrow-right my-1 mx-1" aria-label="Arrow icon" title="Arrow"/>
+                                        <field name="end_time" readonly="1" force_save="1" widget="float_time" class="flex-shrink-1 oe_inline"/>
+                                    </div>
+                                </div>
+                                <label for="duration"/>
+                                <div class="d-flex flex-column flex-shrink-1">
+                                    <div class="d-flex">
+                                        <field name="duration" widget="float_time" class="oe_inline flex-shrink-1"/>
+                                        <span class="ms-2 flex-shrink-1"> Horas laborables</span>
+                                    </div>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="active" invisible="1" />
+                                <field name="role_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_shift_template_tree" model="ir.ui.view">
+            <field name="name">hr.shift.template.tree</field>
+            <field name="model">hr.shift.template</field>
+            <field name="arch" type="xml">
+                <tree string="Plantillas para Turnos" sample="1">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" />
+                    <field name="duration" optional="show"/>
+                    <field name="role_id" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_shift_template_kanban" model="ir.ui.view">
+            <field name="name">hr.shift.template.view.kanban</field>
+            <field name="model">hr.shift.template</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="role_id" />
+                    <field name="name" />
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <div class="row">
+                                            <strong class="col-12">
+                                                <i class="fa fa-clock-o" role="img" aria-label="Hours" title="Hours"/>
+                                                <field name="name" class="ms-2"/>
+                                            </strong>
+                                            <strong class="col-12">
+                                                <field name="role_id" />
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_hr_shift_template_search" model="ir.ui.view">
+            <field name="name">hr.shift.template.search</field>
+            <field name="model">hr.shift.template</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="role_id"/>
+                    <separator/>
+                    <filter name="archived" string="Archivados" domain="[('active', '=', False)]"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Turnos" name="group_by_role" context="{'group_by':'role_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_shift_template_action" model="ir.actions.act_window">
+            <field name="name">Plantillas de Turnos</field>
+            <field name="res_model">hr.shift.template</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_hr_shift_template_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No se encontraron plantillas de turnos. ¡Creemos uno!
+                </p>
+                <p>
+                    Facilite los cambios de codificación con plantillas.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="hr_shift_template_menu"
+                  name="Plantillas de Turnos"
+                  parent="hr_attendance.menu_hr_attendance_settings"
+                  sequence="30"
+                  action="hr_shift_template_action"
+                  groups="hr_attendance.group_hr_attendance_manager"/>
+
+    </data>
+</odoo>

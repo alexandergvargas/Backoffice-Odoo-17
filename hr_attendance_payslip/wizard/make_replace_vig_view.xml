@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="make_replace_vig_form" model="ir.ui.view">
+        <field name="name">make.replace.vig.form</field>
+        <field name="model">make.replace.vig</field>
+        <field name="arch" type="xml">
+            <form string="Asignar reemplazo">
+    			<group>
+                    <group>
+                        <field name="attendance_id" readonly="1"/>
+                        <field name="calendar_line_id" readonly="1"/>
+                        <field name="service_location_id" readonly="1"/>
+                        <field name="employee_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="horario" readonly="1"/>
+                        <field name="fecha" readonly="1"/>
+                        <field name="puesto" readonly="1"/>
+                        <field name="employee_replace_id" required="1"/>
+                        <field name="motive" required="1"/>
+                    </group>
+				</group>
+				<newline />
+                <footer>
+                    <button
+                        name="makerepla"
+                        string="Reemplazar vigilante"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancelar" class="oe_link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

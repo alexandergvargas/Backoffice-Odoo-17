@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <data noupdate="1">
+        <record id="attendance_activity_tomorrow" model="attendance.activity">
+            <field name="name">Turno Mañana</field>
+<!--            <field name="resource_ids" model="resource.resource" eval="[obj().env.ref('hr.employee_admin').resource_id.id]"/>-->
+            <field name="color">4</field>
+            <field name="sequence">1</field>
+        </record>
+        <record id="attendance_activity_afternoon" model="attendance.activity">
+            <field name="name">Turno Tarde</field>
+<!--            <field name="resource_ids" model="resource.resource" eval="[obj().env.ref('hr.employee_admin').resource_id.id]"/>-->
+            <field name="color">7</field>
+            <field name="sequence">2</field>
+        </record>
+        <record id="attendance_activity_night" model="attendance.activity">
+            <field name="name">Turno Noche</field>
+<!--            <field name="resource_ids" model="resource.resource" eval="[obj().env.ref('hr.employee_admin').resource_id.id]"/>-->
+            <field name="color">5</field>
+            <field name="sequence">3</field>
+        </record>
+<!--        <record id="types_shift_night" model="attendance.activity">-->
+<!--            <field name="name">Descanso</field>-->
+<!--            <field name="color">3</field>-->
+<!--            <field name="sequence">4</field>-->
+<!--        </record>-->
+    </data>
+</odoo>

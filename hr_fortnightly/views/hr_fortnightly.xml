@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="hr_advances_and_loans.advance_menu"
+              name="Adelantos"
+              parent="hr_work_entry_contract_enterprise.menu_hr_payroll_root"
+              sequence="73"
+              groups="hr_advances_and_loans.group_hr_advances_root"/>
+
+    <menuitem id="hr_advance_menu"
+              name="Otros Adelantos"
+              parent="hr_advances_and_loans.advance_menu"
+              action="hr_advances_and_loans.action_advance"
+              sequence="20"
+              groups="hr_advances_and_loans.group_hr_advances_root"/>
+
+    <record id="view_hr_fortnightly_filter" model="ir.ui.view">
+        <field name="name">hr.fortnightly.search</field>
+        <field name="model">hr.fortnightly</field>
+        <field name="arch" type="xml">
+            <search string="Adelantos Quincenales">
+                <field name="name" string="PLanilla"/>
+                <filter string="Borrador" name="draft" domain="[('state', '=', 'draft')]" help="Quincena en Borrador"/>
+                <filter string="Exportado" name="exported" domain="[('state', '=', 'exported')]" help="Quincenas Exportadas"/>
+                <group expand="0" string="Group By">
+                    <filter string="Estados" name="state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_hr_fortnightly_tree" model="ir.ui.view">
+        <field name="name">hr.fortnightly.tree</field>
+        <field name="model">hr.fortnightly</field>
+        <field name="arch" type="xml">
+            <tree string="Adelanto Quincenal" sample="1">
+                <field name="name"/>
+                <field name="date_start" optional="show"/>
+                <field name="date_end" optional="show"/>
+                <field name="state" optional="show"/>
+                <field name="payslip_count" optional="show" string="Cant de Recibos"/>
+                <field name="company_id" optional="show" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hr_fortnightly_kanban" model="ir.ui.view">
+        <field name="name">hr.fortnightly.kanban</field>
+        <field name="model">hr.fortnightly</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-6">
+                                    <strong><field name="name" readonly="state != 'draft'"/></strong>
+                                </div>
+                                <div class="col-6">
+                                    <span class="float-right badge badge-secondary">
+                                        <field name="state"/>
+                                    </span>
+                                </div>
+                                <div class="col-12">
+                                    <span>
+                                        <field name="date_start" readonly="state != 'draft'"/> - <field name="date_end" readonly="state != 'draft'"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_hr_fortnightly_form" model="ir.ui.view">
+        <field name="name">hr.fortnightly.form</field>
+        <field name="model">hr.fortnightly</field>
+        <field name="arch" type="xml">
+            <form string="Adelanto Quincenal">
+            <header>
+                <button name="%(action_hr_payslip_by_employees_fortnightly)d" string="Generar Quincena" type="action" class="oe_highlight" invisible="state != 'draft'"/>
+                <button name="get_employees_news" string="Agregar Empleados" type="object" class="oe_highlight" invisible="state != 'verify'"/>
+				<button name="set_draft" string="Volver a Borrador" type="object" invisible="state != 'verify'" confirm="Volver a Borrador este Adelanto de quincena, eliminara todas las Nominas que existen actualmente ¿Esta seguro que desea hacer esto?"/>
+				<button name="recompute_payslips" string="Recalcular" type="object" class="oe_highlight" invisible="state != 'verify'"/>
+                <button name="export_quincena" string="Exortar Quincena" type="object" class="oe_highlight" invisible="state != 'verify'"/>
+                <button name="tab_payroll" string="Planilla Tabular" type="object" class="oe_highlight" invisible="state not in ['verify','exported']"/>
+				<button name="reopen_payroll" string="Reabrir Quincena" type="object" class="oe_highlight" invisible="state != 'exported'" groups="hr_fields.group_hr_manager"/>
+                <field name="state" widget="statusbar"/>
+			</header>
+            <sheet>
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_open_payslips" class="oe_stat_button" icon="fa-book" type="object" help="Recibos Generadas" invisible="payslip_count == 0">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value"><field name="payslip_count"/></span>
+                            <span class="o_stat_text">Quincenas</span>
+                         </div>
+                    </button>
+                </div>
+                <label for="name" string="Planilla"/>
+                <h1>
+                    <field name="name" readonly="state != 'draft'" placeholder="Quincena 01-2024"/>
+                </h1>
+                <group>
+                    <group>
+                        <label for="date_start" string="Periodo"/>
+                        <div class="o_row">
+                            <field name="date_start" class="oe_inline o_hr_narrow_field" readonly="state != 'draft'"/> - <field name="date_end" class="oe_inline o_hr_narrow_field" readonly="state != 'draft'"/>
+                        </div>
+                        <field name="payslip_run_id" readonly="state != 'draft'"/>
+                    </group>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Empleados">
+                        <field name="slip_ids" readonly="state not in ['draft','verify']">
+                            <tree create="0">
+                                <field name="currency_id" column_invisible="1"/>
+                                <field name="number" optional="hide"/>
+                                <field name="identification_id" optional="show"/>
+                                <field name="employee_id"/>
+                                <field name="basic_wage" sum="basic_wage" optional="show"/>
+                                <field name="gross_wage" sum="gross_wage" optional="show"/>
+                                <field name="worker_contributions" sum="worker_contributions" optional="show"/>
+                                <field name="net_discounts" sum="net_discounts" optional="hide"/>
+                                <field name="net_wage" sum="net_wage" optional="show"/>
+                                <field name="state" optional="show"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_fortnightly" model="ir.actions.act_window">
+        <field name="name">Adelantos Quincenales</field>
+        <field name="res_model">hr.fortnightly</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="view_hr_fortnightly_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer Adelanto Quincenal del mes
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_hr_fortnightly"
+              action="action_hr_fortnightly"
+              parent="hr_advances_and_loans.advance_menu"
+              sequence="10"
+              groups="hr_advances_and_loans.group_hr_advances_root"  />
+
+</odoo>

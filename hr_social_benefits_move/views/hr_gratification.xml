@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_hr_gratification_form_inherit_move" model="ir.ui.view">
+		<field name="name">view.hr.gratification.form.inherit.move</field>
+		<field name="model">hr.gratification</field>
+		<field name="inherit_id" ref="hr_advances_and_loans.hr_gratification_form_inherit"/>
+		<field name="arch" type="xml">
+			<field name="months_and_days" position="after">
+				<field name="account_move_id" invisible="state == 'draft'"/>
+			</field>
+			<xpath expr="//button[@name='action_open_grati']" position="after">
+				<button string="Asiento Contable" type="object"
+						name="action_open_asiento"
+						class="oe_stat_button" icon="fa-list"
+						invisible="account_move_id == False"/>
+			</xpath>
+			<xpath expr="//button[@name='compute_grati_line_all']" position="after">
+				<button name="compute_provision_grati" type="object" string="Obtener Provision" class="oe_highlight" invisible="state != 'draft'"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="hr_gratification_line_tree_inherit_move" model="ir.ui.view">
+		<field name="name">hr.gratification.line.tree.inherit.move</field>
+		<field name="model">hr.gratification.line</field>
+		<field name="inherit_id" ref="hr_advances_and_loans.hr_gratification_line_tree_inherit"/>
+		<field name="arch" type="xml">
+			<field name="total" position="after">
+				<field name="prov_acumulado" sum="prov_acumulado" optional="show"/>
+			</field>
+		</field>
+	</record>
+
+	<record id="wizard_hr_gratification_move" model="ir.actions.server">
+		<field name="name">Generar Asiento Contable</field>
+		<field name="model_id" ref="hr_social_benefits.model_hr_gratification"/>
+		<field name="binding_model_id" ref="hr_social_benefits.model_hr_gratification"/>
+		<field name="state">code</field>
+		<field name="code">action = records.get_move_wizard()</field>
+	</record>
+</odoo>

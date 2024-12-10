@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_hr_tareaje_manager_line_attendance_tree" model="ir.ui.view">
+        <field name="name">hr.tareaje.manager.line.attendance.tree</field>
+        <field name="model">hr.tareaje.manager.line.attendance</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="employee_id" optional="hide"/>
+                <field name="work_location_id" optional="show"/>
+                <field name="fecha" optional="show"/>
+                <field name="day_name" optional="show"/>
+                <field name="horario" optional="show"/>
+                <field name="mar_hora_ing" optional="show" widget="float_time"/>
+                <field name="mar_hora_sal" optional="show" widget="float_time"/>
+                <field name="mar_duration_ref" optional="show" widget="float_time"/>
+                <field name="worked_hours" optional="show" widget="float_time"/>
+                <field name="state" optional="show" decoration-success="state in ('ok','descanso')" widget="badge" decoration-danger="state == 'no_ok'" decoration-info="state in ('vacaciones','justificada')"/>
+
+                <field name="incos" optional="show" sum="incos"/>
+                <field name="dlab" optional="show" sum="dlab"/>
+                <field name="dlabn" optional="hide" sum="dlabn"/>
+                <field name="htd" optional="hide" sum="htd" widget="float_time"/>
+                <field name="htn" optional="hide" sum="htn" widget="float_time"/>
+                <field name="dom" optional="show" sum="dom"/>
+                <field name="fer" optional="hide" sum="fer"/>
+                <field name="fal" optional="show" sum="fal"/>
+                <field name="dmed" optional="show" sum="dmed"/>
+                <field name="dpat" optional="hide" sum="dpat"/>
+                <field name="lcgh" optional="hide" sum="lcgh"/>
+                <field name="lsgh" optional="hide" sum="lsgh"/>
+                <field name="dvac" optional="show" sum="dvac"/>
+                <field name="smar" optional="hide" sum="smar"/>
+                <field name="senf" optional="hide" sum="senf"/>
+                <field name="tar" optional="show" sum="tar" widget="float_time"/>
+                <field name="he25" optional="show" sum="he25" widget="float_time"/>
+                <field name="he35" optional="show" sum="he35" widget="float_time"/>
+                <field name="he100" optional="hide" sum="he100" widget="float_time"/>
+                <field name="hours_compensate" optional="show" sum="hours_compensate" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hr_tareaje_manager_form" model="ir.ui.view">
+        <field name="name">view.hr.tareaje.manager.form</field>
+        <field name="model">hr.tareaje.manager</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Gestion de Asistencias">
+                <header>
+                    <button name="get_tareaje" string="Procesar" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="set_close" string="Cerrar" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="set_reopen" string="Reabrir" type="object" invisible="state != 'done'" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+                <sheet>
+                    <label for="name" string="Nombre"/>
+                    <h2>
+                        <field name="name" required="1" readonly="state == 'done'" placeholder="1ERA QUINCENA ENERO-2024"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <label for="date_start" string="Periodo"/>
+                            <div class="o_row" readonly="state == 'done'">
+                                <field name="date_start" class="oe_inline"/> - <field name="date_end" class="oe_inline"/>
+                            </div>
+                            <field name="time_tolerancia" widget="float_time" readonly="state == 'done'"/>
+                        </group>
+                        <group>
+                            <field name="is_compute_he" readonly="state == 'done'"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detalle Tareaje">
+                            <field name="tareaje_line_ids" readonly="state == 'done'">
+                                <tree editable="bottom">
+                                    <field name="employee_id" optional="show"/>
+                                    <field name="incos" optional="show" sum="incos"/>
+                                    <field name="dlab" optional="show" sum="dlab"/>
+                                    <field name="dlabn" optional="hide" sum="dlabn"/>
+                                    <field name="htd" optional="hide" sum="htd" widget="float_time"/>
+                                    <field name="htn" optional="hide" sum="htn" widget="float_time"/>
+                                    <field name="dom" optional="show" sum="dom"/>
+                                    <field name="fer" optional="hide" sum="fer"/>
+                                    <field name="fal" optional="show" sum="fal"/>
+                                    <field name="dmed" optional="show" sum="dmed"/>
+                                    <field name="dpat" optional="hide" sum="dpat"/>
+                                    <field name="lcgh" optional="hide" sum="lcgh"/>
+                                    <field name="lsgh" optional="hide" sum="lsgh"/>
+                                    <field name="dvac" optional="show" sum="dvac"/>
+                                    <field name="smar" optional="hide" sum="smar"/>
+                                    <field name="senf" optional="hide" sum="senf"/>
+                                    <field name="tar" optional="show" sum="tar" widget="float_time"/>
+                                    <field name="he25" optional="show" sum="he25" widget="float_time"/>
+                                    <field name="he35" optional="show" sum="he35" widget="float_time"/>
+                                    <field name="he100" optional="hide" sum="he100" widget="float_time"/>
+                                    <button name="view_detail" icon="fa-eye" string="Ver Detalle" type="object"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_tareaje_manager_tree" model="ir.ui.view">
+        <field name="name">view.hr.tareaje.manager.tree</field>
+        <field name="model">hr.tareaje.manager</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="date_start" optional="show"/>
+                <field name="date_end" optional="show"/>
+                <field name="time_tolerancia" optional="show"/>
+                <field name="is_compute_he" optional="show"/>
+                <field name="company_id" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hr_tareaje_manager" model="ir.actions.act_window">
+        <field name="name">Gestion de Tareos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.tareaje.manager</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html"> <p class="o_view_nocontent_smiling_face"> Haga click aqui para crear.</p></field>
+    </record>
+
+<!--    NOMINAS-->
+
+    <menuitem
+        id="menu_hr_payroll_attendance_manager"
+        name="Gestion de Tareos"
+        parent="hr_work_entry_contract_enterprise.menu_hr_payroll_work_entries_root"
+        action="action_hr_tareaje_manager"
+        sequence="100"/>
+</odoo>

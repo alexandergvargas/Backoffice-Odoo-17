@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<function model="hr.salary.rule" name="store_salary_rules_bs"/>
+
+	<data noupdate="0">
+		<record model='hr.salary.rule' id="hr_fields.salary_rule_NETREMU">
+			<field name='name'>Neto Remuneraciones</field>
+			<field name='code'>NETREMU</field>
+			<field name='sunat_code'></field>
+			<field name='sequence'>98</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+result = NETO-GRA_TRU-BON9_TRU-CTS_TRU
+			</field>
+			<field name='category_id' ref='hr_fields.SUB'/>
+			<field name='struct_id' ref='hr_fields.base_structure'/>
+		</record>
+<!--		<record model='hr.salary.rule' id="salary_rule_NETVACA">-->
+<!--			<field name='name'>Neto Vacaciones</field>-->
+<!--			<field name='code'>NETVACA</field>-->
+<!--			<field name='sunat_code'></field>-->
+<!--			<field name='sequence'>99</field>-->
+<!--			<field name='appears_on_payslip'>True</field>-->
+<!--			<field name='condition_select'>none</field>-->
+<!--			<field name='amount_select'>code</field>-->
+<!--			<field name='amount_python_compute'>-->
+<!--net_vac = VAC+VATRU-((TAT-QUINTA) * VACAFE)-->
+<!--if net_rem &lt; 0:-->
+<!--    result = net_vac + net_rem-->
+<!--else:-->
+<!--    result = (net_vac - ADE_VAC) if abs(net_vac - ADE_VAC) >0.1 else 0-->
+<!--			</field>-->
+<!--			<field name='category_id' ref='SUB'/>-->
+<!--			<field name='struct_id' ref='hr_fields.base_structure'/>-->
+<!--		</record>-->
+	</data>
+</odoo>

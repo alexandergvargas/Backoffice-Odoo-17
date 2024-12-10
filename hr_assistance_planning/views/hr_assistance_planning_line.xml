@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+        <!-- planning.slot views -->
+        <record id="view_hr_assistance_planning_line_tree" model="ir.ui.view">
+            <field name="name">hr.assistance.planning.line.tree</field>
+            <field name="model">hr.assistance.planning.line</field>
+            <field name="arch" type="xml">
+                <tree string="Listado de Turnos" multi_edit="1" sample="1" editable="bottom" js_class="planning_tree" open_form_view="True">
+                    <header>
+                        <button name="action_send" class="btn btn-secondary mx-1" string="Publicar" type="object" invisible="context.get('search_default_my_shifts')"/>
+                    </header>
+                    <field name="resource_id" widget="many2one_avatar_resource" optional="show" readonly="not start_datetime or not end_datetime or state == 'published'"
+                           context="{'from_planning': True, 'search_view_ref': 'resource.view_resource_resource_search', 'search_default_role_ids': role_id, 'show_job_title': True, 'form_view_ref': 'resource.resource_resource_form'}" placeholder="Abrir Turnos"/>
+                    <field name="resource_type" column_invisible="True"/>
+                    <field name="resource_color" column_invisible="1"/>
+                    <field name="work_location_id" optional="show" readonly="state == 'published'"/>
+                    <field name="start_datetime" widget="daterange" options="{'end_date_field': 'end_datetime'}" readonly="state == 'published'" optional="hide"/>
+                    <field name="end_datetime" column_invisible="True" />
+                    <field name="fecha" optional="show" readonly="state == 'published'"/>
+                    <field name="day_name" optional="show" readonly="state == 'published'"/>
+                    <field name="is_day_rest" widget="boolean_toggle" optional="show" readonly="state == 'published'"/>
+                    <field name="horario" optional="show" readonly="state == 'published'"/>
+                    <field name="allocated_hours" widget="float_time" sum="Allocated Hours" readonly="1" decoration-danger="allocated_percentage &gt; 100"/>
+                    <field name="allocated_percentage" avg="Allocated Percentage" optional="hide" decoration-danger="allocated_percentage &gt; 100" readonly="1" invisible="resource_type == 'material'"/>
+                    <field name="role_id" optional="show" context="{'search_default_resource_ids': resource_id}" readonly="state == 'published'" placeholder="Ejemplo: Turno tarde"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide" readonly="1"/>
+                    <field name="company_id" column_invisible="True"/>
+                    <field name="lunch_time" optional="hide" readonly="state == 'published'"/>
+                    <field name="name" optional="hide" readonly="state == 'published'"/>
+                    <field name="state" decoration-success="state == 'published'" widget="badge" optional="show" readonly="1"/>
+                    <field name="recurrency_id" column_invisible="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_assistance_planning_line_form" model="ir.ui.view">
+            <field name="name">hr.assistance.planning.line.form</field>
+            <field name="model">hr.assistance.planning.line</field>
+            <field name="arch" type="xml">
+                <form js_class="planning_form">
+                    <header>
+                        <button string="Publicar" type="object" name="action_send" class="btn btn-primary" close="1" data-hotkey="q"
+                                invisible="context.get('search_default_my_shifts') or (state == 'published' or resource_type == 'material')"/>
+                        <button string="Volver a Borrador" type="object" name="action_unpublish" class="btn btn-secondary" close="1"
+                                invisible="state == 'draft' or resource_type == 'material'" data-hotkey="q"/>
+                        <field name="state" widget="statusbar" invisible="context.get('search_default_my_shifts')"/>
+                    </header>
+                    <field name="is_past" invisible="1"/>
+                    <field name="work_email" invisible="1" />
+                    <field name="previous_template_id" invisible="1" />
+                    <field name="template_reset" invisible="1" />
+                    <field name="employee_id" invisible="1"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="resource_type" invisible="1"/>
+                    <field name="repeat" invisible="1"/>
+                    <field name="color" invisible="1" />
+                    <div class="alert alert-info oe_edit_only d-lg-flex align-items-center" role="status" invisible="not id or not repeat">
+                        <div class="my-2">
+                            <span class="ms-0 me-4">Editar</span>
+                        </div>
+                        <field name="recurrence_update" widget="radio" class="mb-0 d-sm-block d-lg-none" options="{'horizontal': false}"/>
+                        <field name="recurrence_update" widget="radio" class="mb-0 d-lg-block d-none" options="{'horizontal': true}"/>
+                    </div>
+                    <div role="alert" class="alert alert-warning text-center" invisible="overlap_slot_count == 0">
+                        <span class="align-middle" invisible="overlap_slot_count == 0">Tenga cuidado, este empleado ya tiene otros turnos asignados:</span>
+                        <button name="action_see_overlaping_slots" type="object" class="btn-link pe-1" invisible="overlap_slot_count == 0">
+                            <field name="overlap_slot_count"/> Turnos
+                        </button>
+                        <span class="align-middle" invisible="overlap_slot_count == 0">en conflicto.</span>
+                    </div>
+
+                    <sheet string="Shift">
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <field name="template_id"
+                               domain="[['id', 'in', template_autocomplete_ids]]"
+                               widget="selection_badge" options="{'horizontal': true}"
+                               groups="hr_attendance.group_hr_attendance_manager"
+                               invisible="not template_autocomplete_ids and not template_id"/>
+                        <field name="template_autocomplete_ids" invisible="1"/>
+                        <field name="recurrency_id" invisible='1'/>
+                        <group>
+                            <group>
+                                <field name="resource_id" context="{'search_view_ref': 'resource.view_resource_resource_search', 'search_default_role_ids': role_id, 'from_planning': True, 'show_job_title': True, 'tree_view_ref': 'resource.resource_resource_tree'}" options="{'no_create_edit': True}"
+                                       readonly="not start_datetime or not end_datetime or state == 'published'" widget="many2one_avatar_resource" placeholder="Ejemplo: Fernando Valdivia"/>
+                                <field name="role_id" readonly="state == 'published'" context="{'search_default_resource_ids': resource_id}" placeholder="Ejemplo: Turno Tarde"/>
+                                <field name="work_location_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="company_id" invisible="1"/>
+                            </group>
+                            <!-- slot_info_right group is used in another module -->
+                            <group name="slot_info_right">
+                                <field name="start_datetime" string="Fecha" widget="daterange" options="{'end_date_field': 'end_datetime'}" readonly="state == 'published'"/>
+                                <field name="end_datetime" invisible="1" />
+                                <label for="allocated_hours"/>
+                                <div class="o_row">
+                                    <field name="allocated_hours" widget="float_time" class="oe_inline" required="resource_type == 'material'" readonly="state == 'published'"/>
+                                    <span invisible="resource_type == 'material'">
+                                        (<field name="allocated_percentage" class="o_field_percentage oe_inline" decoration-danger="allocated_percentage &gt; 100"/> %)
+                                    </span>
+                                </div>
+                            </group>
+                        </group>
+                        <div class="my-4" groups="hr_attendance.group_hr_attendance_manager">
+                            <div class="d-block d-md-flex">
+                                <label for="repeat"/>
+                                <field name="repeat"/>
+                                <div class="o_checkbox_optional_field">
+                                    <div invisible="not repeat" class="d-flex">
+                                        <label for="repeat_interval" string="Cada"/>
+                                        <field name="repeat_interval" class="ms-2" style="max-width: 4rem;" readonly="state == 'published'"/>
+                                        <field name="repeat_unit" class="ms-2" readonly="state == 'published'"/>
+                                        <field name="repeat_type" nolabel="1" class="ms-2" required="repeat" readonly="state == 'published'"/>
+                                        <field name="repeat_until" class="ms-2" nolabel="1" invisible="repeat_type != 'until'" required="repeat_type == 'until' and repeat" readonly="state == 'published'"/>
+                                        <field name="repeat_number" class="ms-2" invisible="repeat_type != 'x_times'" required="repeat_type == 'x_times' and repeat" style="max-width: 4rem;" readonly="state == 'published'"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <field name="name" nolabel="1" placeholder="Nota adicional enviada al empleado" readonly="state == 'published'"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_assistance_planning_line_inherit" model="ir.ui.view">
+            <field name="name">hr.assistance.planning.line.form</field>
+            <field name="model">hr.assistance.planning.line</field>
+            <field name="inherit_id" ref="view_hr_assistance_planning_line_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_assistance_planning_line_in_gantt" model="ir.ui.view">
+            <field name="name">hr.assistance.planning.line.form.gantt</field>
+            <field name="model">hr.assistance.planning.line</field>
+            <field name="inherit_id" ref="view_hr_assistance_planning_line_inherit"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="after">
+                    <footer class="d-flex flex-wrap">
+                        <field name="publication_warning" invisible="1"/>
+                        <field name="is_past" invisible="1"/>
+                        <field name="confirm_delete" invisible="1"/>
+                        <button string="Guardar" special="save" data-hotkey="q" class="btn btn-primary ms-1" close="1" groups="hr_attendance.group_hr_attendance_manager" invisible="confirm_delete"/>
+                        <button string="Guardar" special="save" data-hotkey="q" class="btn btn-primary ms-1" close="1" groups="hr_attendance.group_hr_attendance_manager" invisible="not confirm_delete" confirm="Todos los turnos posteriores serán eliminados. Estás seguro de que quieres continuar?" />
+                        <button string="Publicar" type="object" name="action_send" class="btn btn-primary" close="1"
+                                groups="hr_attendance.group_hr_attendance_manager" data-hotkey="v" invisible="context.get('search_default_my_shifts') or (state == 'published' or resource_type == 'material')"/>
+                        <button string="Volver a Borrador" type="object" name="action_unpublish" class="btn btn-secondary" close="1"
+                                groups="hr_attendance.group_hr_attendance_manager" data-hotkey="r" invisible="context.get('search_default_my_shifts') or (state == 'draft' or resource_type == 'material')"/>
+                        <button string="Descartar" special="cancel" data-hotkey="x" class="btn-secondary float-end" close="1" fullscreen="True" groups="hr_attendance.group_hr_attendance_manager"/>
+                        <button name="unlink" type="object" icon="fa-trash" title="Remove" class="btn-secondary float-end d-none d-md-inline" close="1" invisible="not id" groups="hr_attendance.group_hr_attendance_manager" data-hotkey="d"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Base search view, contains the fields and filters common to planning slot and planning analysis report-->
+        <record id="view_hr_assistance_planning_line_search_base" model="ir.ui.view">
+            <field name="name">hr.assistance.planning.line.search.base</field>
+            <field name="model">hr.assistance.planning.line</field>
+            <field name="priority">999</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="resource_id" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <field name="role_id" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <field name="department_id" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <field name="job_title" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <field name="name" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <filter name="open_shifts" string="Abrir Turnos" domain="[('resource_id', '=', False)]" />
+                    <filter name="my_shifts" string="Mis Turnos" domain="[('user_id', '=', uid)]" />
+                    <filter name="my_department_shifts" string="Mi Departamento" domain="[('employee_id.member_of_department', '=', True)]" help="Shifts of Your Department Member" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <separator/>
+                    <filter name="shift_planned" invisible="1" string="Turnos planificados" groups="hr_attendance.group_hr_attendance_manager" context="{'highlight_planned': 1}"/>
+                    <filter name="conflict_shifts" string="Turnos con Conflictos" groups="hr_attendance.group_hr_attendance_manager" context="{'highlight_conflicting': 1}"/>
+                    <separator/>
+                    <filter name="unpublished_shifts" string="Borrador" domain="[('state', '=', 'draft')]" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <filter name="published_shifts" string="Publicado" domain="[('state', '=', 'published')]" groups="hr_attendance.group_hr_attendance_manager"/>
+                    <separator groups="hr_attendance.group_hr_attendance_manager"/>
+                    <filter string="Fecha Inicio" name="start_datetime" date="start_datetime"/>
+                    <filter string="Fecha Final" name="end_datetime" date="end_datetime"/>
+                    <group string="Group By">
+                        <filter name="group_by_department" string="Departamento" context="{'group_by': 'department_id'}" groups="hr_attendance.group_hr_attendance_manager"/>
+                        <filter name="group_fecha" string="Fecha" domain="[]" context="{'group_by':'fecha'}"/>
+                        <filter name="group_by_resource" string="Empleados" context="{'group_by': 'resource_id'}" groups="hr_attendance.group_hr_attendance_manager"/>
+                        <filter name="group_by_role" string="Turno" context="{'group_by': 'role_id'}"/>
+                        <filter name="group_by_company" string="Compañia" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                        <filter name="group_by_start_datetime" string="Fecha de Inicio" context="{'group_by':'start_datetime:day'}"/>
+                        <filter name="group_by_end_datetime" string="Fecha Final" context="{'group_by':'end_datetime:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_hr_assistance_planning_line_pivot" model="ir.ui.view">
+            <field name="name">hr.assistance.planning.line.pivot</field>
+            <field name="model">hr.assistance.planning.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Planning" sample="1" js_class="planning_pivot">
+                    <field name="start_datetime" interval="week" type="row"/>
+                    <field name="resource_id" type="col"/>
+                    <field name="allocated_hours" type="measure" widget="float_time"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_hr_assistance_planning_line_gantt" model="ir.ui.view">
+            <field name="name">hr.assistance.planning.line.gantt</field>
+            <field name="model">hr.assistance.planning.line</field>
+            <field name="arch" type="xml">
+                <gantt
+                        js_class="planning_gantt"
+                        form_view_id="%(view_hr_assistance_planning_line_in_gantt)d"
+                        date_start="start_datetime"
+                        date_stop="end_datetime"
+                        default_group_by="resource_id"
+                        default_scale="week"
+                        color="color"
+                        plan="false"
+                        string="Horario"
+                        total_row="True"
+                        scales="day,week,month,year"
+                        precision="{'day': 'hour:full', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}"
+                        decoration-info="state == 'draft'"
+                        decoration-warning="publication_warning or (not is_past)"
+                        decoration-danger="overlap_slot_count > 0"
+                        display_unavailability="1"
+                        sample="1"
+                        progress_bar="resource_id"
+                        pill_label="True">
+
+                    <field name="allocated_hours"/>
+                    <field name="recurrency_id" />
+                    <field name="state"/>
+                    <field name="publication_warning"/>
+                    <field name="is_past"/>
+                    <field name="employee_id"/>
+                    <field name="resource_id"/>
+                    <field name="resource_type"/>
+                    <field name="overlap_slot_count"/>
+                    <field name="allocated_percentage"/>
+                    <field name="name"/>
+                    <templates>
+                        <div t-name="gantt-popover">
+                            <div id="allocated_hours"><strong>Tiempo asignado — </strong> <t t-esc="allocatedHoursFormatted"/> <t t-if="resource_type == 'user'"> (<t t-esc="allocatedPercentageFormatted"/>%)</t></div>
+                            <div>
+                                <t t-esc="start_datetime.toFormat('f ')"/>
+                                <i class="fa fa-long-arrow-right" title="Arrow"/>
+                                <t t-esc="end_datetime.toFormat(' f')"/>
+                            </div>
+                            <p class="mt-2 mb-0" t-if="name"><t t-esc="name.slice(0, 200) + (name.length > 200?'…':'')" /></p>
+                            <p t-if="publication_warning and !overlap_slot_count" class="text-warning mt-2 mb-0">
+                                Se realizaron algunos cambios desde que se publicó este cambio.
+                            </p>
+                            <p t-if="overlap_slot_count" class="text-danger mt-2 mb-0">
+                                <t t-esc="overlap_slot_count"/> otros turnos en conflicto.
+                            </p>
+                        </div>
+                    </templates>
+                </gantt>
+            </field>
+        </record>
+
+        <record id="hr_assistance_planning_line_action" model="ir.actions.act_window">
+            <field name="name">Planificación de Turnos</field>
+            <field name="res_model">hr.assistance.planning.line</field>
+            <field name="view_mode">gantt,tree,form,pivot</field>
+            <field name="context">{'planning_expand_resource': 1, 'planning_expand_role': 1, 'search_default_group_fecha': 1, 'search_default_group_by_resource': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No se encontraron turnos. ¡Creemos uno!
+                </p>
+                <p>
+                    Programe sus Horarios de Trabajo en turnos y proyectos.
+                </p>
+            </field>
+        </record>
+
+        <record id="hr_assistance_planning_line_action_publish_and_send" model="ir.actions.server">
+            <field name="name">Publicar Turnos</field>
+            <field name="model_id" ref="hr_assistance_planning.model_hr_assistance_planning_line"/>
+            <field name="binding_model_id" ref="hr_assistance_planning.model_hr_assistance_planning_line"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_send()</field>
+        </record>
+
+        <record id="hr_assistance_planning_line_action_reset_to_draft" model="ir.actions.server">
+            <field name="name">Volver a Borrador</field>
+            <field name="model_id" ref="hr_assistance_planning.model_hr_assistance_planning_line"/>
+            <field name="binding_model_id" ref="hr_assistance_planning.model_hr_assistance_planning_line"/>
+<!--            <field name="groups_id" eval="[(4, ref('hr_attendance.group_hr_attendance_manager'))]"/>-->
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_unpublish()</field>
+        </record>
+
+		<menuitem id="menu_hr_assistance_planning_line"
+				  action="hr_assistance_planning_line_action"
+				  parent="menu_hr_attendance_programa_turnos"
+				  sequence="10"/>
+
+	</data>
+</odoo>

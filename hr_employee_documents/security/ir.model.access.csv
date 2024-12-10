@@ -1,0 +1,7 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_document_employee,access.hr.employee.document.employee,model_hr_employee_document,base.group_user,1,0,0,0
+access_hr_salary_history_base_user,access.hr.salary_history.user,model_hr_salary_history,base.group_user,1,0,0,0
+access_hr_employee_document_manager,access.hr.employee.document.manager,model_hr_employee_document,hr.group_hr_manager,1,1,1,1
+access_hr_employee_document_user,access.hr.employee.document.user,model_hr_employee_document,hr.group_hr_user,1,1,1,0
+access_hr_document_type_manager,access.hr.document.type",model_hr_document_type,hr.group_hr_manager,1,1,1,1
+access_hr_salary_history_manager,access.hr.salary_history.manager,model_hr_salary_history,hr.group_hr_manager,1,1,1,1

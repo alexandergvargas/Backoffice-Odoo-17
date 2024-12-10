@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_subsidies_lot_manager,hr.subsidies.lot.manager.group,model_hr_subsidies_lot,hr_subsidies.group_hr_subsidies_root,1,1,1,1
+access_hr_subsidies_manager,hr.subsidies.manager.group,model_hr_subsidies,hr_subsidies.group_hr_subsidies_root,1,1,1,1
+access_hr_subsidies_line_manager,hr.subsidies.line.manager.group,model_hr_subsidies_line,hr_subsidies.group_hr_subsidies_root,1,1,1,1
+access_hr_subsidies_total_manager,hr.subsidies.total.manager.group,model_hr_subsidies_total,hr_subsidies.group_hr_subsidies_root,1,1,1,1
+access_hr_subsidies_periodo_manager,hr.subsidies.periodo.manager.group,model_hr_subsidies_periodo,hr_subsidies.group_hr_subsidies_root,1,1,1,1
+access_report_subsidios_user,report.subsidios.user,model_report_subsidios,hr_subsidies.group_hr_subsidies_root,1,1,1,1

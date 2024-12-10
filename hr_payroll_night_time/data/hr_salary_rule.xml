@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+
+		<record model='hr.salary.rule' id="hr_fields.salary_rule_BAS">
+			<field name='name'>Basico</field>
+			<field name='amount_python_compute'>
+total_dias = worked_days['DLAB'].number_of_days+worked_days['DOM'].number_of_days+worked_days['DLABN'].number_of_days+worked_days['FAL'].number_of_days+worked_days['DVAC'].number_of_days+worked_days['DMED'].number_of_days+worked_days['DPAT'].number_of_days+worked_days['LCGH'].number_of_days+worked_days['LSGH'].number_of_days
+dias_lab = worked_days['DLAB'].number_of_days+worked_days['DOM'].number_of_days+worked_days['DLABN'].number_of_days+worked_days['FAL'].number_of_days
+if total_dias >= payslip.date_to.day:
+	if dias_lab >= payslip.date_to.day:
+		result = payslip.wage
+	else:
+		result = (dias_lab + (30-payslip.date_to.day)) * (payslip.wage/30)
+else:
+	result = dias_lab * (payslip.wage/30)
+			</field>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_BON_NOC">
+			<field name='name'>Bonificacion Nocturna</field>
+			<field name='code'>BON_NOC</field>
+			<field name='sunat_code'>0121</field>
+			<field name='sequence'>3</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+res = 0
+minimovital = payslip.rmv
+minimonoct = minimovital * 1.35
+if payslip.wage &lt;= minimonoct:
+    sueldon = (minimonoct - payslip.wage)
+else:
+    sueldon = 0
+dianocturno = sueldon/30
+res = (worked_days['DLABN'].number_of_days * dianocturno)
+result = res
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fields.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="hr_fields.salary_rule_BAS_M">
+			<field name='name'>Basico del mes</field>
+			<field name='amount_python_compute'>
+result = BAS + BON_NOC + FER - FAL - TAR + DMED + DPAT + LCGH - LSGH
+			</field>
+		</record>
+
+		<record model='hr.salary.rule' id="salary_rule_HEN25">
+			<field name='name'>Horas extras Nocturnas 25%</field>
+			<field name='code'>HEN25</field>
+			<field name='sunat_code'>0105</field>
+			<field name='sequence'>20</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.wage >1383.75:
+    result = round(((payslip.wage+AF)/30/8),2)*(1+worked_days['HEN25'].rate/100)*(worked_days['HEN25'].number_of_hours)
+else:
+    result = round(((1383.75+AF)/30/8),2)*(1+worked_days['HEN25'].rate/100)*(worked_days['HEN25'].number_of_hours)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fields.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_HEN35">
+			<field name='name'>Horas extras Nocturnas 35%</field>
+			<field name='code'>HEN35</field>
+			<field name='sunat_code'>0106</field>
+			<field name='sequence'>21</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.wage >1383.75:
+    result = round(((payslip.wage+AF)/30/8),2)*(1+worked_days['HEN35'].rate/100)*(worked_days['HEN35'].number_of_hours)
+else:
+    result = round(((1383.75+AF)/30/8),2)*(1+worked_days['HEN35'].rate/100)*(worked_days['HEN35'].number_of_hours)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fields.base_structure'/>
+		</record>
+		<record model='hr.salary.rule' id="salary_rule_HEN100">
+			<field name='name'>Horas extras Nocturnas 100%</field>
+			<field name='code'>HEN100</field>
+			<field name='sunat_code'>0107</field>
+			<field name='sequence'>22</field>
+			<field name='appears_on_payslip'>True</field>
+			<field name='condition_select'>none</field>
+			<field name='amount_select'>code</field>
+			<field name='amount_python_compute'>
+if contract.wage >1383.75:
+    result = round(((payslip.wage+AF)/30/8),2)*(1+worked_days['HEN100'].rate/100)*(worked_days['HEN100'].number_of_hours)
+else:
+    result = round(((1383.75+AF)/30/8),2)*(1+worked_days['HEN100'].rate/100)*(worked_days['HEN100'].number_of_hours)
+			</field>
+			<field name='category_id' ref='hr_fields.ING'/>
+			<field name='struct_id' ref='hr_fields.base_structure'/>
+		</record>
+
+		<record model='hr.salary.rule' id="hr_fields.salary_rule_TOT_EXT">
+			<field name='name'>Total Horas Extras</field>
+			<field name='amount_python_compute'>
+result = HE25 + HE35 + HE100 + HEN25 + HEN35 + HEN100
+			</field>
+		</record>
+	</data>
+</odoo>

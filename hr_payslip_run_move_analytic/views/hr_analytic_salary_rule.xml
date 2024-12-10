@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_salary_rule_form_inherit" model="ir.ui.view">
+		<field name="name">hr.salary.rule.form.inherit</field>
+		<field name="model">hr.salary.rule</field>
+		<field name="inherit_id" ref="hr_fields.hr_salary_rule_form_inherit"/>
+		<field name="arch" type="xml">
+			<xpath expr="//sheet" position="before">
+				<header>
+					<button name="get_clear" string="Limpiar Distribucion" type="object" class="oe_highlight" confirm="Se eliminarán las distribuciones importadas. ¿Desea continuar?"/>
+				</header>
+			</xpath>
+			<xpath expr="//notebook"  position="inside">
+				<page string="Distribucion">
+					<field name="detail_ids" >
+						<tree editable="bottom">
+							<field name="account_analityc"/>
+							<field name="account_id" required="1"/>
+						</tree>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

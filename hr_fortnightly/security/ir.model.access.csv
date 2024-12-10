@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_fortnightly_manager,hr_fortnightly_root,model_hr_fortnightly,group_hr_fortnightly_root,1,1,1,1
+access_hr_payslip_employees_fortnightly_manager,hr.payslip.employees.fortnightly,model_hr_payslip_employees_fortnightly,group_hr_fortnightly_root,1,1,1,0
+access_hr_employee_news_fortnightly_wizard_manager,hr.employee.news.fortnightly.wizard,model_hr_employee_news_fortnightly_wizard,group_hr_fortnightly_root,1,1,1,0
+access_hr_planilla_tabular_fortnightly_wizard_manager,hr.planilla.tabular.fortnightly.wizard,model_hr_planilla_tabular_fortnightly_wizard,group_hr_fortnightly_root,1,1,1,0

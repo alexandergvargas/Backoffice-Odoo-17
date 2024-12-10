@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+        <record id="fotocheck_config_restricted_company_rule" model="ir.rule">
+            <field name="name">Restricted fotocheck: multi-company</field>
+            <field name="model_id" ref="model_hr_fotocheck_config"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+        <record id="assistance_planning_company_rule" model="ir.rule">
+            <field name="name">Restricted assistance planning: multi-company</field>
+            <field name="model_id" ref="model_hr_assistance_planning"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+        <record id="assistance_planning_line_company_rule" model="ir.rule">
+            <field name="name">Restricted assistance planning line: multi-company</field>
+            <field name="model_id" ref="model_hr_assistance_planning_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+        <record id="attendance_monitor_company_rule" model="ir.rule">
+            <field name="name">Restricted attendance monitor: multi-company</field>
+            <field name="model_id" ref="model_hr_attendance_monitor"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">
+                [('company_id', 'in', company_ids)]
+            </field>
+        </record>
+
+    </data>
+</odoo>

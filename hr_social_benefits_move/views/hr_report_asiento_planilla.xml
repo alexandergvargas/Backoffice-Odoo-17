@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_hr_report_asiento_planilla_tree" model="ir.ui.view">
+			<field name="name">hr.report.asiento.planilla.tree</field>
+			<field name="model">hr.report.asiento.planilla</field>
+			<field name="arch" type="xml">
+				<tree create="0" edit="0" delete="0">
+<!--					<field name="account_move_id"/>-->
+					<field name="cta_code" optional="show"/>
+					<field name="cta_description" optional="hide"/>
+					<field name="debit" sum="debit" optional="show"/>
+					<field name="credit" sum="credit" optional="show"/>
+					<field name="cc_code" optional="show"/>
+					<field name="cc_description" optional="show"/>
+					<field name="partner_vat" optional="show"/>
+					<field name="partner_name" optional="show"/>
+					<field name="glosa" optional="show"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_hr_report_asiento_planilla_pivot" model="ir.ui.view">
+			<field name="name">hr.report.asiento.planilla.pivot</field>
+			<field name="model">hr.report.asiento.planilla</field>
+			<field name="priority">20</field>
+			<field name="arch" type="xml">
+				<pivot string="Analisis Asiento" sample="1">
+					<field name="glosa" type="row"/>
+<!--					<field name="sequence" type="col"/>-->
+					<field name="cta_code" type="col"/>
+					<field name="debit" type="measure"/>
+					<field name="credit" type="measure"/>
+				</pivot>
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_attendance_activity,hr_attendance_activity,model_attendance_activity,,1,1,1,1
+access_hr_shift_template,hr_shift_template,model_hr_shift_template,,1,1,1,1
+access_hr_assistance_planning,hr_assistance_planning,model_hr_assistance_planning,,1,1,1,1
+access_hr_assistance_planning_employee,hr_assistance_planning_employee,model_hr_assistance_planning_employee,,1,1,1,1
+access_hr_assistance_planning_line,hr_assistance_planning_line,model_hr_assistance_planning_line,,1,1,1,1
+access_hr_assistance_planning_recurrency,hr_assistance_planning_recurrency,model_hr_assistance_planning_recurrency,,1,1,1,1
+access_hr_fotocheck_config,hr_fotocheck_config,model_hr_fotocheck_config,,1,1,1,1
+access_hr_attendance_monitor,hr_attendance_monitor,model_hr_attendance_monitor,,1,1,1,1
+access_hr_monthly_attendance_wizard,hr_monthly_attendance_wizard,model_hr_monthly_attendance_wizard,,1,1,1,1
+access_hr_employee_planning_wizard,hr_employee_planning_wizard,model_hr_employee_planning_wizard,,1,1,1,1
+
+

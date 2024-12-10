@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="view_employee_form_device" model="ir.ui.view">
+			<field name="name">employee.form.device</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr_attendance.view_employee_form_inherit_hr_attendance" />
+			<field name="arch" type="xml">
+				<xpath expr="//notebook[1]/page[@name='hr_settings']" position="after">
+					<page string="Dispositivos no Asignados" invisible="unamapped_attendance_device_ids == []"
+						groups="hr_attendance.group_hr_attendance_officer">
+						<field name="unamapped_attendance_device_ids">
+							<tree name="unamapped_attendance_device_ids" nolabel="1" create="false" delete="false" edit="false">
+								<field name="name" />
+								<field name="ip" groups="hr_attendance.group_hr_attendance_officer" />
+								<field name="port" groups="hr_attendance.group_hr_attendance_officer" />
+								<field name="location_id" />
+								<field name="state" column_invisible="1" />
+							</tree>
+						</field>
+					</page>
+				</xpath>
+				<xpath expr="//button[@name='action_open_last_month_overtime']" position="after">
+					<button name="action_view_finger_template" type="object"
+						groups="hr_attendance_device.group_attendance_devices_manager"
+						class="oe_stat_button" icon="fa-address-card"
+						help="Mostrar plantillas de huellas dactilares de este empleado">
+						<field name="total_finger_template_records" widget="statinfo" />
+					</button>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="view_employee_filter_device" model="ir.ui.view">
+			<field name="name">hr.employee.search.device</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_filter" />
+			<field name="arch" type="xml">
+				<xpath expr="//filter[@name='inactive']" position="after">
+					<separator />
+					<filter string="Creado desde un dispositivo de asistencia"
+						name="created_from_attendance_device" domain="[('created_from_attendance_device','=',True)]" />
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

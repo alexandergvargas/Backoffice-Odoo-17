@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_payslip_form_inherit" model="ir.ui.view">
+		<field name="name">hr.payslip.form.inherit</field>
+		<field name="model">hr.payslip</field>
+		<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+		<field name="arch" type="xml">
+			<button name="action_payslip_done" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</button>
+			<button name="refund_sheet" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</button>
+			<xpath expr="//button[@name='action_print_payslip']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<button name="compute_sheet" position="before">
+				<button name="refresh_from_work_entries" string="Actualizar Tareo" type="object" invisible="state != 'verify'" class="oe_highlight"/>
+			</button>
+			<xpath expr="//div[hasclass('alert', 'alert-warning')]" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+
+			<xpath expr="//sheet/group[1]" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+			<xpath expr="//notebook" position="before">
+				<group>
+					<group name="data_employee">
+						<label for="date_from" string="Periodo"/>
+						<div>
+							<field name="date_from" class="oe_inline"/> - <field name="date_to" class="oe_inline"/>
+						</div>
+						<field name="contract_id" context="{'default_employee_id': employee_id}" required="1"/>
+					</group>
+					<group name="data_payslip">
+						<field name="payslip_run_id" string="Lote" invisible="payslip_run_id == False"/>
+						<field name="struct_type_id" string="Tipo de Planilla" readonly="state in ['done','paid']"/>
+						<field name="struct_id" required="1"/>
+					</group>
+				</group>
+			</xpath>
+
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='amount']" position="attributes">
+				<attribute name="column_invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='name']" position="attributes">
+				<attribute name="column_invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='work_entry_type_id']" position="before">
+				<field name="code"/>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='number_of_days']" position="attributes">
+				<attribute name="readonly">0</attribute>
+			</xpath>
+			<xpath expr="//field[@name='worked_days_line_ids']/tree/field[@name='number_of_hours']" position="attributes">
+				<attribute name="widget">float_time</attribute>
+				<attribute name="readonly">0</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='input_line_ids']/tree" position="attributes">
+				<attribute name="create">0</attribute>
+				<attribute name="delete">0</attribute>
+			</xpath>
+			<xpath expr="//field[@name='input_line_ids']/tree/field[@name='input_type_id']" position="before">
+				<field name="code"/>
+			</xpath>
+			<xpath expr="//field[@name='input_line_ids']/tree/field[@name='name']" position="attributes">
+				<attribute name="column_invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='input_line_ids']/tree/field[@name='amount']" position="attributes">
+				<attribute name="string">Importe</attribute>
+			</xpath>
+
+			<xpath expr="//field[@name='line_ids']/tree/field[@name='code']" position="attributes">
+				<attribute name="optional">show</attribute>
+			</xpath>
+			<xpath expr="//field[@name='line_ids']/tree/field[@name='name']" position="attributes">
+				<attribute name="column_invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='line_ids']/tree/field[@name='salary_rule_id']" position="attributes">
+				<attribute name="column_invisible">1</attribute>
+			</xpath>
+			<xpath expr="//field[@name='line_ids']/tree/field[@name='code']" position="after">
+				<field name="salary_rule_id"/>
+			</xpath>
+
+			<xpath expr="//page[@name='account_info']" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</xpath>
+<!--			<xpath expr="//div[@name='button_box']/button[@name='action_open_salary_attachments']" position="attributes">-->
+<!--				<attribute name="invisible">1</attribute>-->
+<!--			</xpath>-->
+
+<!--			<field name="journal_id" position="attributes">-->
+<!--				<attribute name="required">0</attribute>-->
+<!--			</field>-->
+			<xpath expr="//page[@name='account_info']" position="before">
+				<page name="data_contract" string="Datos Laborales">
+					<group name="data" >
+						<group string="Datos del Contrato">
+							<field name="wage" readonly="state in ['done', 'paid']"/>
+							<field name="labor_regime" readonly="state in ['done', 'paid']"/>
+							<field name="social_insurance_id" readonly="state in ['done', 'paid']"/>
+							<field name="distribution_id" readonly="state in ['done', 'paid']"/>
+						</group>
+						<group string="Datos de Afiliacion">
+							<field name="membership_id" readonly="state in ['done', 'paid']"/>
+							<field name="commision_type" invisible="is_afp == False" readonly="state in ['done', 'paid']"/>
+							<field name="fixed_commision" invisible="is_afp == False" readonly="state in ['done', 'paid']"/>
+							<field name="mixed_commision" invisible="is_afp == False" readonly="state in ['done', 'paid']"/>
+							<field name="prima_insurance" invisible="is_afp == False" readonly="state in ['done', 'paid']"/>
+							<field name="retirement_fund" readonly="state in ['done', 'paid']"/>
+							<field name="insurable_remuneration" invisible="is_afp == False" readonly="state in ['done', 'paid']"/>
+							<field name="is_afp" invisible="1"/>
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+</odoo>

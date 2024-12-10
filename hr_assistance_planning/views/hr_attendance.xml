@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="view_hr_attendance_planning_inherit_form" model="ir.ui.view">
+			<field name="name">hr.attendance.planning.inherit.form</field>
+			<field name="model">hr.attendance</field>
+			<field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+			<field name="arch" type="xml">
+<!--				<xpath expr="//div[@name='in_location_info']" position="after">-->
+<!--					<label for="activity_id" string="Tipo de Asistencia"/>-->
+<!--					<div class="o_row" name="in_type_activity">-->
+<!--						<span>-->
+<!--							<field name="activity_id" optional="show" force_save="1"/>-->
+<!--						</span>-->
+<!--					</div>-->
+<!--				</xpath>-->
+				<field name="overtime_hours" position="after">
+					<field name="activity_id" force_save="1"/>
+					<field name="calendar_line_id" domain="[('employee_id','=',employee_id),('role_id','=',activity_id)]"/>
+				</field>
+			</field>
+		</record>
+
+		<record id="view_hr_attendance_planning_inherit_tree" model="ir.ui.view">
+			<field name="name">hr.attendance.planning.inherit.tree</field>
+			<field name="model">hr.attendance</field>
+			<field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+			<field name="arch" type="xml">
+				<field name="employee_id" position="after">
+					<field name="department_id" optional="show"/>
+					<field name="work_location_id" optional="show"/>
+					<field name="calendar_line_id" optional="hide"/>
+				</field>
+				<field name="check_out" position="after">
+					<field name="activity_id" optional="hide"/>
+<!--					<field name="in_activity_id" optional="hide"/>-->
+<!--					<field name="out_activity_id" optional="hide"/>-->
+				</field>
+			</field>
+		</record>
+	</data>
+</odoo>

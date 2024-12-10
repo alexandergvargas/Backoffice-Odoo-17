@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="hr_attendance.public_kiosk_app" t-inherit-mode="extension">
+        <xpath expr="//t[@t-call='hr_attendance.companyHeader']" position="after">
+            <div class="activities_lists" style="margin-top: 20px; text-align: center;">
+                <h3 class="mt8" style="font-size: 24px; font-weight: bold; margin-bottom: 10px;">Tipo de Asistencia</h3>
+                <select id="activitySelect" style="width: 100%; padding: 10px 15px; font-size: 16px; font-weight: 500; line-height: 1.5; color: #495057; background-color: #fff; border: 1px solid #ced4da; border-radius: 4px; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;" t-on-change="(ev) => this.updateActivity(ev)">
+                    <option style="padding: 10px; font-size: 16px;" t-att-value="0">ELEGIR TURNO</option>
+                    <t t-foreach="this.props.activities" t-as="activity" t-key="activity_id">
+                        <option style="padding: 10px; font-size: 16px;" t-att-value="activity.id" t-esc="activity.name"/>
+                    </t>
+                </select>
+            </div>
+        </xpath>
+    </t>
+</templates>

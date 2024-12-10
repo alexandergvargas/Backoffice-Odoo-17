@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<menuitem id="menu_hr_attendance_programa_turnos"
+				  name="Programación de Turnos"
+				  parent="hr_attendance.menu_hr_attendance_root"
+				  sequence="11"
+				  groups="hr_attendance.group_hr_attendance_manager"/>
+
+<!--		VISTA PLANIFICACION ASISTENCIA-->
+		<record id="view_hr_assistance_planning_tree" model="ir.ui.view">
+			<field name="name">hr.assistance.planning.tree</field>
+			<field name="model">hr.assistance.planning</field>
+			<field name="arch" type="xml">
+				<tree string="Planificación Masiva">
+					<field name="name" optional="show"/>
+					<field name="type_workday" optional="show"/>
+					<field name="calendar_id" optional="hide"/>
+					<field name="number_assists" optional="show"/>
+					<field name="create_date" string="Fecha de Creación"  readonly="1" optional="hide"/>
+					<field name="date_ini" optional="show"/>
+					<field name="date_end" optional="show"/>
+					<field name="h_ini" optional="show"/>
+					<field name="h_end" optional="show"/>
+					<field name="duration" optional="show"/>
+					<field name="ref_ini" optional="hide"/>
+					<field name="ref_end" optional="hide"/>
+					<field name="duration_ref" optional="hide"/>
+					<field name="state" optional="show"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="hr_assistance_planning_form" model="ir.ui.view">
+			<field name="name">hr.assistance.planning.form</field>
+			<field name="model">hr.assistance.planning</field>
+			<field name="arch" type="xml">
+				<form string="Planificación Masiva">
+					<header>
+						<button name="get_employees_planning" class="oe_highlight" string="Traer Empleados" type="object" invisible="state != 'draft'"/>
+						<button name="make_detail" class="oe_highlight" string="Planificar Asistencia" type="object" invisible="state != 'draft'"/>
+						<button name="action_publish" class="oe_highlight" string="Publicar Horarios" type="object" invisible="state != 'prepare'"/>
+						<button name="return_unpublish" class="oe_highlight" string="Volver a Proceso" type="object" invisible="state != 'done'"/>
+						<button name="reopen" string="Volver a Borrador" type="object" invisible="state != 'prepare'" confirm="Volver a Borrador eliminara el listado de empleados que existen actualmente ¿Esta seguro que desea hacer esto?"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,prepare,done"/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" placeholder="SEMANA 01 ENERO-2024"/>
+								<group>
+									<field name="type_workday" required="1" readonly="state in ['done','prepare']"/>
+									<field name="number_assists" widget="radio" readonly="state in ['done','prepare']"/>
+								</group>
+								<group>
+									<field name="calendar_id" invisible="type_workday == 'atipico'" options="{'no_create': True, 'no_create_edit':True}" readonly="state in ['done','prepare']"/>
+									<field name="activity1_id" options="{'no_create': True, 'no_create_edit':True}" required="1" readonly="state in ['done','prepare']"/>
+									<field name="activity2_id" invisible="number_assists == 'one'" required="number_assists == 'two'" options="{'no_create': True, 'no_create_edit':True}" readonly="state in ['done','prepare']"/>
+								</group>
+							</group>
+							<group>
+								<label for="days_work" string="Cant Dias" invisible="type_workday == 'horario'"/>
+								<div invisible="type_workday == 'horario'">
+									<div class="o_row o_row_readonly">
+										<span class="oe_inline">
+											Subida
+										</span>
+										<field name="days_work" class="oe_inline" nolabel="1" force_save="1" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">
+											Bajada
+										</span>
+										<field name="days_rest" class="oe_inline" force_save="1" readonly="state in ['done','prepare']"/>
+									</div>
+								</div>
+
+								<field name="date_ini" string="Fechas" widget="daterange" options="{'end_date_field': 'date_end'}" required="1" readonly="state in ['done','prepare']"/>
+                                <field name="date_end" invisible="1" />
+
+								<label for="h_ini" string="Horario Asistencia"/>
+								<div>
+									<div class="o_row o_row_readonly">
+										<span class="oe_inline">
+											Inicia =
+										</span>
+										<field name="h_ini" class="oe_inline" nolabel="1" widget="float_time" force_save="1" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">
+											Termina =
+										</span>
+										<field name="h_end" class="oe_inline" widget="float_time" force_save="1" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">
+											------> Duracion =
+										</span>
+										<field name="duration" class="oe_inline" widget="float_time" force_save="1"/>
+									</div>
+								</div>
+								<label for="ref_ini" string="Horario Refrigerio"/>
+								<div>
+									<div class="o_row o_row_readonly">
+										<span class="oe_inline">
+											Inicia =
+										</span>
+										<field name="ref_ini" class="oe_inline" nolabel="1" widget="float_time" force_save="1" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">
+											Termina =
+										</span>
+										<field name="ref_end" class="oe_inline" widget="float_time" force_save="1" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">
+											------> Duracion Ref =
+										</span>
+										<field name="duration_ref" class="oe_inline" widget="float_time" force_save="1"/>
+									</div>
+								</div>
+
+								<label for="workday_mo" string="Dias de Descanso" invisible="type_workday == 'atipico'"/>
+								<div invisible="type_workday == 'atipico'">
+									<div class="o_row o_row_readonly">
+										<span class="oe_inline">Lu</span>
+										<field name="workday_mo" class="oe_inline" nolabel="1" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">Ma</span>
+										<field name="workday_tu" class="oe_inline" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">Mi</span>
+										<field name="workday_we" class="oe_inline" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">Ju</span>
+										<field name="workday_th" class="oe_inline" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">Vi</span>
+										<field name="workday_fr" class="oe_inline" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">Sa</span>
+										<field name="workday_sa" class="oe_inline" readonly="state in ['done','prepare']"/>
+										<span class="oe_inline">Do</span>
+										<field name="workday_su" class="oe_inline" readonly="state in ['done','prepare']"/>
+									</div>
+								</div>
+							</group>
+						</group>
+						<notebook>
+							<page string="Empleados">
+								<field name="line_employee_ids" readonly="state in ['done','prepare']">
+									<tree editable="bottom">
+										<field name="employee_id" required="1" domain="[('contract_id.situation_id.code','!=',0)]" optional="show"/>
+										<field name="work_location_id" optional="show"/>
+										<field name="calendar_id" optional="show"/>
+										<button name="view_detail" icon="fa-eye" string="Ver Detalle" type="object" invisible="count_lines == False"/>
+										<field name="count_lines" column_invisible="1"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_assistance_planning_search" model="ir.ui.view">
+			<field name="name">hr.assistance.planning.search</field>
+			<field name="model">hr.assistance.planning</field>
+			<field name="arch" type="xml">
+				<search string="Planificación Masiva">
+					<field name="name"/>
+					<field name="calendar_id"/>
+					<field name="type_workday"/>
+				</search>
+			</field>
+		</record>
+
+		<record id="hr_assistance_planning_action" model="ir.actions.act_window">
+			<field name="name">Planificación Masiva</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.assistance.planning</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_hr_assistance_planning"
+				  action="hr_assistance_planning_action"
+				  parent="menu_hr_attendance_programa_turnos"
+				  sequence="5"/>
+
+	</data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="hr_main_parameter_atypical_form" model="ir.ui.view">
+		<field name="name">hr.main.parameter.atypical.form</field>
+		<field name="model">hr.main.parameter</field>
+		<field name="inherit_id" ref="hr_base_it.hr_main_parameter_form"/>
+		<field name="arch" type="xml">
+			<field name="wd_dlab" position="after">
+				<field name="wd_atypical_hd" widget="many2many_tags"/>
+				<field name="wd_atypical_hn" widget="many2many_tags"/>
+			</field>
+		</field>
+	</record>
+</odoo>

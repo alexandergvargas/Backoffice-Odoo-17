@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_contract_custom_contract_form" model="ir.ui.view">
+            <field name="name">hr.contract.custom.contract.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_fields.hr_contract_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/header" position="inside">
+                    <button name="export_contract" type="object" string="Imprimir Contrato" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//group[@name='duration_group']/group[1]" position="inside">
+                    <field name="trial_date_end" readonly="0" force_save="1"/>
+                </xpath>
+                <field name="contract_type_id" position="attributes">
+                    <attribute name="string">Modelo de Contrato</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="send_contract_email" model="ir.actions.server">
+            <field name="name">Enviar Contratos por Correo</field>
+            <field name="model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="state">code</field>
+            <field name="code">action = records.send_contract_email()</field>
+        </record>
+
+        <record id="view_hr_contract_type_form_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.type.form.inherit</field>
+            <field name="model">hr.contract.type</field>
+            <field name="inherit_id" ref="hr.hr_contract_type_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/group" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//form" position="inside">
+                    <sheet>
+                        <widget name="web_ribbon" title="Archivado" bg_color="bg-danger" invisible="active == True"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="active" invisible="1"/>
+                            <group>
+                                <group>
+                                    <field name="country_id"/>
+                                </group>
+                                <group/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page id = "htmldata" string="Contenido">
+                                <group>
+                                    <field name="contract_html" required="1" widget="html" options="{'style-inline': true,'codeview': true}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_contract_type_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.type.tree.inherit</field>
+            <field name="model">hr.contract.type</field>
+            <field name="inherit_id" ref="hr.hr_contract_type_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="editable"></attribute>
+                </xpath>
+                <field name="code" position="attributes">
+                    <attribute name="column_invisible">1</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record id="action_hr_contract_type" model="ir.actions.act_window">
+            <field name="name">Modelos de Contrato</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.contract.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crea tu primer modelo de Contrato
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="hr.menu_view_hr_contract_type"
+                  name="Modelos de Contrato"
+                  action="action_hr_contract_type"
+                  parent="hr.menu_config_recruitment"
+                  sequence="2"
+                  groups="hr.group_hr_user"/>
+
+    </data>
+</odoo>
